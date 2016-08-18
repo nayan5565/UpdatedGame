@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
-import com.example.nayan.game3.model.MData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,12 +23,14 @@ public class Logic {
     public static final String HARD_GAME_MAX_POINT = "hardMax";
     public static final String NORMAL_GAME_MAX_POINT = "normalMax";
     public static final String MEDIUM_GAME_MAX_POINT = "mediumMax";
+    public static final String Hard_GAME_WIN_NO = "hardWin";
+    public static final String MEDIUM_GAME_WIN_NO = "mediumWin";
+    public static final String NORMAL_GAME_WIN_NO = "normalWin";
+
     static Logic logic;
-    public int previousId, count, clickCount, matchCount, previousType;
+    public int previousId, count, clickCount, matchCount, previousType, matchWin,preViousPoint,presentPoint,bestPoint;
     public boolean isSoundPlay = true;
-    ArrayList<MData> arrayList;
-    int preVoiusPoint;
-    int presentPoint;
+    ArrayList<MLevel> levels;
     SharedPreferences preferences;
     MediaPlayer mediaPlayer;
     Context context;
@@ -37,65 +38,37 @@ public class Logic {
     MyRecyclerViewAdapter adapter;
 
 
+    private Logic(){
 
+    }
     public static Logic getInstance(Context context1) {
-        if (logic==null){
-            logic=new Logic();
+
+        if (logic == null) {
+            logic = new Logic();
         }
-        logic.context=context1;
+        logic.context = context1;
+
         return logic;
 
     }
 
-    public void callData(ArrayList<MData>arrayList,MyRecyclerViewAdapter adapter){
-        this.arrayList=arrayList;
-        this.adapter=adapter;
-    }
-
-    public void bestPoint() {
-        preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
-        if (arrayList.size() == 12) {
-            preVoiusPoint = preferences.getInt(HARD_GAME_MAX_POINT, 0);
-            Log.e("previous point ", "is : " + preVoiusPoint);
-
-        } else if (arrayList.size() == 6) {
-            preVoiusPoint = preferences.getInt(NORMAL_GAME_MAX_POINT, 0);
-        } else if (arrayList.size() == 4) {
-            preVoiusPoint = preferences.getInt(MEDIUM_GAME_MAX_POINT, 0);
+    public void callData(ArrayList<MLevel> levels, MyRecyclerViewAdapter adapter) {
+        this.levels = levels;
+        this.adapter = adapter;
+        if (levels.size() == 12) {
+            bestPoint = getPref(HARD_GAME_MAX_POINT);
+            matchWin = getPref(Hard_GAME_WIN_NO);
+        } else if (levels.size() == 6) {
+            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
+            matchWin = getPref(MEDIUM_GAME_WIN_NO);
+        } else if (levels.size() == 4) {
+            bestPoint = getPref(NORMAL_GAME_MAX_POINT);
+            matchWin = getPref(NORMAL_GAME_WIN_NO);
         }
-        if (presentPoint > preVoiusPoint) {
-            //mData.setBestPoint(presentPoint);
-
-
-        } else {
-            //mData.setBestPoint(preVoiusPoint);
-            presentPoint = preVoiusPoint;
-        }
-
-
-        Dialog dialog = new Dialog(context);
-        dialog.setTitle("Best Point");
-        dialog.setContentView(R.layout.row_d_best_point);
-        TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
-        textView.setText(presentPoint + "");
-
-        SharedPreferences.Editor editor = preferences.edit();
-        if (arrayList.size() == 12) {
-            editor.putInt(HARD_GAME_MAX_POINT, presentPoint);
-        } else if (arrayList.size() == 6) {
-            editor.putInt(NORMAL_GAME_MAX_POINT, presentPoint);
-        } else if (arrayList.size() == 4) {
-            editor.putInt(MEDIUM_GAME_MAX_POINT, presentPoint);
-        }
-
-
-        editor.commit();
-
-
-        dialog.show();
 
 
     }
+
 
     public void showInformation() {
         presentPoint = 100 / clickCount;
@@ -128,18 +101,18 @@ public class Logic {
         }
     }
 
-    public void imageClick(final MData mData, int pos) {
-        if (previousId == mData.getId() || mData.getStatus() == 1) {
+    public void imageClick(final MLevel mLevel, int pos) {
+        if (previousId == mLevel.getId() || mLevel.getStatus() == 1) {
             return;
         }
         clickCount++;
 
-        arrayList.get(pos).setStatus(1);
-        adapter.setData(arrayList);
+        levels.get(pos).setStatus(1);
+        adapter.setData(levels);
         count++;
         if (count == 2) {
 
-            if (previousType == mData.getType()) {
+            if (previousType == mLevel.getType()) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -149,13 +122,33 @@ public class Logic {
 
                 matchCount++;
 
-                if (matchCount == arrayList.size() / 2) {
+                if (matchCount == levels.size() / 2) {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             getSound(R.raw.gameover);
                         }
                     }, 2000);
+                    matchWin++;
+                    presentPoint = 100 / clickCount;
+                    if (levels.size() == 4) {
+                        savePref(NORMAL_GAME_WIN_NO, matchWin);
+                        if (presentPoint > bestPoint) {
+                            Log.e("log","point");
+                            savePref(NORMAL_GAME_MAX_POINT, presentPoint);
+                        }
+                    } else if (levels.size() == 6) {
+                        savePref(MEDIUM_GAME_WIN_NO, matchWin);
+                        if (presentPoint > bestPoint) {
+                            savePref(MEDIUM_GAME_MAX_POINT, presentPoint);
+                        }
+                    } else {
+                        savePref(Hard_GAME_WIN_NO, matchWin);
+                        if (presentPoint > bestPoint) {
+                            savePref(HARD_GAME_MAX_POINT, presentPoint);
+                        }
+                    }
+
 
                     showInformation();
                 }
@@ -170,13 +163,13 @@ public class Logic {
                     @Override
                     public void run() {
                         getSound(R.raw.fail);
-                        for (int i = 0; i < arrayList.size(); i++) {
-                            if (arrayList.get(i).getId() == perevious || arrayList.get(i).getId() == mData.getId()) {
-                                arrayList.get(i).setStatus(0);
+                        for (int i = 0; i < levels.size(); i++) {
+                            if (levels.get(i).getId() == perevious || levels.get(i).getId() == mLevel.getId()) {
+                                levels.get(i).setStatus(0);
 
                             }
                         }
-                        adapter.setData(arrayList);
+                        adapter.setData(levels);
                     }
                 }, 1000);
                 count = 0;
@@ -184,19 +177,57 @@ public class Logic {
                 return;
             }
         }
-        previousId = mData.getId();
-        previousType = mData.getType();
+        previousId = mLevel.getId();
+        previousType = mLevel.getType();
     }
 
 
     public void resetList() {
-        for (int i = 0; i < arrayList.size(); i++) {
-            arrayList.get(i).setStatus(0);
+        for (int i = 0; i < levels.size(); i++) {
+            levels.get(i).setStatus(0);
         }
-        Collections.shuffle(arrayList);
+        Collections.shuffle(levels);
         clickCount = 0;
         matchCount = 0;
-        adapter.setData(arrayList);
+        adapter.setData(levels);
 
+    }
+
+    private void savePref(String key, int value) {
+        preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    private int getPref(String key) {
+        preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
+        return preferences.getInt(key, 0);
+    }
+
+    public void showHistory() {
+        if (levels.size() == 12) {
+            bestPoint = getPref(HARD_GAME_MAX_POINT);
+            matchWin = getPref(Hard_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + preViousPoint);
+
+        } else if (levels.size() == 6) {
+            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
+            matchWin = getPref(MEDIUM_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + preViousPoint);
+
+        } else if (levels.size() == 4) {
+            bestPoint = getPref(NORMAL_GAME_MAX_POINT);
+            matchWin = getPref(NORMAL_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + preViousPoint);
+        }
+        Dialog dialog = new Dialog(context);
+        dialog.setTitle("Status");
+        dialog.setContentView(R.layout.row_d_best_point);
+        TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
+        textView.setText("best point: " + bestPoint + "");
+        TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
+        textView1.setText("no of total win: " + matchWin + "");
+        dialog.show();
     }
 }

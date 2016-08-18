@@ -20,7 +20,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
-
+    MainActivity mainActivity = new MainActivity();
     NavigationDrawerFragment drawerFragment;
 
     @Override
@@ -43,6 +43,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         prepareDisplay();
+        mainActivity.getOnlineData();
     }
 
     @Override
@@ -84,19 +85,19 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.getId() == R.id.btnNormal) {
             Toast.makeText(this, "normal", Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(this,MainActivity.class);
-            intent.putExtra("type",2);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("type", 2);
             startActivity(intent);
 
         } else if (v.getId() == R.id.btnHard) {
             Toast.makeText(this, "hard", Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(this,MainActivity.class);
-            intent.putExtra("type",4);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("type", 4);
             startActivity(intent);
         } else if (v.getId() == R.id.btnMedium) {
             Toast.makeText(this, "medium", Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(this,MainActivity.class);
-            intent.putExtra("type",3);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("type", 3);
             startActivity(intent);
         }
     }

@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.Logic;
+import com.example.nayan.game3.MLevel;
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.model.MData;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,8 +20,9 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewholder> {
 
 
-    ArrayList<MData> arrayList;
-    MData mData;
+
+    ArrayList<MLevel> levels;
+    MLevel mLevel;
     Context context;
     LayoutInflater inflater;
     Logic logic;
@@ -31,18 +31,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public MyRecyclerViewAdapter(Context context) {
         this.context = context;
-        mData = new MData();
+        mLevel = new MLevel();
 
 
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(ArrayList<MData> arrayList) {
-        this.arrayList = arrayList;
+    public void setData(ArrayList<MLevel> levels) {
+        this.levels = levels;
 
             Log.e("log","setdata");
         logic=Logic.getInstance(context);
-        logic.callData(arrayList,this);
+        logic.callData(levels,this);
 
         notifyDataSetChanged();
     }
@@ -57,11 +57,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
-        mData = arrayList.get(position);
-        if (mData.getStatus() == 1) {
-            Picasso.with(context)
-                    .load(mData.getImage())
-                    .into(holder.img);
+        mLevel = levels.get(position);
+        if (mLevel.getStatus() == 1) {
+
             //holder.img.setImageResource(mData.getImage());
         } else {
             holder.img.setImageResource(R.drawable.place);
@@ -71,7 +69,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return levels.size();
     }
 
 
@@ -85,9 +83,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
-                    mData = arrayList.get(getAdapterPosition());
+                    mLevel = levels.get(getAdapterPosition());
                     logic.getSound(R.raw.click);
-                    logic.imageClick(mData, getAdapterPosition());
+                    logic.imageClick(mLevel, getAdapterPosition());
                 }
             });
         }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
 
-    ArrayList<MLevel>levels;
+    ArrayList<MLevel> levels;
 
     RecyclerView recyclerView;
     MyRecyclerViewAdapter adapter;
@@ -43,16 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         value = getIntent().getIntExtra("type", 0);
+        Log.e("log","is"+value);
         init();
-        if (value == 2) {
-
-
-        } else if (value == 3) {
-
-        } else if (value == 4) {
-
-        }
-
+getOnlineData();
 
     }
 
@@ -65,13 +59,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         img.setOnClickListener(this);
         if (image.equals(1 + "")) {
             img.setImageResource(R.drawable.on);
-        }
-       else if (image.equals(0 + "")) {
+        } else if (image.equals(0 + "")) {
             img.setImageResource(R.drawable.off);
         }
 
 
-        levels=new ArrayList<>();
+        levels = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         if (value == 2) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -96,7 +89,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         super.onSuccess(statusCode, headers, response);
                         try {
                             JSONObject puzzle = response.getJSONObject("puzzle");
-                            JSONArray easy = puzzle.getJSONArray("easy");
+                            JSONArray easy = null;
+                            if (value == 2) {
+                                easy = puzzle.getJSONArray("easy");
+
+
+                            } else if (value == 3) {
+                                easy = puzzle.getJSONArray("medium");
+
+                            } else if (value == 4) {
+                                easy = puzzle.getJSONArray("hard");
+                            }
                             for (int i = 0; i < easy.length(); i++) {
                                 JSONObject jsonObject = easy.getJSONObject(i);
 
@@ -106,41 +109,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
 
+
+
                                 levels.add(level);
 
-                                /*JSONArray image = easy.getJSONArray(i);
-                                for (int j = 0; j < image.length(); j++) {
-                                    JSONObject object1 = image.getJSONObject(j);
 
 
-                                }*/
-                            }
-                            JSONArray medium=puzzle.getJSONArray("medium");
-                            for (int i = 0; i < medium.length(); i++) {
-                                JSONObject jsonObject = medium.getJSONObject(i);
-
-                                MLevel level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-
-                                levels.add(level);
                             }
 
-                            JSONArray hard=puzzle.getJSONArray("hard");
-                            for (int i = 0; i < hard.length(); i++) {
-                                JSONObject jsonObject = hard.getJSONObject(i);
-
-                                MLevel level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-
-                                levels.add(level);
-                            }
-
+                            adapter.setData(levels);
 
 
                         } catch (JSONException e) {
@@ -148,11 +125,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
 
-
                     }
                 }
         );
     }
+
 
     /*public void hardGame() {
         mData = new MData();

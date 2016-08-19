@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewholder> {
 
 
-
     ArrayList<MLevel> levels;
     MLevel mLevel;
     Context context;
@@ -28,10 +27,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     Logic logic;
 
 
-
     public MyRecyclerViewAdapter(Context context) {
         this.context = context;
         mLevel = new MLevel();
+        levels=new ArrayList<>();
 
 
         inflater = LayoutInflater.from(context);
@@ -40,9 +39,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void setData(ArrayList<MLevel> levels) {
         this.levels = levels;
 
-            Log.e("log","setdata");
-        logic=Logic.getInstance(context);
-        logic.callData(levels,this);
+        Log.e("log", "setdata:"+levels.size());
+        logic = Logic.getInstance(context);
+        logic.callData(levels, this);
 
         notifyDataSetChanged();
     }
@@ -58,12 +57,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
-        if (mLevel.getStatus() == 1) {
 
-            //holder.img.setImageResource(mData.getImage());
-        } else {
-            holder.img.setImageResource(R.drawable.place);
-        }
+        holder.img.setImageResource(R.drawable.place);
+
 
     }
 

@@ -20,7 +20,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
-    MainActivity mainActivity = new MainActivity();
+
     NavigationDrawerFragment drawerFragment;
 
     @Override
@@ -43,7 +43,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         prepareDisplay();
-        mainActivity.getOnlineData();
+
     }
 
     @Override

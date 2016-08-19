@@ -4,7 +4,30 @@ package com.example.nayan.game3;
  * Created by JEWEL on 8/18/2016.
  */
 public class MLevel {
-    String eId,level,coinPrice,noOfCoinPrice,image;
+    String eId;
+    String level;
+    String coinPrice;
+    String noOfCoinPrice;
+    String image;
+    String sound;
+
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
+    String hint;
     int id,type,status,bestpoint;
 
     public String geteId() {

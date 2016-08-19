@@ -6,9 +6,11 @@
 
    <TextView
        android:id="@+id/txtLevel"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
+       android:layout_width="100dp"
+       android:layout_height="100dp"
        android:layout_margin="20dp"
+       android:padding="40dp"
+       android:textColor="#0f0"
        android:background="#f00"
        android:text="Level"/>
 

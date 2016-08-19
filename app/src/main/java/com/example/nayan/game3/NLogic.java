@@ -10,15 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
+import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.model.MData;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by JEWEL on 8/12/2016.
+ * Created by JEWEL on 8/20/2016.
  */
-public class Logic {
+public class NLogic {
     public static final String MyPREFERENCE = "mypref";
     public static final String HARD_GAME_MAX_POINT = "hardMax";
     public static final String NORMAL_GAME_MAX_POINT = "normalMax";
@@ -27,42 +28,42 @@ public class Logic {
     public static final String MEDIUM_GAME_WIN_NO = "mediumWin";
     public static final String NORMAL_GAME_WIN_NO = "normalWin";
 
-    static Logic logic;
+    static NLogic nLogic;
     public int previousId, count, clickCount, matchCount, previousType, matchWin, preViousPoint, presentPoint, bestPoint;
     public boolean isSoundPlay = true;
-    ArrayList<MLevel> levels;
+    ArrayList<MData> list;
     SharedPreferences preferences;
     MediaPlayer mediaPlayer;
     Context context;
     Handler handler = new Handler();
-    MyRecyclerViewAdapter adapter;
+    GameAdapter adapter;
 
 
-    private Logic() {
+    private NLogic() {
 
     }
 
-    public static Logic getInstance(Context context1) {
+    public static NLogic getInstance(Context context1) {
 
-        if (logic == null) {
-            logic = new Logic();
+        if (nLogic == null) {
+            nLogic = new NLogic();
         }
-        logic.context = context1;
+        nLogic.context = context1;
 
-        return logic;
+        return nLogic;
 
     }
 
-    public void callData(ArrayList<MLevel> levels, MyRecyclerViewAdapter adapter) {
-        this.levels = levels;
+    public void callData(ArrayList<MData> list, GameAdapter adapter) {
+        this.list = list;
         this.adapter = adapter;
-        if (levels.size() == 12) {
+        if (list.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             matchWin = getPref(Hard_GAME_WIN_NO);
-        } else if (levels.size() == 6) {
+        } else if (list.size() == 6) {
             bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
             matchWin = getPref(MEDIUM_GAME_WIN_NO);
-        } else if (levels.size() == 4) {
+        } else if (list.size() == 4) {
             bestPoint = getPref(NORMAL_GAME_MAX_POINT);
             matchWin = getPref(NORMAL_GAME_WIN_NO);
         }
@@ -102,18 +103,18 @@ public class Logic {
         }
     }
 
-    public void imageClick(final MLevel mLevel, int pos) {
-        if (previousId == mLevel.getId() || mLevel.getStatus() == 1) {
+    public void imageClick(final MData mData, int pos) {
+        if (previousId == mData.getId() || mData.getStatus() == 1) {
             return;
         }
         clickCount++;
 
-        levels.get(pos).setStatus(1);
-        adapter.setData(levels);
+        list.get(pos).setStatus(1);
+        adapter.setData(list);
         count++;
         if (count == 2) {
 
-            if (previousType == mLevel.getType()) {
+            if (previousType == mData.getType()) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -123,7 +124,7 @@ public class Logic {
 
                 matchCount++;
 
-                if (matchCount == levels.size() / 2) {
+                if (matchCount == list.size() / 2) {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -132,13 +133,13 @@ public class Logic {
                     }, 2000);
                     matchWin++;
                     presentPoint = 100 / clickCount;
-                    if (levels.size() == 4) {
+                    if (list.size() == 4) {
                         savePref(NORMAL_GAME_WIN_NO, matchWin);
                         if (presentPoint > bestPoint) {
                             Log.e("log", "point");
                             savePref(NORMAL_GAME_MAX_POINT, presentPoint);
                         }
-                    } else if (levels.size() == 6) {
+                    } else if (list.size() == 6) {
                         savePref(MEDIUM_GAME_WIN_NO, matchWin);
                         if (presentPoint > bestPoint) {
                             savePref(MEDIUM_GAME_MAX_POINT, presentPoint);
@@ -164,13 +165,13 @@ public class Logic {
                     @Override
                     public void run() {
                         getSound(R.raw.fail);
-                        for (int i = 0; i < levels.size(); i++) {
-                            if (levels.get(i).getId() == perevious || levels.get(i).getId() == mLevel.getId()) {
-                                levels.get(i).setStatus(0);
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).getId() == perevious || list.get(i).getId() == mData.getId()) {
+                                list.get(i).setStatus(0);
 
                             }
                         }
-                        adapter.setData(levels);
+                        adapter.setData(list);
                     }
                 }, 1000);
                 count = 0;
@@ -178,19 +179,19 @@ public class Logic {
                 return;
             }
         }
-        previousId = mLevel.getId();
-        previousType = mLevel.getType();
+        previousId = mData.getId();
+        previousType = mData.getType();
     }
 
 
     public void resetList() {
-        for (int i = 0; i < levels.size(); i++) {
-            levels.get(i).setStatus(0);
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setStatus(0);
         }
-        Collections.shuffle(levels);
+        Collections.shuffle(list);
         clickCount = 0;
         matchCount = 0;
-        adapter.setData(levels);
+        adapter.setData(list);
 
     }
 
@@ -207,17 +208,17 @@ public class Logic {
     }
 
     public void showHistory() {
-        if (levels.size() == 12) {
+        if (list.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             matchWin = getPref(Hard_GAME_WIN_NO);
             Log.e("previous point ", "is : " + preViousPoint);
 
-        } else if (levels.size() == 6) {
+        } else if (list.size() == 6) {
             bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
             matchWin = getPref(MEDIUM_GAME_WIN_NO);
             Log.e("previous point ", "is : " + preViousPoint);
 
-        } else if (levels.size() == 4) {
+        } else if (list.size() == 4) {
             bestPoint = getPref(NORMAL_GAME_MAX_POINT);
             matchWin = getPref(NORMAL_GAME_WIN_NO);
             Log.e("previous point ", "is : " + preViousPoint);

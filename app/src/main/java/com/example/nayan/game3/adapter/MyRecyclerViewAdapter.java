@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nayan.game3.Game;
 import com.example.nayan.game3.Logic;
 import com.example.nayan.game3.MLevel;
-import com.example.nayan.game3.OpenActivity;
 import com.example.nayan.game3.R;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyRecyclerViewAdapter(Context context) {
         this.context = context;
         mLevel = new MLevel();
-        levels=new ArrayList<>();
+        levels = new ArrayList<>();
 
 
         inflater = LayoutInflater.from(context);
@@ -41,7 +41,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void setData(ArrayList<MLevel> levels) {
         this.levels = levels;
 
-        Log.e("log", "setdata:"+levels.size());
+        Log.e("log", "setdata:" + levels.size());
         logic = Logic.getInstance(context);
         logic.callData(levels, this);
 
@@ -76,15 +76,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         public MyViewholder(final View itemView) {
             super(itemView);
-           txtLevel=(TextView)itemView.findViewById(R.id.txtLevel);
+            txtLevel = (TextView) itemView.findViewById(R.id.txtLevel);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
                     logic.getSound(R.raw.click);
-                    Intent intent=new Intent(context, OpenActivity.class);
-                    intent.putExtra("type",getAdapterPosition());
+                    Intent intent = new Intent(context, Game.class);
+                    intent.putExtra("type", getAdapterPosition());
                     context.startActivity(intent);
                     /*logic.imageClick(mLevel, getAdapterPosition());*/
                 }

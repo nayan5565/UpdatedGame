@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         value = getIntent().getIntExtra("type", 0);
-        Log.e("log","is"+value);
+        Log.e("log", "is" + value);
         init();
-getOnlineData();
+        getOnlineData();
 
     }
 
@@ -76,7 +76,6 @@ getOnlineData();
 
         adapter = new MyRecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
-
 
 
     }
@@ -110,9 +109,7 @@ getOnlineData();
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
 
 
-
                                 levels.add(level);
-
 
 
                             }

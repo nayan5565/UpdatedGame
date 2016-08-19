@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +23,16 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawerLayout;
 
     NavigationDrawerFragment drawerFragment;
+    int value;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_activity);
+
+        value=getIntent().getIntExtra("type",0);
+        Log.e("log","is"+value);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
 

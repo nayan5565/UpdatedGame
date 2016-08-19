@@ -1,15 +1,17 @@
 package com.example.nayan.game3.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.nayan.game3.Logic;
 import com.example.nayan.game3.MLevel;
+import com.example.nayan.game3.OpenActivity;
 import com.example.nayan.game3.R;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.img.setImageResource(R.drawable.place);
+        holder.txtLevel.setText(mLevel.getLevel());
 
 
     }
@@ -70,18 +72,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
 
     class MyViewholder extends RecyclerView.ViewHolder {
-        ImageView img;
+        TextView txtLevel;
 
-        public MyViewholder(View itemView) {
+        public MyViewholder(final View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.img);
+           txtLevel=(TextView)itemView.findViewById(R.id.txtLevel);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
                     logic.getSound(R.raw.click);
-                    logic.imageClick(mLevel, getAdapterPosition());
+                    Intent intent=new Intent(context, OpenActivity.class);
+                    intent.putExtra("type",getAdapterPosition());
+                    context.startActivity(intent);
+                    /*logic.imageClick(mLevel, getAdapterPosition());*/
                 }
             });
         }

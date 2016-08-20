@@ -23,7 +23,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     DrawerLayout drawerLayout;
 
-    NavigationDrawerFragment drawerFragment;
+ //   NavigationDrawerFragment drawerFragment;
 
     ArrayList<MLevel> list;
 
@@ -74,8 +74,8 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragNavDrewer);
-        drawerFragment.setUp(R.id.fragNavDrewer, drawerLayout, toolbar);
+        //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragNavDrewer);
+//        drawerFragment.setUp(R.id.fragNavDrewer, drawerLayout, toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

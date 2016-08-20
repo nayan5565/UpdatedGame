@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.NLogic;
@@ -24,6 +25,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     Context context;
     LayoutInflater inflater;
     NLogic nLogic;
+    Animation animation;
 
 
     public GameAdapter(Context context) {
@@ -82,6 +84,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         public MyViewholder(final View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img);
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,6 +98,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
             });
         }
 
+        public void imageVanish() {
+            img.setVisibility(View.GONE);
+        }
+
 
     }
+
 }

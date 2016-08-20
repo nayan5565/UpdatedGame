@@ -37,6 +37,7 @@ public class NLogic {
     Context context;
     Handler handler = new Handler();
     GameAdapter adapter;
+    Game game=new Game();
 
 
     private NLogic() {
@@ -57,7 +58,9 @@ public class NLogic {
     public void callData(ArrayList<MData> list, GameAdapter adapter) {
         this.list = list;
         this.adapter = adapter;
-        if (list.size() == 12) {
+        bestPoint = getPref(HARD_GAME_MAX_POINT);
+        matchWin = getPref(Hard_GAME_WIN_NO);
+        /*if (list.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             matchWin = getPref(Hard_GAME_WIN_NO);
         } else if (list.size() == 6) {
@@ -66,7 +69,7 @@ public class NLogic {
         } else if (list.size() == 4) {
             bestPoint = getPref(NORMAL_GAME_MAX_POINT);
             matchWin = getPref(NORMAL_GAME_WIN_NO);
-        }
+        }*/
 
 
     }
@@ -115,20 +118,24 @@ public class NLogic {
         if (count == 2) {
 
             if (previousType == mData.getType()) {
+                matchCount++;
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         getSound(R.raw.match2);
+
+
                     }
                 }, 1000);
 
-                matchCount++;
+
 
                 if (matchCount == list.size() / 2) {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             getSound(R.raw.gameover);
+                           /* game.animation();*/
                         }
                     }, 2000);
                     matchWin++;
@@ -232,4 +239,5 @@ public class NLogic {
         textView1.setText("no of total win: " + matchWin + "");
         dialog.show();
     }
+
 }

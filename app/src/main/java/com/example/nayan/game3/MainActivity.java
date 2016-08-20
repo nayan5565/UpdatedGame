@@ -57,8 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         img = (ImageView) findViewById(R.id.img);
         img.setOnClickListener(this);
         if (image.equals(1 + "")) {
+            Logic.getInstance(this).isSoundPlay=true;
             img.setImageResource(R.drawable.on);
         } else if (image.equals(0 + "")) {
+            Logic.getInstance(this).isSoundPlay=false;
             img.setImageResource(R.drawable.off);
         }
 

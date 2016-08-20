@@ -59,11 +59,12 @@
         </LinearLayout>
 
 
-        <fragment
+     <!--   <fragment
+
             android:id="@+id/fragNavDrewer"
             android:name="com.example.nayan.game3.NavigationDrawerFragment"
             android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:layout_gravity="left" />
+            android:layout_gravity="start" />-->
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

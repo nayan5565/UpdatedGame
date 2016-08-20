@@ -18,6 +18,8 @@ import com.example.nayan.game3.model.MData;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+
 /**
  * Created by JEWEL on 8/20/2016.
  */
@@ -32,6 +34,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences preferences;
     int value;
     String image;
+    /*MData pos;
+    int pos1;
+    int pos2;
+    int pos3;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.game_activity);
         init();
         hardGame();
+        value=getIntent().getIntExtra("level",0);
+       /* if (value=pos){
+
+        }*/
     }
 
     public void init() {
@@ -49,13 +59,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         img = (ImageView) findViewById(R.id.img);
         img.setOnClickListener(this);
         if (image.equals(1 + "")) {
+            NLogic.getInstance(this).isSoundPlay=true;
             img.setImageResource(R.drawable.on);
         } else if (image.equals(0 + "")) {
+            NLogic.getInstance(this).isSoundPlay=false;
             img.setImageResource(R.drawable.off);
         }
 
 
         list = new ArrayList<>();
+        //pos=list.get(0);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         /*if (value == 2) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -69,6 +82,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         recyclerView.setAdapter(adapter);
 
 
+    }
+    private void animation(){
+        ScaleInAnimator sa=new ScaleInAnimator();
+        sa.setRemoveDuration(2000);
+        recyclerView.setItemAnimator(sa);
     }
 
     public void hardGame() {

@@ -84,7 +84,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     mLevel = levels.get(getAdapterPosition());
                     logic.getSound(R.raw.click);
                     Intent intent = new Intent(context, Game.class);
-                    intent.putExtra("type", getAdapterPosition());
+                    intent.putExtra("level", getAdapterPosition());
                     context.startActivity(intent);
                     /*logic.imageClick(mLevel, getAdapterPosition());*/
                 }

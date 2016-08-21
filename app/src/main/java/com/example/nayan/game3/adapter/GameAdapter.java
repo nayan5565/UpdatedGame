@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.example.nayan.game3.NLogic;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.model.MData;
+import com.example.nayan.game3.utils.MyAnimation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
             Picasso.with(context)
                     .load(mData.getImage())
                     .into(holder.img);
+            //MyAnimation.rotation(holder.img,false);
 
         } else {
             holder.img.setImageResource(R.drawable.place);
@@ -84,6 +86,15 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         public MyViewholder(final View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img);
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                   /* animation = AnimationUtils.loadAnimation(context,R.anim.card_flip_left_out);
+                    img.startAnimation(animation);*/
+                   // MyAnimation.rotation(img,false);
+                }
+            });
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -92,15 +103,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                     Log.e("position", "is" + getAdapterPosition());
                     mData = list.get(getAdapterPosition());
                     nLogic.getSound(R.raw.click);
-
+                    MyAnimation.rotation(itemView,false);
                     nLogic.imageClick(mData, getAdapterPosition());
                 }
             });
         }
 
-        public void imageVanish() {
-            img.setVisibility(View.GONE);
-        }
+
 
 
     }

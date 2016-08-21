@@ -24,12 +24,13 @@
             android:orientation="vertical">
 
 
-            <Button
+            <ImageView
                 android:id="@+id/btnPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#f00"
-                android:text="Play Game" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+
+                android:src="@drawable/play_image"
+                />
 
 
             <Button
@@ -38,33 +39,33 @@
                 android:layout_height="wrap_content"
                 android:background="#f00"
                 android:text="Normal"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnHard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#f00"
-                android:visibility="gone"
-                android:text="Hard" />
+                android:text="Hard"
+                android:visibility="gone" />
 
 
         </LinearLayout>
 
 
-     <!--   <fragment
+        <!--   <fragment
 
-            android:id="@+id/fragNavDrewer"
-            android:name="com.example.nayan.game3.NavigationDrawerFragment"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start" />-->
+               android:id="@+id/fragNavDrewer"
+               android:name="com.example.nayan.game3.NavigationDrawerFragment"
+               android:layout_width="280dp"
+               android:layout_height="match_parent"
+               android:layout_gravity="start" />-->
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

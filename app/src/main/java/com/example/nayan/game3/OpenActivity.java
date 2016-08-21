@@ -7,8 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,12 +20,12 @@ import java.util.ArrayList;
  */
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnPlay, btnNormal, btnHard, btnMedium;
-
+    Button btnNormal, btnHard, btnMedium;
+    ImageView btnPlay;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
 
- //   NavigationDrawerFragment drawerFragment;
+    //   NavigationDrawerFragment drawerFragment;
 
     ArrayList<MLevel> list;
 
@@ -39,7 +41,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        btnPlay = (Button) findViewById(R.id.btnPlay);
+        btnPlay = (ImageView) findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(this);
         btnNormal = (Button) findViewById(R.id.btnNormal);
         btnNormal.setOnClickListener(this);
@@ -56,19 +58,26 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
-   /* @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id=item.getItemId();
+        if (id==android.R.id.home){
+            btnHard.setVisibility(View.GONE);
+            btnNormal.setVisibility(View.GONE);
+            btnMedium.setVisibility(View.GONE);
+            btnPlay.setVisibility(View.VISIBLE);
+        }
 
         if (id==R.id.action_settings){
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     public void prepareDisplay() {
         setSupportActionBar(toolbar);

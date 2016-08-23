@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nayan.game3.adapter.GameAdapter;
-import com.example.nayan.game3.model.MData;
+import com.example.nayan.game3.model.MLevel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,8 @@ public class NLogic {
     static NLogic nLogic;
     public int previousId, count, clickCount, matchCount, previousType, matchWin, preViousPoint, presentPoint, bestPoint;
     public boolean isSoundPlay = true;
-    ArrayList<MData> list;
+
+    ArrayList<MLevel> list;
     SharedPreferences preferences;
     MediaPlayer mediaPlayer;
     Context context;
@@ -55,7 +56,7 @@ public class NLogic {
 
     }
 
-    public void callData(ArrayList<MData> list, GameAdapter adapter) {
+    public void callData(ArrayList<MLevel> list, GameAdapter adapter) {
         this.list = list;
         this.adapter = adapter;
         bestPoint = getPref(HARD_GAME_MAX_POINT);
@@ -106,8 +107,8 @@ public class NLogic {
         }
     }
 
-    public void imageClick(final MData mData, int pos) {
-        if (previousId == mData.getId() || mData.getStatus() == 1) {
+    public void imageClick(final MLevel mImage, int pos) {
+        if (previousId ==mImage .getId() || mImage.getStatus() == 1) {
             return;
         }
         clickCount++;
@@ -117,7 +118,7 @@ public class NLogic {
         count++;
         if (count == 2) {
 
-            if (previousType == mData.getType()) {
+            if (previousType == mImage.getType()) {
                 matchCount++;
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -173,7 +174,7 @@ public class NLogic {
                     public void run() {
                         getSound(R.raw.fail);
                         for (int i = 0; i < list.size(); i++) {
-                            if (list.get(i).getId() == perevious || list.get(i).getId() == mData.getId()) {
+                            if (list.get(i).getId() == perevious || list.get(i).getId() == mImage.getId()) {
                                 list.get(i).setStatus(0);
 
                             }
@@ -186,8 +187,8 @@ public class NLogic {
                 return;
             }
         }
-        previousId = mData.getId();
-        previousType = mData.getType();
+        previousId = mImage.getId();
+        previousType = mImage.getType();
     }
 
 

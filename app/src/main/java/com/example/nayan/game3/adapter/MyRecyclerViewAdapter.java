@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.nayan.game3.Game;
 import com.example.nayan.game3.Logic;
-import com.example.nayan.game3.MLevel;
+import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.R;
 
 import java.util.ArrayList;
@@ -60,7 +60,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText(mLevel.getLevel());
+        holder.txtLevel.setText("Level "+mLevel.getLevel());
+        holder.txtLevel.setTextColor(0xff000000);
 
 
     }

@@ -1,19 +1,14 @@
 package com.example.nayan.game3;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
+import com.example.nayan.game3.model.MLevel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by JEWEL on 8/12/2016.
@@ -56,7 +51,7 @@ public class Logic {
     public void callData(ArrayList<MLevel> levels, MyRecyclerViewAdapter adapter) {
         this.levels = levels;
         this.adapter = adapter;
-        if (levels.size() == 12) {
+       /* if (levels.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             matchWin = getPref(Hard_GAME_WIN_NO);
         } else if (levels.size() == 6) {
@@ -65,13 +60,13 @@ public class Logic {
         } else if (levels.size() == 4) {
             bestPoint = getPref(NORMAL_GAME_MAX_POINT);
             matchWin = getPref(NORMAL_GAME_WIN_NO);
-        }
+        }*/
 
 
     }
 
 
-    public void showInformation() {
+    /*public void showInformation() {
         presentPoint = 100 / clickCount;
         final Dialog dialog = new Dialog(context);
         dialog.setTitle("Game Over");
@@ -88,7 +83,7 @@ public class Logic {
             }
         });
         dialog.show();
-    }
+    }*/
 
     public void getSound(int path) {
         if (isSoundPlay) {
@@ -102,7 +97,7 @@ public class Logic {
         }
     }
 
-    public void imageClick(final MLevel mLevel, int pos) {
+   /* public void imageClick(final MLevel mLevel, int pos) {
         if (previousId == mLevel.getId() || mLevel.getStatus() == 1) {
             return;
         }
@@ -180,10 +175,10 @@ public class Logic {
         }
         previousId = mLevel.getId();
         previousType = mLevel.getType();
-    }
+    }*/
 
 
-    public void resetList() {
+    /*public void resetList() {
         for (int i = 0; i < levels.size(); i++) {
             levels.get(i).setStatus(0);
         }
@@ -192,9 +187,9 @@ public class Logic {
         matchCount = 0;
         adapter.setData(levels);
 
-    }
+    }*/
 
-    private void savePref(String key, int value) {
+   /* private void savePref(String key, int value) {
         preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
@@ -230,5 +225,5 @@ public class Logic {
         TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
         textView1.setText("no of total win: " + matchWin + "");
         dialog.show();
-    }
+    }*/
 }

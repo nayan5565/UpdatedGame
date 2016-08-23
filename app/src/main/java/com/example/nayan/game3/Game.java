@@ -13,10 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.adapter.GameAdapter;
-import com.example.nayan.game3.model.MData;
+import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.utils.MyGame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
@@ -26,10 +26,11 @@ import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 public class Game extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
-    ArrayList<MData> list;
+    //ArrayList<MData> list;
+    ArrayList<MLevel> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
-    MData mData = new MData();
+    // MData mData = new MData();
     GameAdapter adapter;
     SharedPreferences preferences;
     int value;
@@ -43,15 +44,31 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
-        init();
-        hardGame();
-        value=getIntent().getIntExtra("level",0);
-       /* if (value=pos){
+        MainActivity.getOnlineData();
+        if (MyGame.difficult==1){
+            imageArrayList=MyGame.easy;
+            adapter.setData(imageArrayList);
 
-        }*/
+        }
+        else if (MyGame.difficult2==2){
+            imageArrayList=MyGame.medium;
+            adapter.setData(imageArrayList);
+
+        }
+        else if (MyGame.difficult3==3){
+            imageArrayList=MyGame.hard;
+            adapter.setData(imageArrayList);
+        }
+        init();
+        //hardGame();
+        value = getIntent().getIntExtra("level", 0);
+
+
+
     }
 
     public void init() {
+
         image = getPREF(KEY_IMAGE);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
@@ -59,15 +76,15 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         img = (ImageView) findViewById(R.id.img);
         img.setOnClickListener(this);
         if (image.equals(1 + "")) {
-            NLogic.getInstance(this).isSoundPlay=true;
+            NLogic.getInstance(this).isSoundPlay = true;
             img.setImageResource(R.drawable.on);
         } else if (image.equals(0 + "")) {
-            NLogic.getInstance(this).isSoundPlay=false;
+            NLogic.getInstance(this).isSoundPlay = false;
             img.setImageResource(R.drawable.off);
         }
 
-
-        list = new ArrayList<>();
+        imageArrayList = new ArrayList<>();
+        //list = new ArrayList<>();
         //pos=list.get(0);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         /*if (value == 2) {
@@ -83,13 +100,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
     }
-    private void animation(){
-        ScaleInAnimator sa=new ScaleInAnimator();
+
+    private void animation() {
+        ScaleInAnimator sa = new ScaleInAnimator();
         sa.setRemoveDuration(2000);
         recyclerView.setItemAnimator(sa);
     }
 
-    public void hardGame() {
+
+
+    /*public void hardGame() {
         mData = new MData();
         mData.setId(1);
         mData.setType(1);
@@ -165,7 +185,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         Collections.shuffle(list);
 
         adapter.setData(list);
-    }
+    }*/
 
     /*public void normalGame() {
         mData = new MData();

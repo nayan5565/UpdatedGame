@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
+import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.utils.MyGame;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -26,15 +28,140 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
-
-    ArrayList<MLevel> levels;
-    TextView textView;
+    public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
+    static int value;
+    static TextView textView;
+    static MyRecyclerViewAdapter adapter;
+    static ArrayList<MLevel> levels;
     RecyclerView recyclerView;
-    MyRecyclerViewAdapter adapter;
     SharedPreferences preferences;
     ImageView img, imgSetting;
     String image;
-    int value;
+
+    public static void getOnlineData() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post("http://www.radhooni.com/content/match_game/v1/games.json", new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            JSONObject puzzle = response.getJSONObject("puzzle");
+
+                            if (value == 2) {
+                                textView.setText("Normal");
+                                JSONArray  easy = puzzle.getJSONArray("easy");
+                                for (int i = 0; i < easy.length(); i++) {
+                                    JSONObject jsonObject = easy.getJSONObject(i);
+
+                                    MLevel level = new MLevel();
+                                    level.seteId(jsonObject.getString("id"));
+                                    level.setLevel(jsonObject.getString("level"));
+                                    level.setCoinPrice(jsonObject.getString("coins_price"));
+                                    level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+
+                                    JSONArray asset = jsonObject.getJSONArray("asset");
+                                    for (int j = 0; j < asset.length(); j++) {
+                                        JSONObject image = asset.getJSONObject(j);
+
+
+                                        level.setImage(image.getString("images"));
+                                        level.setSound("sounds");
+                                        level.setHint("hints");
+                                        level.setType(j + 1);
+
+                                    }
+                                    MyGame.easy = new ArrayList<MLevel>();
+                                    MyGame.easy.add(level);
+
+
+                                }
+
+
+                            } else if (value == 3) {
+                                textView.setText("Medium");
+                                JSONArray  medium = puzzle.getJSONArray("medium");
+
+                                for (int i = 0; i < medium.length(); i++) {
+                                    JSONObject jsonObject = medium.getJSONObject(i);
+
+                                    MLevel level = new MLevel();
+                                    level.seteId(jsonObject.getString("id"));
+                                    level.setLevel(jsonObject.getString("level"));
+                                    level.setCoinPrice(jsonObject.getString("coins_price"));
+                                    level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+
+                                    JSONArray asset = jsonObject.getJSONArray("asset");
+                                    for (int j = 0; j < asset.length(); j++) {
+                                        JSONObject image = asset.getJSONObject(j);
+
+
+                                        level.setImage(image.getString("images"));
+                                        level.setSound("sounds");
+                                        level.setHint("hints");
+                                        level.setType(j + 1);
+
+                                    }
+                                    MyGame.medium = new ArrayList<MLevel>();
+                                    MyGame.medium.add(level);
+
+
+                                }
+
+                            } else if (value == 4) {
+                                textView.setText("Hard");
+                                JSONArray hard = puzzle.getJSONArray("hard");
+
+                                for (int i = 0; i < hard.length(); i++) {
+                                    JSONObject jsonObject = hard.getJSONObject(i);
+
+                                    MLevel level = new MLevel();
+                                    level.seteId(jsonObject.getString("id"));
+                                    level.setLevel(jsonObject.getString("level"));
+                                    level.setCoinPrice(jsonObject.getString("coins_price"));
+                                    level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+
+                                    JSONArray asset = jsonObject.getJSONArray("asset");
+                                    for (int j = 0; j < asset.length(); j++) {
+                                        JSONObject image = asset.getJSONObject(j);
+
+
+                                        level.setImage(image.getString("images"));
+                                        level.setSound("sounds");
+                                        level.setHint("hints");
+                                        level.setType(j + 1);
+
+                                    }
+                                    MyGame.hard = new ArrayList<MLevel>();
+                                    MyGame.hard.add(level);
+
+
+                                }
+                            }
+
+
+
+
+
+
+
+                            if (MyGame.difficult == 1) {
+                                adapter.setData(MyGame.easy);
+                            } else if (MyGame.difficult2 == 2) {
+                                adapter.setData(MyGame.medium);
+                            } else if (MyGame.difficult3 == 3) {
+                                adapter.setData(MyGame.hard);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }
+        );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         value = getIntent().getIntExtra("type", 0);
         Log.e("log", "is" + value);
+
         init();
         getOnlineData();
 
@@ -54,13 +182,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
 
+
         img = (ImageView) findViewById(R.id.img);
         img.setOnClickListener(this);
         if (image.equals(1 + "")) {
-            Logic.getInstance(this).isSoundPlay=true;
+            Logic.getInstance(this).isSoundPlay = true;
             img.setImageResource(R.drawable.on);
         } else if (image.equals(0 + "")) {
-            Logic.getInstance(this).isSoundPlay=false;
+            Logic.getInstance(this).isSoundPlay = false;
             img.setImageResource(R.drawable.off);
         }
 
@@ -80,57 +209,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
-    public void getOnlineData() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post("http://www.radhooni.com/content/match_game/v1/game.json", new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        try {
-                            JSONObject puzzle = response.getJSONObject("puzzle");
-                            JSONArray easy = null;
-                            if (value == 2) {
-                                textView.setText("Normal");
-                                easy = puzzle.getJSONArray("easy");
-
-
-                            } else if (value == 3) {
-                                textView.setText("Medium");
-                                easy = puzzle.getJSONArray("medium");
-
-                            } else if (value == 4) {
-                                textView.setText("Hard");
-                                easy = puzzle.getJSONArray("hard");
-                            }
-                            for (int i = 0; i < easy.length(); i++) {
-                                JSONObject jsonObject = easy.getJSONObject(i);
-
-                                MLevel level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-
-
-                                levels.add(level);
-
-
-                            }
-
-                            adapter.setData(levels);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }
-        );
-    }
-
 
     @Override
     public void onClick(View v) {

@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.model;
 
 /**
  * Created by JEWEL on 8/18/2016.
@@ -10,6 +10,7 @@ public class MLevel {
     String noOfCoinPrice;
     String image;
     String sound;
+    int id,type,status,bestpoint;
 
     public String getHint() {
         return hint;
@@ -28,7 +29,7 @@ public class MLevel {
     }
 
     String hint;
-    int id,type,status,bestpoint;
+
 
     public String geteId() {
         return eId;

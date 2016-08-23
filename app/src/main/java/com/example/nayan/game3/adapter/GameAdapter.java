@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import com.example.nayan.game3.MainActivity;
 import com.example.nayan.game3.NLogic;
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.model.MData;
+import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyAnimation;
 import com.squareup.picasso.Picasso;
 
@@ -21,8 +22,10 @@ import java.util.ArrayList;
  * Created by JEWEL on 8/20/2016.
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
-    ArrayList<MData> list;
-    MData mData = new MData();
+    //ArrayList<MData> list;
+    ArrayList<MLevel> imageArrayList;
+    //MData mData = new MData();
+    MLevel level=new MLevel();
     Context context;
     LayoutInflater inflater;
     NLogic nLogic;
@@ -32,18 +35,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     public GameAdapter(Context context) {
         this.context = context;
 
-        list = new ArrayList<>();
+        imageArrayList = new ArrayList<>();
 
 
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(ArrayList<MData> list) {
-        this.list = list;
+    public void setData(ArrayList<MLevel> imageArrayList) {
+        this.imageArrayList = imageArrayList;
 
-        Log.e("log", "setdata:" + list.size());
+        Log.e("log", "setdata:" + imageArrayList.size());
         nLogic = NLogic.getInstance(context);
-        nLogic.callData(list, this);
+        nLogic.callData(imageArrayList, this);
 
         notifyDataSetChanged();
     }
@@ -58,14 +61,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
-        mData = list.get(position);
+        level = imageArrayList.get(position);
 
-        if (mData.getStatus() == 1) {
-            Picasso.with(context)
-                    .load(mData.getImage())
-                    .into(holder.img);
+        /*if (level.getStatus()==1){
+           //holder.img.setImageResource();
             //MyAnimation.rotation(holder.img,false);
+            Glide.with(context).load(MainActivity.IMAGE_URL+level.getImage())
+                    .into(holder.img);*/
 
+        if (level.getStatus() == 1) {
+            Picasso.with(context)
+                    .load(MainActivity.IMAGE_URL+level.getImage())
+                    .into(holder.img);
         } else {
             holder.img.setImageResource(R.drawable.place);
             //holder.img.setVisibility(View.INVISIBLE);
@@ -76,7 +83,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return imageArrayList.size();
     }
 
 
@@ -101,10 +108,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
-                    mData = list.get(getAdapterPosition());
+                    level = imageArrayList.get(getAdapterPosition());
                     nLogic.getSound(R.raw.click);
                     MyAnimation.rotation(itemView,false);
-                    nLogic.imageClick(mData, getAdapterPosition());
+                    nLogic.imageClick(level, getAdapterPosition());
                 }
             });
         }

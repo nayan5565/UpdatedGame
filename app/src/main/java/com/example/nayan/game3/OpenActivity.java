@@ -9,9 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.utils.MyAnimation;
 
 import java.util.ArrayList;
 
@@ -24,6 +28,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     ImageView btnPlay;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
+    Animation animation;
 
     //   NavigationDrawerFragment drawerFragment;
 
@@ -42,6 +47,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         btnPlay = (ImageView) findViewById(R.id.btnPlay);
+//        animation = AnimationUtils.loadAnimation(this, R.anim.zoom);
+//        btnPlay.startAnimation(animation);
+        MyAnimation.zoom(btnPlay,false);
         btnPlay.setOnClickListener(this);
         btnNormal = (Button) findViewById(R.id.btnNormal);
         btnNormal.setOnClickListener(this);
@@ -65,15 +73,15 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id=item.getItemId();
-        if (id==android.R.id.home){
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             btnHard.setVisibility(View.GONE);
             btnNormal.setVisibility(View.GONE);
             btnMedium.setVisibility(View.GONE);
             btnPlay.setVisibility(View.VISIBLE);
         }
 
-        if (id==R.id.action_settings){
+        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -94,10 +102,14 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnPlay) {
+
+            btnPlay.setVisibility(View.GONE);
             btnHard.setVisibility(View.VISIBLE);
             btnNormal.setVisibility(View.VISIBLE);
             btnMedium.setVisibility(View.VISIBLE);
-            btnPlay.setVisibility(View.GONE);
+
+
+
 
         } else if (v.getId() == R.id.btnNormal) {
             Toast.makeText(this, "normal", Toast.LENGTH_SHORT).show();

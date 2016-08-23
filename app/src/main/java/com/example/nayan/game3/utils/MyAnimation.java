@@ -17,4 +17,17 @@ public class MyAnimation {
         animator.setDuration(2000);
         animator.start();
     }
+
+    public static void zoom(View view, boolean isLeft) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "scaleX", 1.0f, 1.2f);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(view, "scaleY", 1.0f, 1.2f);
+        animator2.setDuration(2000);
+        animator2.setRepeatCount(ValueAnimator.INFINITE);
+        animator2.setRepeatMode(ValueAnimator.REVERSE);
+        animator2.start();
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setDuration(2000);
+        animator.start();
+    }
 }

@@ -9,23 +9,22 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
-import com.example.nayan.game3.activity.MainActivity;
-import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.model.MLevel;
-import com.example.nayan.game3.utils.MyAnimation;
+import com.example.nayan.game3.activity.LevelActivity;
+import com.example.nayan.game3.logic.NLogic;
+import com.example.nayan.game3.model.MAsset;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 /**
- * Created by ${NAYAN} on 8/20/2016.
+ * Created by NAYAN on 8/20/2016.
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
     //ArrayList<MData> list;
-    ArrayList<MLevel> imageArrayList;
+    ArrayList<MAsset> imageArrayList;
     //MData mData = new MData();
-    MLevel level=new MLevel();
+    MAsset mAsset=new MAsset();
     Context context;
     LayoutInflater inflater;
     NLogic nLogic;
@@ -41,7 +40,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(ArrayList<MLevel> imageArrayList) {
+    public void setData(ArrayList<MAsset> imageArrayList) {
         this.imageArrayList = imageArrayList;
 
         Log.e("log", "setdata:" + imageArrayList.size());
@@ -61,17 +60,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
-        level = imageArrayList.get(position);
+        mAsset = imageArrayList.get(position);
 
         /*if (level.getStatus()==1){
            //holder.img.setImageResource();
             //MyAnimation.rotation(holder.img,false);
-            Glide.with(context).load(MainActivity.IMAGE_URL+level.getImage())
+            Glide.with(context).load(LevelActivity.IMAGE_URL+level.getImage())
                     .into(holder.img);*/
 
-        if (level.getStatus() == 1) {
+        if (mAsset.getStatus() == 1) {
             Picasso.with(context)
-                    .load(MainActivity.IMAGE_URL+level.getImage())
+                    .load(LevelActivity.IMAGE_URL+mAsset.getImages())
                     .into(holder.img);
         } else {
             holder.img.setImageResource(R.drawable.place);
@@ -108,10 +107,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
-                    level = imageArrayList.get(getAdapterPosition());
+                    mAsset = imageArrayList.get(getAdapterPosition());
                     nLogic.getSound(R.raw.click);
-                    MyAnimation.rotation(itemView,false);
-                    nLogic.imageClick(level, getAdapterPosition());
+                    //MyAnimation.rotation(itemView,false);
+                    nLogic.imageClick(mAsset, getAdapterPosition());
                 }
             });
         }

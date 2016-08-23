@@ -1,7 +1,9 @@
 package com.example.nayan.game3.model;
 
+import java.util.ArrayList;
+
 /**
- * Created by ${NAYAN} on 8/18/2016.
+ * Created by NAYAN on 8/18/2016.
  */
 public class MLevel {
     String eId;
@@ -11,6 +13,15 @@ public class MLevel {
     String image;
     String sound;
     int id,type,status,bestpoint;
+    ArrayList<MAsset>asset=new ArrayList<>();
+
+    public ArrayList<MAsset> getAsset() {
+        return asset;
+    }
+
+    public void setAsset(ArrayList<MAsset> asset) {
+        this.asset = asset;
+    }
 
     public String getHint() {
         return hint;

@@ -17,7 +17,7 @@ import com.example.nayan.game3.R;
 import java.util.ArrayList;
 
 /**
- * Created by ${NAYAN} on 8/3/2016.
+ * Created by NAYAN on 8/3/2016.
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewholder> {
 

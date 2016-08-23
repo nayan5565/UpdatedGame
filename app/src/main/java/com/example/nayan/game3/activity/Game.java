@@ -12,26 +12,26 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.GameAdapter;
-import com.example.nayan.game3.model.MLevel;
-import com.example.nayan.game3.utils.MyGame;
+import com.example.nayan.game3.logic.NLogic;
+import com.example.nayan.game3.model.MAsset;
 
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
 /**
- * Created by ${NAYAN} on 8/20/2016.
+ * Created by NAYAN on 8/20/2016.
  */
 public class Game extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
     //ArrayList<MData> list;
-    ArrayList<MLevel> imageArrayList;
+    ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
+    MAsset mAsset=new MAsset();
     // MData mData = new MData();
     GameAdapter adapter;
     SharedPreferences preferences;
@@ -46,25 +46,27 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
-        MainActivity.getOnlineData();
-        if (MyGame.difficult==1){
-            imageArrayList=MyGame.easy;
-            adapter.setData(imageArrayList);
 
-        }
-        else if (MyGame.difficult2==2){
-            imageArrayList=MyGame.medium;
-            adapter.setData(imageArrayList);
 
-        }
-        else if (MyGame.difficult3==3){
-            imageArrayList=MyGame.hard;
-            adapter.setData(imageArrayList);
-        }
         init();
         //hardGame();
         value = getIntent().getIntExtra("level", 0);
+        /*if (MyGame.difficult == 1) {
+            level.getAsset();
+            imageArrayList = MyGame.easy;
 
+
+        } else if (MyGame.difficult2 == 2) {
+            level.getAsset();
+            imageArrayList = MyGame.medium;
+
+
+        } else if (MyGame.difficult3 == 3) {
+            level.getAsset();
+            imageArrayList = MyGame.hard;
+
+        }*/
+        adapter.setData(imageArrayList);
 
 
     }

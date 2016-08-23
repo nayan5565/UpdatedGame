@@ -13,13 +13,13 @@ import android.widget.TextView;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.Game;
 import com.example.nayan.game3.adapter.GameAdapter;
-import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.model.MAsset;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by ${NAYAN} on 8/20/2016.
+ * Created by NAYAN on 8/20/2016.
  */
 public class NLogic {
     public static final String MyPREFERENCE = "mypref";
@@ -34,7 +34,7 @@ public class NLogic {
     public int previousId, count, clickCount, matchCount, previousType, matchWin, preViousPoint, presentPoint, bestPoint;
     public boolean isSoundPlay = true;
 
-    ArrayList<MLevel> list;
+    ArrayList<MAsset> list;
     SharedPreferences preferences;
     MediaPlayer mediaPlayer;
     Context context;
@@ -58,7 +58,7 @@ public class NLogic {
 
     }
 
-    public void callData(ArrayList<MLevel> list, GameAdapter adapter) {
+    public void callData(ArrayList<MAsset> list, GameAdapter adapter) {
         this.list = list;
         this.adapter = adapter;
         bestPoint = getPref(HARD_GAME_MAX_POINT);
@@ -109,7 +109,7 @@ public class NLogic {
         }
     }
 
-    public void imageClick(final MLevel mImage, int pos) {
+    public void imageClick(final MAsset mImage, int pos) {
         if (previousId ==mImage .getId() || mImage.getStatus() == 1) {
             return;
         }

@@ -23,7 +23,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
 
     ArrayList<MLevel> levels;
-    MLevel mLevel;
+    MLevel mLevel = new MLevel();;
     Context context;
     LayoutInflater inflater;
     Logic logic;
@@ -31,7 +31,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public MyRecyclerViewAdapter(Context context) {
         this.context = context;
-        mLevel = new MLevel();
+
         levels = new ArrayList<>();
 
 

@@ -93,15 +93,15 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         public MyViewholder(final View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img);
-            img.setOnClickListener(new View.OnClickListener() {
+            /*img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                   /* animation = AnimationUtils.loadAnimation(context,R.anim.card_flip_left_out);
-                    img.startAnimation(animation);*/
+                   *//* animation = AnimationUtils.loadAnimation(context,R.anim.card_flip_left_out);
+                    img.startAnimation(animation);*//*
                    // MyAnimation.rotation(img,false);
                 }
-            });
+            });*/
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

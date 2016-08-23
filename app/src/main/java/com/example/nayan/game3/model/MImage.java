@@ -1,7 +1,7 @@
 package com.example.nayan.game3.model;
 
 /**
- * Created by JEWEL on 8/22/2016.
+ * Created by ${NAYAN} on 8/22/2016.
  */
 public class MImage {
     String image;

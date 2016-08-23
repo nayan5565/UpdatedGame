@@ -5,7 +5,7 @@ import com.example.nayan.game3.model.MLevel;
 import java.util.ArrayList;
 
 /**
- * Created by JEWEL on 8/22/2016.
+ * Created by ${NAYAN} on 8/22/2016.
  */
 public class MyGame {
     public static int difficult = 1, difficult2 = 2, difficult3 = 3;

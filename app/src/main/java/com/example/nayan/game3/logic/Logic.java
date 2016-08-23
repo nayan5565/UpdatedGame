@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.logic;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,7 @@ import com.example.nayan.game3.model.MLevel;
 import java.util.ArrayList;
 
 /**
- * Created by JEWEL on 8/12/2016.
+ * Created by ${NAYAN} on 8/12/2016.
  */
 public class Logic {
     public static final String MyPREFERENCE = "mypref";

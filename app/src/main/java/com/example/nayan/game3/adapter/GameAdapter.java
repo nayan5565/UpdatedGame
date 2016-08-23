@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
-import com.example.nayan.game3.MainActivity;
-import com.example.nayan.game3.NLogic;
+import com.example.nayan.game3.activity.MainActivity;
+import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyAnimation;
@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by JEWEL on 8/20/2016.
+ * Created by ${NAYAN} on 8/20/2016.
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
     //ArrayList<MData> list;

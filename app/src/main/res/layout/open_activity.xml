@@ -65,7 +65,7 @@
         <!--   <fragment
 
                android:id="@+id/fragNavDrewer"
-               android:name="com.example.nayan.game3.NavigationDrawerFragment"
+               android:name="com.example.nayan.game3.fragment.NavigationDrawerFragment"
                android:layout_width="280dp"
                android:layout_height="match_parent"
                android:layout_gravity="start" />-->

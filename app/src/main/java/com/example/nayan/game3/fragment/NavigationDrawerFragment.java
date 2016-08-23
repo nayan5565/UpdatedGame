@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.fragment;
 
 
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.nayan.game3.R;
 
 
 /**

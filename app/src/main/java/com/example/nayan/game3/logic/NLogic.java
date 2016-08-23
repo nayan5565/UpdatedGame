@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.logic;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.nayan.game3.R;
+import com.example.nayan.game3.activity.Game;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.model.MLevel;
 
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by JEWEL on 8/20/2016.
+ * Created by ${NAYAN} on 8/20/2016.
  */
 public class NLogic {
     public static final String MyPREFERENCE = "mypref";

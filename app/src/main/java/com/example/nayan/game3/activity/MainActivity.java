@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.nayan.game3.logic.Logic;
+import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyGame;

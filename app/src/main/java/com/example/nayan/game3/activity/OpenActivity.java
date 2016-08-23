@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +14,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.nayan.game3.R;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyAnimation;
 
 import java.util.ArrayList;
 
 /**
- * Created by JEWEL on 8/4/2016.
+ * Created by ${NAYAN} on 8/4/2016.
  */
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
 

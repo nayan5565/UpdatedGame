@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/sFragNavDrawe"
         android:layout_gravity="left"
-        android:name="com.example.nayan.game3.NavigationDrawerFragment"
+        android:name="com.example.nayan.game3.fragment.NavigationDrawerFragment"
         android:layout_width="230dp"
         android:layout_height="match_parent"/>
 </android.support.v4.widget.DrawerLayout>

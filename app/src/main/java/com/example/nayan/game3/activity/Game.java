@@ -1,4 +1,4 @@
-package com.example.nayan.game3;
+package com.example.nayan.game3.activity;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.nayan.game3.logic.NLogic;
+import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyGame;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
 /**
- * Created by JEWEL on 8/20/2016.
+ * Created by ${NAYAN} on 8/20/2016.
  */
 public class Game extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";

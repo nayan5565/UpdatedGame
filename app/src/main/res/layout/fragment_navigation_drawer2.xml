@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#000"
     android:gravity="center"
-    tools:context="com.example.nayan.game3.NavigationDrawerFragment">
+    tools:context=".fragment.NavigationDrawerFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

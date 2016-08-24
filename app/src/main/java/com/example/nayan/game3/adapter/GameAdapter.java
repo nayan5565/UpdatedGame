@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/20/2016.
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
-    //ArrayList<MData> list;
+
     ArrayList<MAsset> imageArrayList;
-    //MData mData = new MData();
-    MAsset mAsset=new MAsset();
+
+    MAsset mAsset = new MAsset();
     Context context;
     LayoutInflater inflater;
     NLogic nLogic;
@@ -70,7 +70,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
         if (mAsset.getStatus() == 1) {
             Picasso.with(context)
-                    .load(LevelActivity.IMAGE_URL+mAsset.getImages())
+                    .load(LevelActivity.IMAGE_URL + mAsset.getImages())
                     .into(holder.img);
         } else {
             holder.img.setImageResource(R.drawable.place);
@@ -114,8 +114,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 }
             });
         }
-
-
 
 
     }

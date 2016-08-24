@@ -46,14 +46,14 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         init();
         if (value == 2) {
             textView.setText("Normal");
-            level.getAsset();
+
             levels = MyGame.easy;
         } else if (value == 3) {
-            level.getAsset();
+
             textView.setText("Medium");
             levels = MyGame.medium;
         } else if (value == 4) {
-            level.getAsset();
+
             textView.setText("Hard");
             levels = MyGame.hard;
 

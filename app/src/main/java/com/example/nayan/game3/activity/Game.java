@@ -16,6 +16,7 @@ import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.utils.MyGame;
 
 import java.util.ArrayList;
 
@@ -27,20 +28,18 @@ import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 public class Game extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
-    //ArrayList<MData> list;
+
     ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
+
     MAsset mAsset=new MAsset();
-    // MData mData = new MData();
+
     GameAdapter adapter;
     SharedPreferences preferences;
     int value;
     String image;
-    /*MData pos;
-    int pos1;
-    int pos2;
-    int pos3;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +48,25 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
         init();
-        //hardGame();
+
         value = getIntent().getIntExtra("level", 0);
-        /*if (MyGame.difficult == 1) {
-            level.getAsset();
-            imageArrayList = MyGame.easy;
+
+        if (MyGame.difficult == 1) {
+
+            imageArrayList=MyGame.easy.get(value).getAsset();
+
 
 
         } else if (MyGame.difficult2 == 2) {
-            level.getAsset();
-            imageArrayList = MyGame.medium;
+
+            imageArrayList=MyGame.medium.get(value).getAsset();
 
 
         } else if (MyGame.difficult3 == 3) {
-            level.getAsset();
-            imageArrayList = MyGame.hard;
+            imageArrayList=MyGame.hard.get(value).getAsset();
 
-        }*/
+
+        }
         adapter.setData(imageArrayList);
 
 
@@ -88,8 +89,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         imageArrayList = new ArrayList<>();
-        //list = new ArrayList<>();
-        //pos=list.get(0);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         /*if (value == 2) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));

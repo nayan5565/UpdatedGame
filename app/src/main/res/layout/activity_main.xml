@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/level_bg_image"
     tools:context=".activity.LevelActivity">
 
     <TextView

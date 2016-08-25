@@ -53,13 +53,13 @@ public class Logic {
         this.adapter = adapter;
        /* if (levels.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
-            matchWin = getPref(Hard_GAME_WIN_NO);
+            gameWinCount = getPref(Hard_GAME_WIN_NO);
         } else if (levels.size() == 6) {
             bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
-            matchWin = getPref(MEDIUM_GAME_WIN_NO);
+            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
         } else if (levels.size() == 4) {
-            bestPoint = getPref(NORMAL_GAME_MAX_POINT);
-            matchWin = getPref(NORMAL_GAME_WIN_NO);
+            bestPoint = getPref(EASY_GAME_MAX_POINT);
+            gameWinCount = getPref(NORMAL_GAME_WIN_NO);
         }*/
 
 
@@ -98,17 +98,17 @@ public class Logic {
     }
 
    /* public void imageClick(final MLevel mLevel, int pos) {
-        if (previousId == mLevel.getId() || mLevel.getStatus() == 1) {
+        if (previousId == mLevel.getPresentId() || mLevel.getImageOpen() == 1) {
             return;
         }
         clickCount++;
 
-        levels.get(pos).setStatus(1);
+        levels.get(pos).setImageOpen(1);
         adapter.setData(levels);
         count++;
         if (count == 2) {
 
-            if (previousType == mLevel.getType()) {
+            if (previousType == mLevel.getPresentType()) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -116,30 +116,30 @@ public class Logic {
                     }
                 }, 1000);
 
-                matchCount++;
+                matchWinCount++;
 
-                if (matchCount == levels.size() / 2) {
+                if (matchWinCount == levels.size() / 2) {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             getSound(R.raw.gameover);
                         }
                     }, 2000);
-                    matchWin++;
+                    gameWinCount++;
                     presentPoint = 100 / clickCount;
                     if (levels.size() == 4) {
-                        savePref(NORMAL_GAME_WIN_NO, matchWin);
+                        savePref(NORMAL_GAME_WIN_NO, gameWinCount);
                         if (presentPoint > bestPoint) {
                             Log.e("log", "point");
-                            savePref(NORMAL_GAME_MAX_POINT, presentPoint);
+                            savePref(EASY_GAME_MAX_POINT, presentPoint);
                         }
                     } else if (levels.size() == 6) {
-                        savePref(MEDIUM_GAME_WIN_NO, matchWin);
+                        savePref(MEDIUM_GAME_WIN_NO, gameWinCount);
                         if (presentPoint > bestPoint) {
                             savePref(MEDIUM_GAME_MAX_POINT, presentPoint);
                         }
                     } else {
-                        savePref(Hard_GAME_WIN_NO, matchWin);
+                        savePref(Hard_GAME_WIN_NO, gameWinCount);
                         if (presentPoint > bestPoint) {
                             savePref(HARD_GAME_MAX_POINT, presentPoint);
                         }
@@ -160,8 +160,8 @@ public class Logic {
                     public void run() {
                         getSound(R.raw.fail);
                         for (int i = 0; i < levels.size(); i++) {
-                            if (levels.get(i).getId() == perevious || levels.get(i).getId() == mLevel.getId()) {
-                                levels.get(i).setStatus(0);
+                            if (levels.get(i).getPresentId() == perevious || levels.get(i).getPresentId() == mLevel.getPresentId()) {
+                                levels.get(i).setImageOpen(0);
 
                             }
                         }
@@ -173,18 +173,18 @@ public class Logic {
                 return;
             }
         }
-        previousId = mLevel.getId();
-        previousType = mLevel.getType();
+        previousId = mLevel.getPresentId();
+        previousType = mLevel.getPresentType();
     }*/
 
 
     /*public void resetList() {
         for (int i = 0; i < levels.size(); i++) {
-            levels.get(i).setStatus(0);
+            levels.get(i).setImageOpen(0);
         }
         Collections.shuffle(levels);
         clickCount = 0;
-        matchCount = 0;
+        matchWinCount = 0;
         adapter.setData(levels);
 
     }*/
@@ -204,18 +204,18 @@ public class Logic {
     public void showHistory() {
         if (levels.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
-            matchWin = getPref(Hard_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + preViousPoint);
+            gameWinCount = getPref(Hard_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
 
         } else if (levels.size() == 6) {
             bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
-            matchWin = getPref(MEDIUM_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + preViousPoint);
+            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
 
         } else if (levels.size() == 4) {
-            bestPoint = getPref(NORMAL_GAME_MAX_POINT);
-            matchWin = getPref(NORMAL_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + preViousPoint);
+            bestPoint = getPref(EASY_GAME_MAX_POINT);
+            gameWinCount = getPref(NORMAL_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
         }
         Dialog dialog = new Dialog(context);
         dialog.setTitle("Status");
@@ -223,7 +223,7 @@ public class Logic {
         TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
         textView.setText("best point: " + bestPoint + "");
         TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
-        textView1.setText("no of total win: " + matchWin + "");
+        textView1.setText("no of total win: " + gameWinCount + "");
         dialog.show();
     }*/
 }

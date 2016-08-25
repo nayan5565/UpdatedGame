@@ -62,13 +62,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     public void onBindViewHolder(MyViewholder holder, int position) {
         mAsset = imageArrayList.get(position);
 
-        /*if (level.getStatus()==1){
+        /*if (level.getImageOpen()==1){
            //holder.img.setImageResource();
             //MyAnimation.rotation(holder.img,false);
             Glide.with(context).load(LevelActivity.IMAGE_URL+level.getImage())
                     .into(holder.img);*/
 
-        if (mAsset.getStatus() == 1) {
+        if (mAsset.getImageOpen() == 1) {
             Picasso.with(context)
                     .load(LevelActivity.IMAGE_URL + mAsset.getImages())
                     .into(holder.img);

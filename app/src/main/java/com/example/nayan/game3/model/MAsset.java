@@ -5,7 +5,7 @@ package com.example.nayan.game3.model;
  */
 public class MAsset {
     String images,sounds,hints;
-    int status,id,type;
+    int imageOpen, presentId, presentType;
 
     public String getImages() {
         return images;
@@ -31,27 +31,27 @@ public class MAsset {
         this.hints = hints;
     }
 
-    public int getStatus() {
-        return status;
+    public int getImageOpen() {
+        return imageOpen;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setImageOpen(int imageOpen) {
+        this.imageOpen = imageOpen;
     }
 
-    public int getId() {
-        return id;
+    public int getPresentId() {
+        return presentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPresentId(int presentId) {
+        this.presentId = presentId;
     }
 
-    public int getType() {
-        return type;
+    public int getPresentType() {
+        return presentType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setPresentType(int presentType) {
+        this.presentType = presentType;
     }
 }

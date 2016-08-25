@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sDrawe"
+    android:presentId="@+presentId/sDrawe"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,14 +21,14 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btnNormal"
+                android:presentId="@+presentId/btnNormal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#ccc"
                 android:text="Normal" />
 
             <Button
-                android:id="@+id/btnHard"
+                android:presentId="@+presentId/btnHard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#f00"
@@ -36,7 +36,7 @@
                 android:textColor="#0f0" />
 
             <Button
-                android:id="@+id/btnEasy"
+                android:presentId="@+presentId/btnEasy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Easy" />
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <fragment
-        android:id="@+id/sFragNavDrawe"
+        android:presentId="@+presentId/sFragNavDrawe"
         android:layout_gravity="left"
         android:name="com.example.nayan.game3.fragment.NavigationDrawerFragment"
         android:layout_width="230dp"

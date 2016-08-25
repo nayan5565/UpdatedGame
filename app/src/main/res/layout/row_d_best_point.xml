@@ -7,7 +7,7 @@
 
     <TextView
         android:background="#f00"
-        android:id="@+id/txtBetPoint"
+        android:presentId="@+presentId/txtBetPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="best"/>
@@ -19,7 +19,7 @@
 
     <TextView
         android:background="#f0f"
-        android:id="@+id/txtTotalWin"
+        android:presentId="@+presentId/txtTotalWin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total"/>

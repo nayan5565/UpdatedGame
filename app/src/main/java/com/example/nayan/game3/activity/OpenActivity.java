@@ -133,7 +133,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
-                                    mAsset.setType(j + 1);
+                                    mAsset.setPresentType(j + 1);
                                     asset.add(mAsset);
 
                                 }
@@ -165,7 +165,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
-                                    mAsset.setType(j + 1);
+                                    mAsset.setPresentType(j + 1);
                                     asset.add(mAsset);
 
                                 }
@@ -197,7 +197,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
-                                    mAsset.setType(j + 1);
+                                    mAsset.setPresentType(j + 1);
                                     asset.add(mAsset);
 
                                 }

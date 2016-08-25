@@ -11,7 +11,7 @@
         layout="@layout/app_bar" />
 
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer"
+        android:presentId="@+presentId/drawer"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -27,7 +27,7 @@
 
 
             <ImageView
-                android:id="@+id/btnPlay"
+                android:presentId="@+presentId/btnPlay"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
 
@@ -36,7 +36,7 @@
 
 
             <Button
-                android:id="@+id/btnNormal"
+                android:presentId="@+presentId/btnNormal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#f00"
@@ -44,14 +44,14 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/btnMedium"
+                android:presentId="@+presentId/btnMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medium"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/btnHard"
+                android:presentId="@+presentId/btnHard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#f00"
@@ -64,7 +64,7 @@
 
         <!--   <fragment
 
-               android:id="@+id/fragNavDrewer"
+               android:presentId="@+presentId/fragNavDrewer"
                android:name="com.example.nayan.game3.fragment.NavigationDrawerFragment"
                android:layout_width="280dp"
                android:layout_height="match_parent"

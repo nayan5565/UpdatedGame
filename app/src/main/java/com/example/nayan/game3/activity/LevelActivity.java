@@ -98,7 +98,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-       /* if (v.getId() == R.id.imgseting) {
+       /* if (v.getPresentId() == R.id.imgseting) {
             final Dialog dialog = new Dialog(this);
             dialog.setTitle("Game Information");
             dialog.requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);

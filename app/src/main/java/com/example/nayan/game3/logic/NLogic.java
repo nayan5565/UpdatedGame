@@ -39,7 +39,7 @@ public class NLogic {
     MediaPlayer mediaPlayer;
     Context context;
     Handler handler = new Handler();
-    GameAdapter adapter;
+    GameAdapter gameAdapter;
     Game game=new Game();
 
 
@@ -60,7 +60,7 @@ public class NLogic {
 
     public void callData(ArrayList<MAsset> list, GameAdapter adapter) {
         this.list = list;
-        this.adapter = adapter;
+        this.gameAdapter = adapter;
         bestPoint = getPref(HARD_GAME_MAX_POINT);
         gameWinCount = getPref(Hard_GAME_WIN_NO);
         /*if (list.size() == 12) {
@@ -116,7 +116,7 @@ public class NLogic {
         clickCount++;
 
         list.get(pos).setImageOpen(1);
-        adapter.setData(list);
+        gameAdapter.setData(list);
         count++;
         if (count == 2) {
 
@@ -181,7 +181,7 @@ public class NLogic {
 
                             }
                         }
-                        adapter.setData(list);
+                        gameAdapter.setData(list);
                     }
                 }, 1000);
                 count = 0;
@@ -201,7 +201,7 @@ public class NLogic {
         Collections.shuffle(list);
         clickCount = 0;
         matchWinCount = 0;
-        adapter.setData(list);
+        gameAdapter.setData(list);
 
     }
 

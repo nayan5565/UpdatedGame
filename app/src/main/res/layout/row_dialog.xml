@@ -6,13 +6,13 @@
     android:gravity="center">
 
     <TextView
-        android:presentId="@+presentId/txt"
+        android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Point"/>
 
     <Button
-        android:presentId="@+presentId/btnNewGame"
+        android:id="@+id/btnNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NewGame"/>

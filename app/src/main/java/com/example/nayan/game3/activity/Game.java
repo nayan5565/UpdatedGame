@@ -35,7 +35,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     //MAsset mAsset=new MAsset();
 
-    GameAdapter adapter;
+    GameAdapter gameAdapter;
     SharedPreferences preferences;
     int value;
     String image;
@@ -67,7 +67,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
         }
-        adapter.setData(imageArrayList);
+        gameAdapter.setData(imageArrayList);
 
 
     }
@@ -92,8 +92,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        adapter = new GameAdapter(this);
-        recyclerView.setAdapter(adapter);
+        gameAdapter = new GameAdapter(this);
+        recyclerView.setAdapter(gameAdapter);
 
 
     }
@@ -181,7 +181,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         Collections.shuffle(list);
 
-        adapter.setData(list);
+        levelAdapter.setData(list);
     }*/
 
     /*public void normalGame() {
@@ -236,7 +236,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         Collections.shuffle(arrayList);
 
-        adapter.setData(arrayList);
+        levelAdapter.setData(arrayList);
     }
 
     public void mediumGame() {
@@ -303,7 +303,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         Collections.shuffle(arrayList);
 
-        adapter.setData(arrayList);
+        levelAdapter.setData(arrayList);
     }*/
 
     @Override

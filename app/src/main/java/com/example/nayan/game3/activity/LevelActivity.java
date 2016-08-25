@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
+import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.logic.Logic;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.MyGame;
@@ -25,7 +25,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
     static int value;
     static TextView textView;
-    static MyRecyclerViewAdapter adapter;
+    static LevelAdapter levelAdapter;
     static ArrayList<MLevel> levels;
     static MLevel level = new MLevel();
     RecyclerView recyclerView;
@@ -58,7 +58,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             levels = MyGame.hard;
 
         }
-        adapter.setData(levels);
+        levelAdapter.setData(levels);
 
 
     }
@@ -90,8 +90,8 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
 
-        adapter = new MyRecyclerViewAdapter(this);
-        recyclerView.setAdapter(adapter);
+        levelAdapter = new LevelAdapter(this);
+        recyclerView.setAdapter(levelAdapter);
 
 
     }

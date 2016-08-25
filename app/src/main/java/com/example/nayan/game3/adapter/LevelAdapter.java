@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by NAYAN on 8/3/2016.
  */
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewholder> {
+public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder> {
 
 
     ArrayList<MLevel> levels;
@@ -29,7 +29,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     Logic logic;
 
 
-    public MyRecyclerViewAdapter(Context context) {
+    public LevelAdapter(Context context) {
         this.context = context;
 
         levels = new ArrayList<>();
@@ -61,7 +61,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         mLevel = levels.get(position);
 
         holder.txtLevel.setText("Level "+mLevel.getLevel());
-        holder.txtLevel.setTextColor(0xff000000);
+        holder.txtLevel.setTextColor(0xffff00ff);
 
 
     }

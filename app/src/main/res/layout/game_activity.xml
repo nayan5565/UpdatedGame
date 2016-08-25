@@ -9,7 +9,8 @@
     tools:context=".activity.LevelActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:presentId="@+presentId/recycler"
+        android:id="@+id/recycler"
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -21,7 +22,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:presentId="@+presentId/img"
+            android:id="@+id/img"
+
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="left"
@@ -33,7 +35,8 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:presentId="@+presentId/imgseting"
+            android:id="@+id/imgseting"
+
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"

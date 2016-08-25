@@ -1,11 +1,9 @@
 package com.example.nayan.game3.logic;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Handler;
 
-import com.example.nayan.game3.adapter.MyRecyclerViewAdapter;
+import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.model.MLevel;
 
 import java.util.ArrayList;
@@ -14,23 +12,23 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/12/2016.
  */
 public class Logic {
-    public static final String MyPREFERENCE = "mypref";
+   /* public static final String MyPREFERENCE = "mypref";
     public static final String HARD_GAME_MAX_POINT = "hardMax";
     public static final String NORMAL_GAME_MAX_POINT = "normalMax";
     public static final String MEDIUM_GAME_MAX_POINT = "mediumMax";
     public static final String Hard_GAME_WIN_NO = "hardWin";
     public static final String MEDIUM_GAME_WIN_NO = "mediumWin";
-    public static final String NORMAL_GAME_WIN_NO = "normalWin";
+    public static final String NORMAL_GAME_WIN_NO = "normalWin";*/
 
     static Logic logic;
-    public int previousId, count, clickCount, matchCount, previousType, matchWin, preViousPoint, presentPoint, bestPoint;
+    // public int previousId, count, clickCount, matchCount, previousType, matchWin, preViousPoint, presentPoint, bestPoint;
     public boolean isSoundPlay = true;
     ArrayList<MLevel> levels;
-    SharedPreferences preferences;
+    //SharedPreferences preferences;
     MediaPlayer mediaPlayer;
     Context context;
-    Handler handler = new Handler();
-    MyRecyclerViewAdapter adapter;
+    //Handler handler = new Handler();
+    LevelAdapter levelAdapter;
 
 
     private Logic() {
@@ -48,9 +46,9 @@ public class Logic {
 
     }
 
-    public void callData(ArrayList<MLevel> levels, MyRecyclerViewAdapter adapter) {
+    public void callData(ArrayList<MLevel> levels, LevelAdapter adapter) {
         this.levels = levels;
-        this.adapter = adapter;
+        this.levelAdapter = adapter;
        /* if (levels.size() == 12) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             gameWinCount = getPref(Hard_GAME_WIN_NO);
@@ -104,7 +102,7 @@ public class Logic {
         clickCount++;
 
         levels.get(pos).setImageOpen(1);
-        adapter.setData(levels);
+        levelAdapter.setData(levels);
         count++;
         if (count == 2) {
 
@@ -165,7 +163,7 @@ public class Logic {
 
                             }
                         }
-                        adapter.setData(levels);
+                        levelAdapter.setData(levels);
                     }
                 }, 1000);
                 count = 0;
@@ -185,7 +183,7 @@ public class Logic {
         Collections.shuffle(levels);
         clickCount = 0;
         matchWinCount = 0;
-        adapter.setData(levels);
+        levelAdapter.setData(levels);
 
     }*/
 

@@ -11,8 +11,7 @@
         layout="@layout/app_bar" />
 
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:presentId="@+presentId/drawer"
-
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,42 +19,40 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:gravity="center"
             android:background="@drawable/g_bg_im"
             android:orientation="vertical">
 
 
             <ImageView
-                android:presentId="@+presentId/btnPlay"
+                android:id="@+id/btnPlay"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-
                 android:src="@drawable/play_image"
                 />
 
 
             <Button
-                android:presentId="@+presentId/btnNormal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#f00"
-                android:text="Normal"
+                android:id="@+id/btnNormal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/easy_img"
                 android:visibility="gone" />
 
             <Button
-                android:presentId="@+presentId/btnMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+                android:id="@+id/btnMedium"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/medium_img"
                 android:text="Medium"
                 android:visibility="gone" />
 
             <Button
-                android:presentId="@+presentId/btnHard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#f00"
-                android:text="Hard"
+                android:id="@+id/btnHard"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/hard_img"
                 android:visibility="gone" />
 
 

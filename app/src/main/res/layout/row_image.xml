@@ -2,19 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:background="#f00"
+    android:background="@drawable/level3_bg_image"
     android:layout_margin="5dp"
     android:orientation="vertical">
 
    <TextView
-       android:presentId="@+presentId/txtLevel"
+       android:id="@+id/txtLevel"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-
        android:gravity="center"
        android:textColor="#0f0"
        android:textSize="20dp"
-
        android:text="1"/>
 
 

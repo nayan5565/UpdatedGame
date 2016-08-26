@@ -23,6 +23,7 @@ public class Utils {
     public static boolean isSoundPlay=true;
     public static void getSound(Context context,int path) {
         if (isSoundPlay) {
+
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 //mediaPlayer.reset();

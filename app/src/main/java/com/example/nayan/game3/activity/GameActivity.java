@@ -1,7 +1,6 @@
 package com.example.nayan.game3.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +18,7 @@ import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by NAYAN on 8/20/2016.
@@ -26,20 +26,21 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
-
+    public static int value;
     ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
     GameAdapter gameAdapter;
     SharedPreferences preferences;
-    int value;
     String image;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.game_activity);
+
 
 
         init();
@@ -48,40 +49,53 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if (Utils.difficult == 1) {
 
-            imageArrayList=Utils.easy.get(value).getAsset();
-
+            imageArrayList = Utils.easy.get(value).getAsset();
 
 
         } else if (Utils.difficult2 == 2) {
 
-            imageArrayList=Utils.medium.get(value).getAsset();
+            imageArrayList = Utils.medium.get(value).getAsset();
 
 
         } else if (Utils.difficult3 == 3) {
-            imageArrayList=Utils.hard.get(value).getAsset();
+            imageArrayList = Utils.hard.get(value).getAsset();
 
 
         }
+        Collections.shuffle(imageArrayList);
         gameAdapter.setData(imageArrayList);
 
 
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
+
     public void init() {
 
-        image = getPREF(KEY_IMAGE);
+//        image = getPREF(KEY_IMAGE);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
 
-        img = (ImageView) findViewById(R.id.img);
-        img.setOnClickListener(this);
-        if (image.equals(1 + "")) {
+//        img = (ImageView) findViewById(R.id.img);
+        // img.setOnClickListener(this);
+       /* if (image.equals(1 + "")) {
             NLogic.getInstance(this).isSoundPlay = true;
             img.setImageResource(R.drawable.on);
         } else if (image.equals(0 + "")) {
             NLogic.getInstance(this).isSoundPlay = false;
             img.setImageResource(R.drawable.off);
-        }
+        }*/
 
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -308,7 +322,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             dialog.show();
 
-        } else if (v.getId() == R.id.img) {
+        }/* else if (v.getId() == R.id.img) {
             if (NLogic.getInstance(this).isSoundPlay == false) {
                 NLogic.getInstance(this).isSoundPlay = true;
                 img.setImageResource(R.drawable.on);
@@ -319,10 +333,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 savePref(KEY_IMAGE, 0 + "");
             }
 
-        }
+        }*/
     }
 
-    private void savePref(String key, String value) {
+    /*private void savePref(String key, String value) {
         preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
@@ -332,5 +346,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public String getPREF(String key) {
         preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         return preferences.getString(key, "null");
-    }
+    }*/
 }

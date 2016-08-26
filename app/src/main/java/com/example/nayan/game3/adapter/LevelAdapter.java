@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.GameActivity;
+import com.example.nayan.game3.logic.Logic;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
@@ -26,7 +27,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     MLevel mLevel = new MLevel();;
     Context context;
     LayoutInflater inflater;
-//    Logic logic;
+    Logic logic;
 
 
     public LevelAdapter(Context context) {
@@ -42,8 +43,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         this.levels = levels;
 
         Log.e("log", "setdata:" + levels.size());
-       /* logic = Logic.getInstance(context);
-        logic.callData(levels, this);*/
+        logic = Logic.getInstance(context);
+        logic.callData(levels, this);
 
         notifyDataSetChanged();
     }

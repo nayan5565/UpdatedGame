@@ -175,9 +175,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     asset.add(mAsset);
                                 }
                                 level.setAsset(asset);
-                                database.addLevelFromJson(level);
-                                Utils.easy = database.getAllData();
-                                // MyGame.easy.add(level);
+                               /* database.addLevelFromJson(level);
+                                Utils.easy = database.getAllData();*/
+                                Utils.easy.add(level);
 
 
                             }
@@ -308,7 +308,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else if (v.getId() == R.id.btnPlay) {
-            Utils.getSound(OpenActivity.this, R.raw.match2);
+            Utils.getSound(OpenActivity.this, R.raw.click);
             btnPlay.setVisibility(View.GONE);
             btnHard.setVisibility(View.VISIBLE);
             btnNormal.setVisibility(View.VISIBLE);
@@ -316,17 +316,20 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         } else if (v.getId() == R.id.btnNormal) {
+            Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "normal", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", 2);
             startActivity(intent);
 
         } else if (v.getId() == R.id.btnHard) {
+            Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "hard", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", 4);
             startActivity(intent);
         } else if (v.getId() == R.id.btnMedium) {
+            Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "medium", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", 3);

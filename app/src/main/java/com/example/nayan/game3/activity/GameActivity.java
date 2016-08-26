@@ -16,25 +16,20 @@ import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
-import com.example.nayan.game3.utils.MyGame;
+import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
 /**
  * Created by NAYAN on 8/20/2016.
  */
-public class Game extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
 
     ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
-
-    //MAsset mAsset=new MAsset();
-
     GameAdapter gameAdapter;
     SharedPreferences preferences;
     int value;
@@ -51,19 +46,19 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         value = getIntent().getIntExtra("level", 0);
 
-        if (MyGame.difficult == 1) {
+        if (Utils.difficult == 1) {
 
-            imageArrayList=MyGame.easy.get(value).getAsset();
-
-
-
-        } else if (MyGame.difficult2 == 2) {
-
-            imageArrayList=MyGame.medium.get(value).getAsset();
+            imageArrayList=Utils.easy.get(value).getAsset();
 
 
-        } else if (MyGame.difficult3 == 3) {
-            imageArrayList=MyGame.hard.get(value).getAsset();
+
+        } else if (Utils.difficult2 == 2) {
+
+            imageArrayList=Utils.medium.get(value).getAsset();
+
+
+        } else if (Utils.difficult3 == 3) {
+            imageArrayList=Utils.hard.get(value).getAsset();
 
 
         }
@@ -94,18 +89,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         gameAdapter = new GameAdapter(this);
         recyclerView.setAdapter(gameAdapter);
-
-
     }
-
-    private void animation() {
-        ScaleInAnimator sa = new ScaleInAnimator();
-        sa.setRemoveDuration(2000);
-        recyclerView.setItemAnimator(sa);
-    }
-
-
-
     /*public void hardGame() {
         mData = new MData();
         mData.setPresentId(1);
@@ -310,7 +294,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.imgseting) {
             final Dialog dialog = new Dialog(this);
-            dialog.setTitle("Game Information");
+            dialog.setTitle("GameActivity Information");
             dialog.requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
             dialog.setContentView(R.layout.dialog_setting);
             Button btnWin = (Button) dialog.findViewById(R.id.btnStatics);
@@ -318,7 +302,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    NLogic.getInstance(Game.this).showHistory();
+                    NLogic.getInstance(GameActivity.this).showHistory();
                 }
             });
 

@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.nayan.game3.activity.Game;
-import com.example.nayan.game3.logic.Logic;
-import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.R;
+import com.example.nayan.game3.activity.GameActivity;
+import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     MLevel mLevel = new MLevel();;
     Context context;
     LayoutInflater inflater;
-    Logic logic;
+//    Logic logic;
 
 
     public LevelAdapter(Context context) {
@@ -42,8 +42,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         this.levels = levels;
 
         Log.e("log", "setdata:" + levels.size());
-        logic = Logic.getInstance(context);
-        logic.callData(levels, this);
+       /* logic = Logic.getInstance(context);
+        logic.callData(levels, this);*/
 
         notifyDataSetChanged();
     }
@@ -83,11 +83,11 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
-                    logic.getSound(R.raw.click);
-                    Intent intent = new Intent(context, Game.class);
+                    Utils.getSound(context,R.raw.click);
+                    Intent intent = new Intent(context, GameActivity.class);
                     intent.putExtra("level", getAdapterPosition());
                     context.startActivity(intent);
-                    /*logic.imageClick(mLevel, getAdapterPosition());*/
+
                 }
             });
         }

@@ -13,6 +13,7 @@ import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.LevelActivity;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -108,8 +109,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mAsset = imageArrayList.get(getAdapterPosition());
-                    nLogic.getSound(R.raw.click);
+                    Utils.getSound(context,R.raw.click);
+//
                     //MyAnimation.rotation(itemView,false);
+                    Log.e("ADA","pres ID: "+mAsset.getPresentId());
                     nLogic.imageClick(mAsset, getAdapterPosition());
                 }
             });

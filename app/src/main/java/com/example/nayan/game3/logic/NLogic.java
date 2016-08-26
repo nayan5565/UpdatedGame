@@ -3,7 +3,6 @@ package com.example.nayan.game3.logic;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.activity.Game;
+import com.example.nayan.game3.activity.GameActivity;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,11 +36,10 @@ public class NLogic {
 
     ArrayList<MAsset> list;
     SharedPreferences preferences;
-    MediaPlayer mediaPlayer;
     Context context;
     Handler handler = new Handler();
     GameAdapter gameAdapter;
-    Game game=new Game();
+    GameActivity game=new GameActivity();
 
 
     private NLogic() {
@@ -81,15 +80,15 @@ public class NLogic {
     public void showInformation() {
         presentPoint = 100 / clickCount;
         final Dialog dialog = new Dialog(context);
-        dialog.setTitle("Game Over");
+        dialog.setTitle("GameActivity Over");
         dialog.setContentView(R.layout.row_dialog);
         TextView textView = (TextView) dialog.findViewById(R.id.txt);
         textView.setText("Point : " + presentPoint);
-        Button button = (Button) dialog.findViewById(R.id.btnNewGame);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button newGame = (Button) dialog.findViewById(R.id.btnNewGame);
+        newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSound(R.raw.shuffle);
+               Utils.getSound(context,R.raw.shuffle);
                 resetList();
                 dialog.dismiss();
             }
@@ -97,19 +96,9 @@ public class NLogic {
         dialog.show();
     }
 
-    public void getSound(int path) {
-        if (isSoundPlay) {
-            if (mediaPlayer != null) {
-                //mediaPlayer.stop();
-                //mediaPlayer.reset();
-                mediaPlayer.release();
-            }
-            mediaPlayer = MediaPlayer.create(context, path);
-            mediaPlayer.start();
-        }
-    }
 
     public void imageClick(final MAsset mImage, int pos) {
+
         if (previousId ==mImage .getPresentId() || mImage.getImageOpen() == 1) {
             return;
         }
@@ -125,8 +114,8 @@ public class NLogic {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getSound(R.raw.match2);
 
+                        Utils.getSound(context,R.raw.match2);
 
                     }
                 }, 1000);
@@ -137,7 +126,8 @@ public class NLogic {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            getSound(R.raw.gameover);
+
+                            Utils.getSound(context,R.raw.gameover);
                            /* game.animation();*/
                         }
                     }, 2000);
@@ -174,7 +164,7 @@ public class NLogic {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getSound(R.raw.fail);
+                        Utils.getSound(context,R.raw.fail);
                         for (int i = 0; i < list.size(); i++) {
                             if (list.get(i).getPresentId() == perevious || list.get(i).getPresentId() == mImage.getPresentId()) {
                                 list.get(i).setImageOpen(0);

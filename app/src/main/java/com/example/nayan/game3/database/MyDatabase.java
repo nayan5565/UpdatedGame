@@ -62,23 +62,21 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public ArrayList<MLevel> getAllData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<MLevel> levelArrayList = null;
-        try {
-            levelArrayList = new ArrayList<>();
-            String sql = "select * from " + DATABASE_TABLE;
-            Cursor cursor = db.rawQuery(sql, null);
-            while (cursor.isAfterLast() == false) {
-                MLevel mLevel = new MLevel();
-                mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
-                mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
-                mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
-                levelArrayList.add(mLevel);
-                cursor.moveToNext();
-            }
-            db.close();
-        } catch (Exception e) {
+        ArrayList<MLevel> levelArrayList = new ArrayList<>();
 
+        MLevel mLevel;
+        String sql = "select * from " + DATABASE_TABLE;
+        Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.isAfterLast() == false) {
+            mLevel = new MLevel();
+            mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
+            mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
+            mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
+            levelArrayList.add(mLevel);
+            cursor.moveToNext();
         }
+        db.close();
+
 
         return levelArrayList;
     }

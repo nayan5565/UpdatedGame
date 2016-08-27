@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.nayan.game3.model.MLevel;
 
@@ -14,18 +15,24 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/24/2016.
  */
 public class MyDatabase extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "game.db";
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_TABLE = "level_table";
-
-    public static final String KEY_ID = "id";
-    public static final String KEY_LEVEL = "level";
-    public static final String KEY_COINS_PRICE = "coins_price";
-    public static final String KEY_NO_OF_COINS = "no_of_coins";
-    // public static final String KEY_HINTS = "hints";
+    private static final String DATABASE_NAME = "game.db";
+    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_LEVEL_TABLE = "level_table";
+    private static final String DATABASE_ASSET_TABLE = "asset_table";
 
 
-    private static final String DATABASE_CREATE_TABLE = "create table " + DATABASE_TABLE + "(" + KEY_ID + " integer primary key autoincrement, " + KEY_LEVEL + " text, " + KEY_COINS_PRICE + " text, " + KEY_NO_OF_COINS + " text)";
+    private static final String KEY_ID = "id";
+    private static final String KEY_LEVEL = "level";
+    private static final String KEY_COINS_PRICE = "coins_price";
+    private static final String KEY_NO_OF_COINS = "no_of_coins";
+    private static final String KEY_Difficulty = "difficulty";
+    private static final String KEY_HINTS = "hints";
+    private static final String KEY_IMAGE = "images";
+    private static final String KEY_SOUNDS = "sounds";
+
+
+    private static final String DATABASE_CREATE_LEVEL_TABLE = "create table " + DATABASE_LEVEL_TABLE + "(" + KEY_ID + " integer, " + KEY_LEVEL + " text, " + KEY_COINS_PRICE + " text, " + KEY_Difficulty + " integer, " + KEY_NO_OF_COINS + " text)";
+    private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_ID + " integer, " + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,13 +40,15 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE_TABLE);
+        db.execSQL(DATABASE_CREATE_LEVEL_TABLE);
+        db.execSQL(DATABASE_CREATE_ASSET_TABLE);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + DATABASE_TABLE);
+        db.execSQL("drop table if exists " + DATABASE_LEVEL_TABLE);
+        db.execSQL("drop table if exists " + DATABASE_ASSET_TABLE);
         onCreate(db);
 
     }
@@ -49,10 +58,22 @@ public class MyDatabase extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_LEVEL, mLevel.getLevel());
+            values.put(KEY_ID, mLevel.getId());
             values.put(KEY_COINS_PRICE, mLevel.getCoinPrice());
-
+            values.put(KEY_Difficulty, mLevel.getDifficulty());
             values.put(KEY_NO_OF_COINS, mLevel.getNoOfCoinPrice());
-            db.insert(DATABASE_TABLE, null, values);
+            String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_ID + "='" + mLevel.getId() + "'";
+            Cursor cursor = db.rawQuery(sql, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int update = db.update(DATABASE_LEVEL_TABLE, values, KEY_ID + "=?", new String[]{mLevel.getId() + ""});
+                Log.e("log", "update : " + update);
+            } else {
+                long v = db.insert(DATABASE_LEVEL_TABLE, null, values);
+                Log.e("log", "return : " + v);
+
+            }
+
+
             db.close();
         } catch (Exception e) {
 
@@ -60,24 +81,83 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<MLevel> getAllData() {
+    /*public void addAssetFromJson(MAsset mAsset) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_ID, mAsset.getLevelId());
+            values.put(KEY_IMAGE, mAsset.getImages());
+            values.put(KEY_HINTS, mAsset.getHints());
+            values.put(KEY_SOUNDS, mAsset.getSounds());
+
+            String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_ID + "='" + mAsset.getLevelId() + "'";
+            Cursor cursor = db.rawQuery(sql, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_ID + "=?", new String[]{mAsset.getLevelId() + ""});
+                Log.e("log", "Assetupdate : " + update);
+            } else {
+                long v = db.insert(DATABASE_ASSET_TABLE, null, values);
+                Log.e("log", "Assetreturn : " + v);
+
+            }
+
+
+            db.close();
+        } catch (Exception e) {
+
+        }
+
+    }*/
+
+
+
+    public ArrayList<MLevel> getAllData(int diffculty) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MLevel> levelArrayList = new ArrayList<>();
 
         MLevel mLevel;
-        String sql = "select * from " + DATABASE_TABLE;
+        String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_Difficulty + "='" + diffculty + "'";
         Cursor cursor = db.rawQuery(sql, null);
-        while (cursor.isAfterLast() == false) {
-            mLevel = new MLevel();
-            mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
-            mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
-            mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
-            levelArrayList.add(mLevel);
-            cursor.moveToNext();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                mLevel = new MLevel();
+                mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
+                mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
+                mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
+                mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_Difficulty)));
+                levelArrayList.add(mLevel);
+
+            } while (cursor.moveToNext());
         }
+
         db.close();
 
 
         return levelArrayList;
     }
+
+    /*public ArrayList<MAsset> getData(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<MAsset> assetArrayList = new ArrayList<>();
+
+        MAsset mAsset;
+        String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_ID + "='" + id + "'";
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                mAsset = new MAsset();
+                mAsset.setImages(cursor.getString(cursor.getColumnIndex(KEY_IMAGE)));
+                mAsset.setSounds(cursor.getString(cursor.getColumnIndex(KEY_SOUNDS)));
+                mAsset.setHints(cursor.getString(cursor.getColumnIndex(KEY_HINTS)));
+
+                assetArrayList.add(mAsset);
+
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+
+        return assetArrayList;
+    }*/
 }

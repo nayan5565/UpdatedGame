@@ -5,7 +5,19 @@ package com.example.nayan.game3.model;
  */
 public class MAsset {
     String images,sounds,hints;
-    int imageOpen, presentId, presentType;
+    int imageOpen;
+    int presentId;
+    int presentType;
+
+    public int getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(int levelId) {
+        this.levelId = levelId;
+    }
+
+    int levelId;
 
     public String getImages() {
         return images;

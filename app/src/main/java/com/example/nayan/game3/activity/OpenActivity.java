@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     //   NavigationDrawerFragment drawerFragment;
 
-    ArrayList<MLevel> list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,13 +60,16 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         init();
-        prepareDisplay();
         getOnlineData();
+        saveToDb();
+        getLocalData();
+        prepareDisplay();
 
     }
 
     public void init() {
-        list = new ArrayList<>();
+
+        database = new MyDatabase(this);
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -145,10 +148,11 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 JSONObject jsonObject = easy.getJSONObject(i);
 
                                 level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
+                                level.setId(jsonObject.getInt("id"));
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+                                level.setDifficulty(1);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
                                 ArrayList<MAsset> asset = new ArrayList<MAsset>();
@@ -162,6 +166,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setPresentType(j + 1);
                                     mAsset.setPresentId(count);
 
@@ -171,12 +176,12 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset = new MAsset();
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setPresentType(j + 1);
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setPresentId(count);
                                     asset.add(mAsset);
                                 }
                                 level.setAsset(asset);
-                               /* database.addLevelFromJson(level);
-                                Utils.easy = database.getAllData();*/
+
                                 Utils.easy.add(level);
 
 
@@ -189,10 +194,11 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 JSONObject jsonObject = medium.getJSONObject(i);
 
                                 level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
+                                level.setId(jsonObject.getInt("id"));
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+                                level.setDifficulty(2);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
                                 ArrayList<MAsset> asset = new ArrayList<MAsset>();
@@ -207,6 +213,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
                                     mAsset.setPresentType(j + 1);
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setPresentId(count);
                                     asset.add(mAsset);
 
@@ -214,6 +221,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset = new MAsset();
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setHints(image.getString("hints"));
                                     mAsset.setPresentType(j + 1);
                                     mAsset.setPresentId(count);
@@ -234,10 +242,11 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 JSONObject jsonObject = hard.getJSONObject(i);
 
                                 level = new MLevel();
-                                level.seteId(jsonObject.getString("id"));
+                                level.setId(jsonObject.getInt("id"));
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
+                                level.setDifficulty(3);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
                                 ArrayList<MAsset> asset = new ArrayList<MAsset>();
@@ -251,6 +260,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setPresentType(j + 1);
                                     mAsset.setPresentId(count);
                                     asset.add(mAsset);
@@ -260,6 +270,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setImages(image.getString("images"));
                                     mAsset.setSounds(image.getString("sounds"));
                                     mAsset.setHints(image.getString("hints"));
+                                    mAsset.setLevelId(level.getId());
                                     mAsset.setPresentType(j + 1);
                                     mAsset.setPresentId(count);
                                     asset.add(mAsset);
@@ -281,6 +292,40 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                 }
         );
     }
+
+    private void saveToDb() {
+        for (MLevel data : Utils.easy) {
+            database.addLevelFromJson(data);
+        }
+        for (MLevel data : Utils.medium) {
+            database.addLevelFromJson(data);
+        }
+        for (MLevel data : Utils.hard) {
+            database.addLevelFromJson(data);
+        }
+
+    }
+
+    private void getLocalData() {
+        Utils.easy = database.getAllData(1);
+        Log.e("log", "easy : " + Utils.easy.size());
+        Utils.medium = database.getAllData(2);
+        Log.e("log", "medium : " + Utils.medium.size());
+        Utils.hard = database.getAllData(3);
+        Log.e("log", "hard : " + Utils.hard.size());
+    }
+
+    /*private void saveDbTOAsset(){
+        for (MAsset data : Utils.easy) {
+            database.addAssetFromJson(data);
+        }
+        for (MAsset data : Utils.medium) {
+            database.addLevelFromJson(data);
+        }
+        for (MAsset data : Utils.hard) {
+            database.addLevelFromJson(data);
+        }
+    }*/
 
     public void prepareDisplay() {
         setSupportActionBar(toolbar);

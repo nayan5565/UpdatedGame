@@ -61,7 +61,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
         getOnlineData();
-        saveToDb();
+
         getLocalData();
         prepareDisplay();
 
@@ -286,7 +286,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        saveToDb();
 
                     }
                 }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     }
 
-    /*public void addAssetFromJson(MAsset mAsset) {
+    public void addAssetFromJson(MAsset mAsset) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -107,7 +108,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
         }
 
-    }*/
+    }
 
 
 
@@ -136,7 +137,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         return levelArrayList;
     }
 
-    /*public ArrayList<MAsset> getData(int id) {
+    public ArrayList<MAsset> getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MAsset> assetArrayList = new ArrayList<>();
 
@@ -159,5 +160,5 @@ public class MyDatabase extends SQLiteOpenHelper {
 
 
         return assetArrayList;
-    }*/
+    }
 }

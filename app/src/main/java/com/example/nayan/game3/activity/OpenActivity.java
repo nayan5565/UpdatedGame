@@ -63,6 +63,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         getOnlineData();
 
         getLocalData();
+        getLocalDataAsset();
         prepareDisplay();
 
     }
@@ -287,6 +288,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                         saveToDb();
+                        saveDbTOAsset();
 
                     }
                 }
@@ -315,17 +317,23 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         Log.e("log", "hard : " + Utils.hard.size());
     }
 
-    /*private void saveDbTOAsset(){
-        for (MAsset data : Utils.easy) {
-            database.addAssetFromJson(data);
+    private void saveDbTOAsset(){
+        for (MAsset data2 : Utils.easy2) {
+            database.addAssetFromJson(data2);
         }
-        for (MAsset data : Utils.medium) {
-            database.addLevelFromJson(data);
+        for (MAsset data2 : Utils.medium2) {
+            database.addAssetFromJson(data2);
         }
-        for (MAsset data : Utils.hard) {
-            database.addLevelFromJson(data);
+        for (MAsset data2 : Utils.hard2) {
+            database.addAssetFromJson(data2);
         }
-    }*/
+    }
+    private void getLocalDataAsset(){
+        MAsset mAsset=new MAsset();
+        Utils.easy2=database.getData(mAsset.getLevelId());
+        Utils.medium2=database.getData(mAsset.getLevelId());
+        Utils.hard2=database.getData(mAsset.getLevelId());
+    }
 
     public void prepareDisplay() {
         setSupportActionBar(toolbar);

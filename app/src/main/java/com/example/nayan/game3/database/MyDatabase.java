@@ -27,13 +27,14 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String KEY_COINS_PRICE = "coins_price";
     private static final String KEY_NO_OF_COINS = "no_of_coins";
     private static final String KEY_Difficulty = "difficulty";
+    private static final String KEY_LEVEL_ID="level_id";
     private static final String KEY_HINTS = "hints";
     private static final String KEY_IMAGE = "images";
     private static final String KEY_SOUNDS = "sounds";
 
 
     private static final String DATABASE_CREATE_LEVEL_TABLE = "create table " + DATABASE_LEVEL_TABLE + "(" + KEY_ID + " integer, " + KEY_LEVEL + " text, " + KEY_COINS_PRICE + " text, " + KEY_Difficulty + " integer, " + KEY_NO_OF_COINS + " text)";
-    private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_ID + " integer, " + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
+    private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_LEVEL_ID + " integer, " + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -86,15 +87,15 @@ public class MyDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(KEY_ID, mAsset.getLevelId());
+            values.put(KEY_LEVEL_ID, mAsset.getLevelId());
             values.put(KEY_IMAGE, mAsset.getImages());
             values.put(KEY_HINTS, mAsset.getHints());
             values.put(KEY_SOUNDS, mAsset.getSounds());
 
-            String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_ID + "='" + mAsset.getLevelId() + "'";
+            String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_LEVEL_ID + "='" + mAsset.getLevelId() + "'";
             Cursor cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
-                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_ID + "=?", new String[]{mAsset.getLevelId() + ""});
+                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_LEVEL_ID + "=?", new String[]{mAsset.getLevelId() + ""});
                 Log.e("log", "Assetupdate : " + update);
             } else {
                 long v = db.insert(DATABASE_ASSET_TABLE, null, values);
@@ -142,7 +143,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         ArrayList<MAsset> assetArrayList = new ArrayList<>();
 
         MAsset mAsset;
-        String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_ID + "='" + id + "'";
+        String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_LEVEL_ID + "='" + id + "'";
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -150,6 +151,7 @@ public class MyDatabase extends SQLiteOpenHelper {
                 mAsset.setImages(cursor.getString(cursor.getColumnIndex(KEY_IMAGE)));
                 mAsset.setSounds(cursor.getString(cursor.getColumnIndex(KEY_SOUNDS)));
                 mAsset.setHints(cursor.getString(cursor.getColumnIndex(KEY_HINTS)));
+                mAsset.setLevelId(cursor.getInt(cursor.getColumnIndex(KEY_LEVEL_ID)));
 
                 assetArrayList.add(mAsset);
 

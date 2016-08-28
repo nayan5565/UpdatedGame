@@ -318,21 +318,21 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveDbTOAsset(){
-        for (MAsset data2 : Utils.easy2) {
+        for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
         }
-        for (MAsset data2 : Utils.medium2) {
+        for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
         }
-        for (MAsset data2 : Utils.hard2) {
+        for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
         }
     }
     private void getLocalDataAsset(){
         MAsset mAsset=new MAsset();
-        Utils.easy2=database.getData(mAsset.getLevelId());
-        Utils.medium2=database.getData(mAsset.getLevelId());
-        Utils.hard2=database.getData(mAsset.getLevelId());
+        Utils.assetArrayList=database.getData(mAsset.getLevelId());
+        Utils.assetArrayList=database.getData(mAsset.getLevelId());
+        Utils.assetArrayList=database.getData(mAsset.getLevelId());
     }
 
     public void prepareDisplay() {

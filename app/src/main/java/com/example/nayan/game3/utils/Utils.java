@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class Utils {
     public static int difficult = 1, difficult2 = 2, difficult3 = 3;
+    public static ArrayList<MAsset> assetArrayList;
     public static ArrayList<MLevel> easy;
     public static ArrayList<MLevel> medium;
     public static ArrayList<MLevel> hard;

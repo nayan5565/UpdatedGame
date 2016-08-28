@@ -86,7 +86,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
                     mLevel = levels.get(getAdapterPosition());
                     Utils.getSound(context,R.raw.click);
                     Intent intent = new Intent(context, GameActivity.class);
-                    intent.putExtra("level", getAdapterPosition());
+                    intent.putExtra("level", mLevel.getId());
                     context.startActivity(intent);
 
                 }

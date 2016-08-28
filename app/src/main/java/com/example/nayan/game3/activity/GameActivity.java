@@ -13,9 +13,9 @@ import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
-import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import java.util.Collections;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
-    public static int value;
+    public static int levelId;
     ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
@@ -42,30 +42,31 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.game_activity);
 
 
-
         init();
 
-        value = getIntent().getIntExtra("level", 0);
-
-        if (Utils.difficult == 1) {
-
-            imageArrayList = Utils.easy.get(value).getAsset();
+        levelId = getIntent().getIntExtra("level", 0);
 
 
-        } else if (Utils.difficult2 == 2) {
+        imageArrayList = generateAssets();
 
-            imageArrayList = Utils.medium.get(value).getAsset();
-
-
-        } else if (Utils.difficult3 == 3) {
-            imageArrayList = Utils.hard.get(value).getAsset();
-
-
-        }
         Collections.shuffle(imageArrayList);
         gameAdapter.setData(imageArrayList);
 
 
+    }
+
+    private ArrayList<MAsset> generateAssets() {
+//        int count = 20;
+        MyDatabase db = new MyDatabase(this);
+        ArrayList<MAsset> tempAsset = new ArrayList<>();
+        for (MAsset asset : db.getData(levelId)) {
+            tempAsset.add(asset);
+//            count++;
+//            asset.setPresentId(count);
+//            Log.e("log","present id ::"+asset.getPresentId());
+            tempAsset.add(asset);
+        }
+        return tempAsset;
     }
 
 

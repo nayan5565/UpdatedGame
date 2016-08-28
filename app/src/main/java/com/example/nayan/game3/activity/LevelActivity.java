@@ -42,18 +42,18 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         if (value == 2) {
             textView.setText("Normal");
-            level.getImage();
+//            level.getImage();
             //levels=database.getAllData();
             levels = Utils.easy;
         } else if (value == 3) {
 
             textView.setText("Medium");
-            level.getImage();
+//            level.getImage();
             levels = Utils.medium;
         } else if (value == 4) {
 
             textView.setText("Hard");
-            level.getImage();
+//            level.getImage();
             levels = Utils.hard;
 
         }

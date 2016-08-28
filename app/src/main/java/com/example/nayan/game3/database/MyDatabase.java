@@ -27,14 +27,19 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String KEY_COINS_PRICE = "coins_price";
     private static final String KEY_NO_OF_COINS = "no_of_coins";
     private static final String KEY_Difficulty = "difficulty";
-    private static final String KEY_LEVEL_ID="level_id";
+    private static final String KEY_LEVEL_ID = "level_id";
     private static final String KEY_HINTS = "hints";
     private static final String KEY_IMAGE = "images";
     private static final String KEY_SOUNDS = "sounds";
+    private static final String KEY_PRESENT_ID = "present_id";
+    private static final String KEY_PRESENT_TYPE = "present_type";
 
 
     private static final String DATABASE_CREATE_LEVEL_TABLE = "create table " + DATABASE_LEVEL_TABLE + "(" + KEY_ID + " integer, " + KEY_LEVEL + " text, " + KEY_COINS_PRICE + " text, " + KEY_Difficulty + " integer, " + KEY_NO_OF_COINS + " text)";
-    private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_LEVEL_ID + " integer, " + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
+    private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_LEVEL_ID + " integer, "
+            + KEY_PRESENT_ID + " integer, "
+            + KEY_PRESENT_TYPE + " integer, "
+            + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -91,11 +96,13 @@ public class MyDatabase extends SQLiteOpenHelper {
             values.put(KEY_IMAGE, mAsset.getImages());
             values.put(KEY_HINTS, mAsset.getHints());
             values.put(KEY_SOUNDS, mAsset.getSounds());
+            values.put(KEY_PRESENT_ID, mAsset.getPresentId());
+            values.put(KEY_PRESENT_TYPE, mAsset.getPresentType());
 
-            String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_LEVEL_ID + "='" + mAsset.getLevelId() + "'";
+            String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_LEVEL_ID + "='" + mAsset.getLevelId() + "' AND " + KEY_IMAGE + "='" + mAsset.getImages() + "'";
             Cursor cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
-                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_LEVEL_ID + "=?", new String[]{mAsset.getLevelId() + ""});
+                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_LEVEL_ID + "= AND ?" + KEY_IMAGE + "=?", new String[]{mAsset.getLevelId() + "", mAsset.getImages()});
                 Log.e("log", "Assetupdate : " + update);
             } else {
                 long v = db.insert(DATABASE_ASSET_TABLE, null, values);
@@ -112,7 +119,6 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
 
-
     public ArrayList<MLevel> getAllData(int diffculty) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MLevel> levelArrayList = new ArrayList<>();
@@ -123,6 +129,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 mLevel = new MLevel();
+                mLevel.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                 mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
                 mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
                 mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
@@ -152,6 +159,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                 mAsset.setSounds(cursor.getString(cursor.getColumnIndex(KEY_SOUNDS)));
                 mAsset.setHints(cursor.getString(cursor.getColumnIndex(KEY_HINTS)));
                 mAsset.setLevelId(cursor.getInt(cursor.getColumnIndex(KEY_LEVEL_ID)));
+                mAsset.setPresentId(cursor.getInt(cursor.getColumnIndex(KEY_PRESENT_ID)));
+                mAsset.setPresentType(cursor.getInt(cursor.getColumnIndex(KEY_PRESENT_TYPE)));
 
                 assetArrayList.add(mAsset);
 

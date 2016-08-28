@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -97,7 +98,7 @@ public class NLogic {
 
 
     public void imageClick(final MAsset mImage, int pos) {
-
+        Log.e("Loge","present id ::"+mImage.getPresentId());
         if (previousId ==mImage .getPresentId() || mImage.getImageOpen() == 1) {
             return;
         }

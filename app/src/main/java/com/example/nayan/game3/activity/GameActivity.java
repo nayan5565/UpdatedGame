@@ -56,15 +56,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private ArrayList<MAsset> generateAssets() {
-//        int count = 20;
+        int count = 20;
         MyDatabase db = new MyDatabase(this);
         ArrayList<MAsset> tempAsset = new ArrayList<>();
         for (MAsset asset : db.getData(levelId)) {
             tempAsset.add(asset);
-//            count++;
-//            asset.setPresentId(count);
-//            Log.e("log","present id ::"+asset.getPresentId());
-            tempAsset.add(asset);
+            count++;
+            MAsset asset1=new MAsset();
+            asset1.setPresentId(count);
+            asset1.setPresentType(asset.getPresentType());
+            asset1.setHints(asset.getHints());
+            asset1.setImageOpen(asset.getImageOpen());
+            asset1.setImages(asset.getImages());
+            asset1.setLevelId(asset.getLevelId());
+            asset1.setSounds(asset.getSounds());
+            tempAsset.add(asset1);
         }
         return tempAsset;
     }

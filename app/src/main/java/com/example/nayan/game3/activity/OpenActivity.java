@@ -132,15 +132,16 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getOnlineData() {
-        Utils.easy = new ArrayList<MLevel>();
-        Utils.medium = new ArrayList<MLevel>();
-        Utils.hard = new ArrayList<MLevel>();
-        Utils.assetArrayList=new ArrayList<>();
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.post("http://www.radhooni.com/content/match_game/v1/games.json", new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
+                        Utils.easy = new ArrayList<MLevel>();
+                        Utils.medium = new ArrayList<MLevel>();
+                        Utils.hard = new ArrayList<MLevel>();
+                        Utils.assetArrayList=new ArrayList<>();
                         try {
                             JSONObject puzzle = response.getJSONObject("puzzle");
 
@@ -176,13 +177,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-                                    count++;
-                                    mAsset = new MAsset();
-                                    mAsset.setPresentId(count);
-                                    Log.e("Loge","present id ::"+mAsset.getPresentId());
-                                    Utils.assetArrayList.add(mAsset);
+
                                 }
-                                level.setAsset(Utils.assetArrayList);
+//                                level.setAsset(Utils.assetArrayList);
 
                                 Utils.easy.add(level);
 
@@ -219,15 +216,8 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setPresentId(count);
 
                                     Utils.assetArrayList.add(mAsset);
-
-                                    count++;
-                                    mAsset = new MAsset();
-                                    mAsset.setPresentId(count);
-                                    Utils.assetArrayList.add(mAsset);
-
-
                                 }
-                                level.setAsset(Utils.assetArrayList);
+//                                level.setAsset(Utils.assetArrayList);
                                 Utils.medium.add(level);
 
 
@@ -265,20 +255,8 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setPresentId(count);
 
                                     Utils.assetArrayList.add(mAsset);
-
-
-                                    count++;
-//                                    mAsset = new MAsset();
-//                                    mAsset.setImages(image.getString("images"));
-//                                    mAsset.setSounds(image.getString("sounds"));
-//                                    mAsset.setHints(image.getString("hints"));
-//                                    mAsset.setLevelId(level.getId());
-//                                    mAsset.setPresentType(j + 1);
-                                    mAsset.setPresentId(count);
-                                    Utils.assetArrayList.add(mAsset);
-
                                 }
-                                level.setAsset(Utils.assetArrayList);
+//                                level.setAsset(Utils.assetArrayList);
                                 Utils.hard.add(level);
 
 

@@ -102,7 +102,7 @@ public class MyDatabase extends SQLiteOpenHelper {
             String sql = "select * from " + DATABASE_ASSET_TABLE + " where " + KEY_LEVEL_ID + "='" + mAsset.getLevelId() + "' AND " + KEY_IMAGE + "='" + mAsset.getImages() + "'";
             Cursor cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
-                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_LEVEL_ID + "= AND ?" + KEY_IMAGE + "=?", new String[]{mAsset.getLevelId() + "", mAsset.getImages()});
+                int update = db.update(DATABASE_ASSET_TABLE, values, KEY_LEVEL_ID + "=? AND " + KEY_IMAGE + "=?", new String[]{mAsset.getLevelId() + "", mAsset.getImages()});
                 Log.e("log", "Assetupdate : " + update);
             } else {
                 long v = db.insert(DATABASE_ASSET_TABLE, null, values);

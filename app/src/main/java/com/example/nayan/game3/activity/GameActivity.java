@@ -16,6 +16,7 @@ import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,110 +110,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        if (LevelActivity.value == 2) {
+        if (LevelActivity.value == Utils.EASY) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
-        if (LevelActivity.value == 3) {
+        if (LevelActivity.value == Utils.MEDIUM) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         }
-        if (LevelActivity.value == 4) {
+        if (LevelActivity.value == Utils.HARD) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         }
 
         gameAdapter = new GameAdapter(this);
         recyclerView.setAdapter(gameAdapter);
     }
-    /*public void hardGame() {
-        mData = new MData();
-        mData.setPresentId(1);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/one.png");
-        list.add(mData);
 
-        mData = new MData();
-        mData.setPresentId(2);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/one.png");
-        list.add(mData)
-        ;
-        mData = new MData();
-        mData.setPresentId(3);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/two.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(4);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/two.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(5);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/three.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(6);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/three.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(7);
-        mData.setPresentType(4);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/four.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(8);
-        mData.setPresentType(4);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/four.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(9);
-        mData.setPresentType(5);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/five.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(10);
-        mData.setPresentType(5);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/five.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(11);
-        mData.setPresentType(6);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/six.png");
-        list.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(12);
-        mData.setPresentType(6);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/six.png");
-        list.add(mData);
-
-        Collections.shuffle(list);
-
-        levelAdapter.setData(list);
-    }*/
-
-    /*public void normalGame() {
-        mData = new MData();
-        mData.setPresentId(1);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/seven.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(2);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/seven.png");
-        arrayList.add(mData)
-        ;
+   /* public void normalGame() {
         mData = new MData();
         mData.setPresentId(3);
         mData.setPresentType(2);
@@ -226,96 +138,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         arrayList.add(mData);
 
         mData = new MData();
-        mData.setPresentId(5);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/nineteen.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(6);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/nineteen.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(5);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/fifteen.png");
-        arrayList.add(mData);
-
-        mData = new MData();
         mData.setPresentId(6);
         mData.setPresentType(3);
         mData.setImage("http://www.radhooni.com/content/match_game/v1/images/fifteen.png");
         arrayList.add(mData);
 
-
-        Collections.shuffle(arrayList);
-
-        levelAdapter.setData(arrayList);
-    }
-
-    public void mediumGame() {
-        mData = new MData();
-        mData.setPresentId(1);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/nine.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(2);
-        mData.setPresentType(1);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/nine.png");
-        arrayList.add(mData)
-        ;
-        mData = new MData();
-        mData.setPresentId(3);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/ten.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(4);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/ten.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(5);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/eleven.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(6);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/eleven.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(7);
-        mData.setPresentType(4);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/twelve.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(8);
-        mData.setPresentType(4);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/twelve.png");
-        arrayList.add(mData);
-
-
-        mData = new MData();
-        mData.setPresentId(9);
-        mData.setPresentType(5);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/fourteen.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(10);
-        mData.setPresentType(5);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/fourteen.png");
-        arrayList.add(mData);
 
         Collections.shuffle(arrayList);
 

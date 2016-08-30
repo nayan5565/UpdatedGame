@@ -39,20 +39,16 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         init();
 
-        if (value == 2) {
+        if (value == Utils.EASY) {
             textView.setText("Normal");
-//            level.getImage();
-            //levels=database.getAllData();
             levels = Utils.easy;
-        } else if (value == 3) {
+        } else if (value == Utils.MEDIUM) {
 
             textView.setText("Medium");
-//            level.getImage();
             levels = Utils.medium;
-        } else if (value == 4) {
+        } else if (value == Utils.HARD) {
 
             textView.setText("Hard");
-//            level.getImage();
             levels = Utils.hard;
 
         }
@@ -67,11 +63,11 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        if (value == 2) {
+        if (value == Utils.EASY) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else if (value == 3) {
+        } else if (value == Utils.MEDIUM) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else if (value == 4) {
+        } else if (value == Utils.HARD) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
 

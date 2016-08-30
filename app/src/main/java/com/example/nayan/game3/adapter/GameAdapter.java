@@ -113,7 +113,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 //
                     //MyAnimation.rotation(itemView,false);
                     Log.e("ADA","pres ID: "+mAsset.getPresentId());
-                    nLogic.imageClick(mAsset, getAdapterPosition());
+                    nLogic.imageClick(mAsset, getAdapterPosition(),imageArrayList.size());
                 }
             });
         }

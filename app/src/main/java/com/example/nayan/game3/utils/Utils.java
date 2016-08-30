@@ -16,13 +16,16 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/25/2016.
  */
 public class Utils {
+    public static int IMAGE_ON=1,IMAGE_OFF=0;
+    public static int EASY = 2, MEDIUM = 3, HARD = 4;
     public static ArrayList<MAsset> assetArrayList;
     public static ArrayList<MLevel> easy;
     public static ArrayList<MLevel> medium;
     public static ArrayList<MLevel> hard;
+    public static boolean isSoundPlay = true;
     static MediaPlayer mediaPlayer;
-    public static boolean isSoundPlay=true;
-    public static void getSound(Context context,int path) {
+
+    public static void getSound(Context context, int path) {
         if (isSoundPlay) {
 
             if (mediaPlayer != null) {
@@ -30,10 +33,10 @@ public class Utils {
                 //mediaPlayer.reset();
                 mediaPlayer.release();
             }
-            Log.e("CONTEXT","value :"+context+":"+path);
+            Log.e("CONTEXT", "value :" + context + ":" + path);
             mediaPlayer = MediaPlayer.create(context, path);
             mediaPlayer.start();
-            Log.e("log","playing");
+            Log.e("log", "playing");
         }
     }
 

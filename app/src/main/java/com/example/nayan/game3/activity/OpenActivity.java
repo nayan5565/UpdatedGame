@@ -141,7 +141,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                         Utils.easy = new ArrayList<MLevel>();
                         Utils.medium = new ArrayList<MLevel>();
                         Utils.hard = new ArrayList<MLevel>();
-                        Utils.assetArrayList=new ArrayList<>();
+                        Utils.assetArrayList = new ArrayList<>();
                         try {
                             JSONObject puzzle = response.getJSONObject("puzzle");
 
@@ -172,10 +172,8 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setLevelId(level.getId());
                                     mAsset.setPresentType(j + 1);
                                     mAsset.setPresentId(count);
-                                    Log.e("Loge","present id id ::"+mAsset.getPresentId());
+                                    Log.e("Loge", "present id id ::" + mAsset.getPresentId());
                                     Utils.assetArrayList.add(mAsset);
-
-
 
 
                                 }
@@ -296,7 +294,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         Log.e("log", "hard : " + Utils.hard.size());
     }
 
-    private void saveDbTOAsset(){
+    private void saveDbTOAsset() {
         for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
         }

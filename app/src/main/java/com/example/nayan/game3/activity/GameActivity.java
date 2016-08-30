@@ -60,6 +60,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<MAsset> tempAsset = new ArrayList<>();
         for (MAsset asset : db.getData(levelId)) {
             NLogic.count = 0;
+
+            NLogic.previousId=tempAsset.size()+1;
+
             tempAsset.add(asset);
             count++;
             MAsset asset1 = new MAsset();

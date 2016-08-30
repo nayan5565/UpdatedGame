@@ -19,14 +19,13 @@ import java.util.ArrayList;
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
-    static int value;
+    public static int value;
     static TextView textView;
     static LevelAdapter levelAdapter;
     static ArrayList<MLevel> levels;
     static MLevel level = new MLevel();
     MyDatabase database;
     RecyclerView recyclerView;
-
 
 
     @Override
@@ -63,9 +62,8 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void init() {
-        database=new MyDatabase(this);
+        database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);
-
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);

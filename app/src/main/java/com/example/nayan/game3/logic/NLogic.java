@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.GameActivity;
+import com.example.nayan.game3.activity.LevelActivity;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.utils.Utils;
@@ -31,7 +32,7 @@ public class NLogic {
     public static final String NORMAL_GAME_WIN_NO = "normalWin";
 
     static NLogic nLogic;
-    public int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
+    public static int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
 
 
     ArrayList<MAsset> list;
@@ -60,18 +61,18 @@ public class NLogic {
     public void callData(ArrayList<MAsset> list, GameAdapter adapter) {
         this.list = list;
         this.gameAdapter = adapter;
-       /* bestPoint = getPref(HARD_GAME_MAX_POINT);
-        gameWinCount = getPref(Hard_GAME_WIN_NO);*/
-       /* if (list==Utils.hard.get(GameActivity.value).getAsset()) {
-            bestPoint = getPref(HARD_GAME_MAX_POINT);
-            gameWinCount = getPref(Hard_GAME_WIN_NO);
-        } else if (list==Utils.medium.get(GameActivity.value).getAsset()) {
-            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
-            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
-        } else if (list==Utils.easy.get(GameActivity.value).getAsset()) {
+//        bestPoint = getPref(HARD_GAME_MAX_POINT);
+//        gameWinCount = getPref(Hard_GAME_WIN_NO);
+        if (LevelActivity.value==2) {
             bestPoint = getPref(EASY_GAME_MAX_POINT);
             gameWinCount = getPref(NORMAL_GAME_WIN_NO);
-        }*/
+        } if (LevelActivity.value==3) {
+            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
+            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
+        } else if (LevelActivity.value==4) {
+            bestPoint = getPref(HARD_GAME_MAX_POINT);
+            gameWinCount = getPref(Hard_GAME_WIN_NO);
+        }
 
 
     }
@@ -99,6 +100,8 @@ public class NLogic {
 
     public void imageClick(final MAsset mImage, int pos) {
         Log.e("Loge","present id ::"+mImage.getPresentId());
+
+
         if (previousId ==mImage .getPresentId() || mImage.getImageOpen() == 1) {
             return;
         }
@@ -134,6 +137,27 @@ public class NLogic {
                     }, 1000);
                     gameWinCount++;
                     presentPoint = 100 / clickCount;
+                   if (LevelActivity.value==2){
+                       savePref(NORMAL_GAME_WIN_NO, gameWinCount);
+                       if (presentPoint > bestPoint) {
+                           Log.e("log", "point");
+                           savePref(EASY_GAME_MAX_POINT, presentPoint);
+                       }
+                   }
+                    if (LevelActivity.value==3){
+                        savePref(MEDIUM_GAME_WIN_NO, gameWinCount);
+                        if (presentPoint > bestPoint) {
+                            Log.e("log", "point");
+                            savePref(MEDIUM_GAME_MAX_POINT, presentPoint);
+                        }
+                    }
+                    if (LevelActivity.value==4){
+                        savePref(Hard_GAME_WIN_NO, gameWinCount);
+                        if (presentPoint > bestPoint) {
+                            Log.e("log", "point");
+                            savePref(HARD_GAME_MAX_POINT, presentPoint);
+                        }
+                    }
                     /*if (list==Utils.easy.get(GameActivity.value).getAsset()) {
                         savePref(NORMAL_GAME_WIN_NO, gameWinCount);
                         if (presentPoint > bestPoint) {
@@ -209,6 +233,21 @@ public class NLogic {
     }
 
     public String showHistory() {
+        if (LevelActivity.value==2){
+            bestPoint = getPref(EASY_GAME_MAX_POINT);
+            gameWinCount = getPref(NORMAL_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
+        }
+        if (LevelActivity.value==3){
+            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
+            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
+        }
+        if (LevelActivity.value==4){
+            bestPoint = getPref(HARD_GAME_MAX_POINT);
+            gameWinCount = getPref(Hard_GAME_WIN_NO);
+            Log.e("previous point ", "is : " + previousPoint);
+        }
        /* if (list==Utils.hard.get(GameActivity.value).getAsset()) {
             bestPoint = getPref(HARD_GAME_MAX_POINT);
             gameWinCount = getPref(Hard_GAME_WIN_NO);

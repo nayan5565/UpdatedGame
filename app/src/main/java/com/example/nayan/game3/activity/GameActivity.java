@@ -43,7 +43,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         init();
-
         levelId = getIntent().getIntExtra("level", 0);
 
 
@@ -55,14 +54,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private ArrayList<MAsset> generateAssets() {
+    public ArrayList<MAsset> generateAssets() {
         int count = 20;
         MyDatabase db = new MyDatabase(this);
         ArrayList<MAsset> tempAsset = new ArrayList<>();
         for (MAsset asset : db.getData(levelId)) {
+            NLogic.count = 0;
             tempAsset.add(asset);
             count++;
-            MAsset asset1=new MAsset();
+            MAsset asset1 = new MAsset();
             asset1.setPresentId(count);
             asset1.setPresentType(asset.getPresentType());
             asset1.setHints(asset.getHints());
@@ -106,8 +106,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        if (LevelActivity.value == 2) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+        if (LevelActivity.value == 3) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }
+        if (LevelActivity.value == 4) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         gameAdapter = new GameAdapter(this);
         recyclerView.setAdapter(gameAdapter);
     }

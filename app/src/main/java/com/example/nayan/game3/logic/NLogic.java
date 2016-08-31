@@ -60,7 +60,8 @@ public class NLogic {
         this.list = list;
         this.gameAdapter = adapter;
 
-
+        bestPoint = mLevel.getBestpoint();
+        gameWinCount = mLevel.getLevelWinCount();
 
 
     }
@@ -134,7 +135,7 @@ public class NLogic {
                     //starting game over
                     gameWinCount = mLevel.getLevelWinCount();
                     gameWinCount++;
-                    mLevel.setLevelWinCount(matchWinCount);
+                    mLevel.setLevelWinCount(gameWinCount);
                     savePoint(listSize);
                     showInformation(listSize);
                 }
@@ -220,7 +221,7 @@ public class NLogic {
         TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
         textView.setText("best point: " + mLevel.getBestpoint() + "\nWin count : " + mLevel.getLevelWinCount());
         TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
-        textView1.setText("no of total win: " + gameWinCount + "");
+//        textView1.setText("no of total win: " + gameWinCount + "");
         dialog.show();
         return "";
     }

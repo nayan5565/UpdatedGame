@@ -24,7 +24,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 
 
     ArrayList<MLevel> levels;
-    MLevel mLevel = new MLevel();;
+    MLevel mLevel = new MLevel();
+    ;
     Context context;
     LayoutInflater inflater;
     Logic logic;
@@ -61,7 +62,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText("Level "+mLevel.getLevel());
+        holder.txtLevel.setText("Level " + mLevel.getLevel()+"\n point "+mLevel.getBestpoint());
         holder.txtLevel.setTextColor(0xffff00ff);
 
 
@@ -75,18 +76,20 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 
     class MyViewholder extends RecyclerView.ViewHolder {
         TextView txtLevel;
+//        TextView txtLevelPoint;
 
         public MyViewholder(final View itemView) {
             super(itemView);
             txtLevel = (TextView) itemView.findViewById(R.id.txtLevel);
+//            txtLevelPoint = (TextView) itemView.findViewById(R.id.txtLevelPoint);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
-                    Utils.getSound(context,R.raw.click);
+                    Utils.getSound(context, R.raw.click);
+                    GameActivity.mLevel = mLevel;
                     Intent intent = new Intent(context, GameActivity.class);
-                    intent.putExtra("level", mLevel.getId());
                     context.startActivity(intent);
 
                 }

@@ -21,25 +21,35 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_LEVEL_TABLE = "level_table";
     private static final String DATABASE_ASSET_TABLE = "asset_table";
 
-
     private static final String KEY_ID = "id";
     private static final String KEY_LEVEL = "level";
     private static final String KEY_COINS_PRICE = "coins_price";
     private static final String KEY_NO_OF_COINS = "no_of_coins";
-    private static final String KEY_Difficulty = "difficulty";
+    private static final String KEY_DIFFICULTY = "difficulty";
     private static final String KEY_LEVEL_ID = "level_id";
     private static final String KEY_HINTS = "hints";
     private static final String KEY_IMAGE = "images";
     private static final String KEY_SOUNDS = "sounds";
     private static final String KEY_PRESENT_ID = "present_id";
     private static final String KEY_PRESENT_TYPE = "present_type";
+    private static final String KEY_BEST_POINT = "best_point";
+    private static final String KEY_LEVEL_WIN_COUNT = "win_count";
 
 
-    private static final String DATABASE_CREATE_LEVEL_TABLE = "create table " + DATABASE_LEVEL_TABLE + "(" + KEY_ID + " integer, " + KEY_LEVEL + " text, " + KEY_COINS_PRICE + " text, " + KEY_Difficulty + " integer, " + KEY_NO_OF_COINS + " text)";
+    private static final String DATABASE_CREATE_LEVEL_TABLE = "create table " + DATABASE_LEVEL_TABLE + "("
+            + KEY_ID + " integer, "
+            + KEY_LEVEL + " text, "
+            + KEY_COINS_PRICE + " text, "
+            + KEY_DIFFICULTY + " integer, "
+            + KEY_BEST_POINT + "integer, "
+            + KEY_LEVEL_WIN_COUNT + "integer, "
+            + KEY_NO_OF_COINS + " text)";
     private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_LEVEL_ID + " integer, "
             + KEY_PRESENT_ID + " integer, "
             + KEY_PRESENT_TYPE + " integer, "
-            + KEY_IMAGE + " text, " + KEY_HINTS + " text, " + KEY_SOUNDS + " text)";
+            + KEY_IMAGE + " text, "
+            + KEY_HINTS + " text, "
+            + KEY_SOUNDS + " text)";
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,8 +77,10 @@ public class MyDatabase extends SQLiteOpenHelper {
             values.put(KEY_LEVEL, mLevel.getLevel());
             values.put(KEY_ID, mLevel.getId());
             values.put(KEY_COINS_PRICE, mLevel.getCoinPrice());
-            values.put(KEY_Difficulty, mLevel.getDifficulty());
+            values.put(KEY_DIFFICULTY, mLevel.getDifficulty());
             values.put(KEY_NO_OF_COINS, mLevel.getNoOfCoinPrice());
+            values.put(KEY_BEST_POINT, mLevel.getBestpoint());
+            values.put(KEY_LEVEL_WIN_COUNT, mLevel.getLevelWinCount());
             String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_ID + "='" + mLevel.getId() + "'";
             Cursor cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -124,7 +136,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         ArrayList<MLevel> levelArrayList = new ArrayList<>();
 
         MLevel mLevel;
-        String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_Difficulty + "='" + diffculty + "'";
+        String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_DIFFICULTY + "='" + diffculty + "'";
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -133,7 +145,9 @@ public class MyDatabase extends SQLiteOpenHelper {
                 mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
                 mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
                 mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
-                mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_Difficulty)));
+                mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_DIFFICULTY)));
+                mLevel.setBestpoint(cursor.getInt(cursor.getColumnIndex(KEY_BEST_POINT)));
+                mLevel.setLevelWinCount(cursor.getInt(cursor.getColumnIndex(KEY_LEVEL_WIN_COUNT)));
                 levelArrayList.add(mLevel);
 
             } while (cursor.moveToNext());

@@ -6,16 +6,28 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/18/2016.
  */
 public class MLevel {
+    ArrayList<MAsset> asset = new ArrayList<>();
     //String eId;
-    String level;
-    String coinPrice;
-    String noOfCoinPrice;
-    String image;
-    String sound;
-    int id;
-    int type;
-    int status;
-    int bestpoint;
+    private String level;
+    private String coinPrice;
+    private String noOfCoinPrice;
+    private String image;
+    private String sound;
+    private String hint;
+    private int difficulty;
+    private int id;
+    private int type;
+    private int status;
+    private int bestpoint;
+    private int levelWinCount;
+
+    public int getLevelWinCount() {
+        return levelWinCount;
+    }
+
+    public void setLevelWinCount(int levelWinCount) {
+        this.levelWinCount = levelWinCount;
+    }
 
     public int getDifficulty() {
         return difficulty;
@@ -24,9 +36,6 @@ public class MLevel {
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
-
-    int difficulty;
-    ArrayList<MAsset>asset=new ArrayList<>();
 
     public ArrayList<MAsset> getAsset() {
         return asset;
@@ -51,11 +60,6 @@ public class MLevel {
     public void setSound(String sound) {
         this.sound = sound;
     }
-
-    String hint;
-
-
-
 
     public String getImage() {
         return image;

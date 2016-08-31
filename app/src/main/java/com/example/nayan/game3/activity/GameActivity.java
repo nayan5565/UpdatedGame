@@ -16,6 +16,7 @@ import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
     public static int levelId;
+    public static MLevel mLevel;
     ArrayList<MAsset> imageArrayList;
     ImageView img, imgSetting;
     RecyclerView recyclerView;
@@ -44,8 +46,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         init();
-        levelId = getIntent().getIntExtra("level", 0);
-
+        levelId = mLevel.getId();
+        NLogic.getInstance(this).setLevel(mLevel);
 
         imageArrayList = generateAssets();
 
@@ -62,7 +64,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         for (MAsset asset : db.getData(levelId)) {
             NLogic.count = 0;
 
-            NLogic.previousId=tempAsset.size()+1;
+            NLogic.previousId = tempAsset.size() + 1;
 
             tempAsset.add(asset);
             count++;

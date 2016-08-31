@@ -10,9 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.activity.LevelActivity;
 import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
@@ -32,11 +33,12 @@ public class NLogic {
     public static int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
     static NLogic nLogic;
 
-    ArrayList<MAsset> list;
-    SharedPreferences preferences;
-    Context context;
-    Handler handler = new Handler();
-    GameAdapter gameAdapter;
+    private ArrayList<MAsset> list;
+    private SharedPreferences preferences;
+    private Context context;
+    private Handler handler = new Handler();
+    private GameAdapter gameAdapter;
+    private MLevel mLevel;
 
 
     private NLogic() {
@@ -57,20 +59,19 @@ public class NLogic {
     public void callData(ArrayList<MAsset> list, GameAdapter adapter) {
         this.list = list;
         this.gameAdapter = adapter;
-        if (LevelActivity.value == Utils.EASY) {
-            bestPoint = getPref(EASY_GAME_MAX_POINT);
-            gameWinCount = getPref(NORMAL_GAME_WIN_NO);
-        }
-        if (LevelActivity.value == Utils.MEDIUM) {
-            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
-            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
-
-        } else if (LevelActivity.value == Utils.HARD) {
-            bestPoint = getPref(HARD_GAME_MAX_POINT);
-            gameWinCount = getPref(Hard_GAME_WIN_NO);
-        }
 
 
+
+
+    }
+
+    public void setLevel(MLevel mLevel) {
+        this.mLevel = mLevel;
+    }
+
+    public void saveDb() {
+        MyDatabase db = new MyDatabase(context);
+        db.addLevelFromJson(mLevel);
     }
 
 
@@ -130,7 +131,10 @@ public class NLogic {
                            /* game.animation();*/
                         }
                     }, 1000);
+                    //starting game over
+                    gameWinCount = mLevel.getLevelWinCount();
                     gameWinCount++;
+                    mLevel.setLevelWinCount(matchWinCount);
                     savePoint(listSize);
                     showInformation(listSize);
                 }
@@ -177,36 +181,20 @@ public class NLogic {
 
     public void savePoint(int listSize) {
         presentPoint = pointCount(listSize);
-        if (LevelActivity.value == Utils.EASY) {
-            savePref(NORMAL_GAME_WIN_NO, gameWinCount);
-            if (presentPoint > bestPoint) {
-                Log.e("log", "point");
-                savePref(EASY_GAME_MAX_POINT, presentPoint);
-            }
+        if (presentPoint > bestPoint) {
+            mLevel.setBestpoint(presentPoint);
+            saveDb();
         }
-        if (LevelActivity.value == Utils.MEDIUM) {
-            savePref(MEDIUM_GAME_WIN_NO, gameWinCount);
-            if (presentPoint > bestPoint) {
-                Log.e("log", "point");
-                savePref(MEDIUM_GAME_MAX_POINT, presentPoint);
-            }
-        }
-        if (LevelActivity.value == Utils.HARD) {
-            savePref(Hard_GAME_WIN_NO, gameWinCount);
-            if (presentPoint > bestPoint) {
-                Log.e("log", "point");
-                savePref(HARD_GAME_MAX_POINT, presentPoint);
-            }
-        }
+
     }
 
     public int pointCount(int listSize) {
         int point = 50;
 
-        if (count == listSize) {
-            point= 100;
-        } else if (count > listSize && count <= listSize + listSize / 2) {
-            point= 75;
+        if (clickCount == listSize) {
+            point = 100;
+        } else if (clickCount > listSize && clickCount <= listSize + listSize / 2) {
+            point = 75;
         }
 
         return point;
@@ -225,26 +213,12 @@ public class NLogic {
     }
 
     public String showHistory() {
-        if (LevelActivity.value == Utils.EASY) {
-            bestPoint = getPref(EASY_GAME_MAX_POINT);
-            gameWinCount = getPref(NORMAL_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + previousPoint);
-        }
-        if (LevelActivity.value == Utils.MEDIUM) {
-            bestPoint = getPref(MEDIUM_GAME_MAX_POINT);
-            gameWinCount = getPref(MEDIUM_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + previousPoint);
-        }
-        if (LevelActivity.value == Utils.HARD) {
-            bestPoint = getPref(HARD_GAME_MAX_POINT);
-            gameWinCount = getPref(Hard_GAME_WIN_NO);
-            Log.e("previous point ", "is : " + previousPoint);
-        }
+
         Dialog dialog = new Dialog(context);
         dialog.setTitle("Status");
         dialog.setContentView(R.layout.row_d_best_point);
         TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
-        textView.setText("best point: " + bestPoint + "");
+        textView.setText("best point: " + mLevel.getBestpoint() + "\nWin count : " + mLevel.getLevelWinCount());
         TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
         textView1.setText("no of total win: " + gameWinCount + "");
         dialog.show();

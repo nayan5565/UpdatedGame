@@ -41,8 +41,8 @@ public class MyDatabase extends SQLiteOpenHelper {
             + KEY_LEVEL + " text, "
             + KEY_COINS_PRICE + " text, "
             + KEY_DIFFICULTY + " integer, "
-            + KEY_BEST_POINT + "integer, "
-            + KEY_LEVEL_WIN_COUNT + "integer, "
+            + KEY_BEST_POINT + " integer, "
+            + KEY_LEVEL_WIN_COUNT + " integer, "
             + KEY_NO_OF_COINS + " text)";
     private static final String DATABASE_CREATE_ASSET_TABLE = "create table " + DATABASE_ASSET_TABLE + "(" + KEY_LEVEL_ID + " integer, "
             + KEY_PRESENT_ID + " integer, "

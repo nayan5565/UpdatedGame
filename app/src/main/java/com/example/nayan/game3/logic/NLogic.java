@@ -61,7 +61,7 @@ public class NLogic {
         this.gameAdapter = adapter;
 
         bestPoint = mLevel.getBestpoint();
-        gameWinCount = mLevel.getLevelWinCount();
+//        gameWinCount = mLevel.getLevelWinCount();
 
 
     }

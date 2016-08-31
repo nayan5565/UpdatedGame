@@ -41,14 +41,17 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         if (value == Utils.EASY) {
             textView.setText("Normal");
+            textView.setTextColor(0xffff00ff);
             levels = Utils.easy;
         } else if (value == Utils.MEDIUM) {
 
             textView.setText("Medium");
+            textView.setTextColor(0xffff00ff);
             levels = Utils.medium;
         } else if (value == Utils.HARD) {
 
             textView.setText("Hard");
+            textView.setTextColor(0xffff00ff);
             levels = Utils.hard;
 
         }

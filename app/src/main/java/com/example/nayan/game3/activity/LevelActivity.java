@@ -60,6 +60,13 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @Override
+    protected void onRestart() {
+        MyDatabase db=new MyDatabase(this);
+//        db.getAllData();
+        super.onRestart();
+    }
+
     public void init() {
         database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);

@@ -79,8 +79,14 @@ public class MyDatabase extends SQLiteOpenHelper {
             values.put(KEY_COINS_PRICE, mLevel.getCoinPrice());
             values.put(KEY_DIFFICULTY, mLevel.getDifficulty());
             values.put(KEY_NO_OF_COINS, mLevel.getNoOfCoinPrice());
-            values.put(KEY_BEST_POINT, mLevel.getBestpoint());
-            values.put(KEY_LEVEL_WIN_COUNT, mLevel.getLevelWinCount());
+            if (mLevel.getBestpoint()>0){
+                values.put(KEY_BEST_POINT, mLevel.getBestpoint());
+            }
+
+            if (mLevel.getLevelWinCount()>0){
+                values.put(KEY_LEVEL_WIN_COUNT, mLevel.getLevelWinCount());
+            }
+
             String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_ID + "='" + mLevel.getId() + "'";
             Cursor cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Utils {
     public static int IMAGE_ON=1,IMAGE_OFF=0;
-    public static int EASY = 2, MEDIUM = 3, HARD = 4;
+    public static int EASY = 1, MEDIUM = 2, HARD = 3;
     public static ArrayList<MAsset> assetArrayList;
     public static ArrayList<MLevel> easy;
     public static ArrayList<MLevel> medium;

@@ -9,8 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -40,7 +38,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
     Button btnNormal, btnHard, btnMedium;
-    ImageView btnPlay;
+//    ImageView btnPlay;
     Toolbar toolbar;
     MLevel level;
     MyDatabase database;
@@ -78,18 +76,18 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        btnPlay = (ImageView) findViewById(R.id.btnPlay);
-        Utils.zoom(btnPlay, false);
+//        btnPlay = (ImageView) findViewById(R.id.btnPlay);
+//        Utils.zoom(btnPlay, false);
 
-        btnPlay.setOnClickListener(this);
+//        btnPlay.setOnClickListener(this);
         btnNormal = (Button) findViewById(R.id.btnNormal);
-        Utils.zoom(btnNormal, false);
+//        Utils.zoom(btnNormal, false);
         btnNormal.setOnClickListener(this);
         btnMedium = (Button) findViewById(R.id.btnMedium);
-        Utils.zoom(btnMedium, false);
+//        Utils.zoom(btnMedium, false);
         btnMedium.setOnClickListener(this);
         btnHard = (Button) findViewById(R.id.btnHard);
-        Utils.zoom(btnHard, false);
+//        Utils.zoom(btnHard, false);
         btnHard.setOnClickListener(this);
         image = getPREF(KEY_IMAGE);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
@@ -107,29 +105,29 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            btnHard.setVisibility(View.GONE);
-            btnNormal.setVisibility(View.GONE);
-            btnMedium.setVisibility(View.GONE);
-            btnPlay.setVisibility(View.VISIBLE);
-        }
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+////        int id = item.getItemId();
+////        if (id == android.R.id.home) {
+////            btnHard.setVisibility(View.GONE);
+////            btnNormal.setVisibility(View.GONE);
+////            btnMedium.setVisibility(View.GONE);
+////            btnPlay.setVisibility(View.VISIBLE);
+////        }
+////
+////        if (id == R.id.action_settings) {
+////            return true;
+////        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void getOnlineData() {
 
@@ -325,32 +323,32 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                 savePref(KEY_IMAGE, 0 + "");
             }
 
-        } else if (v.getId() == R.id.btnPlay) {
-            Utils.getSound(OpenActivity.this, R.raw.click);
-            btnPlay.setVisibility(View.GONE);
-            btnHard.setVisibility(View.VISIBLE);
-            btnNormal.setVisibility(View.VISIBLE);
-            btnMedium.setVisibility(View.VISIBLE);
+//        } else if (v.getId() == R.id.btnPlay) {
+//            Utils.getSound(OpenActivity.this, R.raw.click);
+//            btnPlay.setVisibility(View.GONE);
+//            btnHard.setVisibility(View.VISIBLE);
+//            btnNormal.setVisibility(View.VISIBLE);
+//            btnMedium.setVisibility(View.VISIBLE);
 
 
         } else if (v.getId() == R.id.btnNormal) {
             Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "normal", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", 2);
+            intent.putExtra("type", Utils.EASY);
             startActivity(intent);
 
         } else if (v.getId() == R.id.btnHard) {
             Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "hard", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", 4);
+            intent.putExtra("type", Utils.HARD);
             startActivity(intent);
         } else if (v.getId() == R.id.btnMedium) {
             Utils.getSound(OpenActivity.this, R.raw.click);
             Toast.makeText(this, "medium", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", 3);
+            intent.putExtra("type", Utils.MEDIUM);
             startActivity(intent);
         }
     }

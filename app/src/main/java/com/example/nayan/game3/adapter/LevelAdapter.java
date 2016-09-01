@@ -26,7 +26,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     MLevel mLevel = new MLevel();
     Context context;
     LayoutInflater inflater;
-//    Logic logic;
+
 
 
     public LevelAdapter(Context context) {
@@ -42,9 +42,6 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         this.levels = levels;
 
         Log.e("log", "setdata:" + levels.size());
-//        logic = Logic.getInstance(context);
-//        logic.callData(levels, this);
-
         notifyDataSetChanged();
     }
 

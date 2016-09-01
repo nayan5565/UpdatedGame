@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,12 +23,13 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
     public static int value;
-    static TextView textView;
+    public static TextView textView;
     static LevelAdapter levelAdapter;
     static ArrayList<MLevel> levels;
     static MLevel level = new MLevel();
     MyDatabase database;
     RecyclerView recyclerView;
+    Toolbar toolbar;
 
 
     @Override
@@ -38,38 +42,58 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         Log.e("log", "is" + value);
 
         init();
+        prepareDisplay();
+        getLocalData();
 
-        if (value == Utils.EASY) {
-            textView.setText("Normal");
-            textView.setTextColor(0xffff00ff);
-            levels = Utils.easy;
-        } else if (value == Utils.MEDIUM) {
-
-            textView.setText("Medium");
-            textView.setTextColor(0xffff00ff);
-            levels = Utils.medium;
-        } else if (value == Utils.HARD) {
-
-            textView.setText("Hard");
-            textView.setTextColor(0xffff00ff);
-            levels = Utils.hard;
-
-        }
-        levelAdapter.setData(levels);
+//        if (value == Utils.EASY) {
+//            textView.setText("Normal");
+//            textView.setTextColor(0xffff00ff);
+//            levels = Utils.easy;
+//        } else if (value == Utils.MEDIUM) {
+//
+//            textView.setText("Medium");
+//            textView.setTextColor(0xffff00ff);
+//            levels = Utils.medium;
+//        } else if (value == Utils.HARD) {
+//
+//            textView.setText("Hard");
+//            textView.setTextColor(0xffff00ff);
+//            levels = Utils.hard;
+//
+//        }
+//        levelAdapter.setData(levels);
 
 
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        id = R.id.action_settings;
+        //id unused
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void getLocalData() {
+        levels = database.getAllData(value);
+        levelAdapter.setData(levels);
+    }
+
+    @Override
     protected void onRestart() {
-        MyDatabase db=new MyDatabase(this);
-//        db.getAllData();
+        getLocalData();
         super.onRestart();
     }
 
     public void init() {
         database = new MyDatabase(this);
-        textView = (TextView) findViewById(R.id.tct);
+//        textView = (TextView) findViewById(R.id.tct);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -81,9 +105,18 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
 
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+
         levelAdapter = new LevelAdapter(this);
         recyclerView.setAdapter(levelAdapter);
 
+
+    }
+    public void prepareDisplay() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

@@ -1,7 +1,6 @@
 package com.example.nayan.game3.activity;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,17 +25,12 @@ import java.util.Collections;
  * Created by NAYAN on 8/20/2016.
  */
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String MYPREF = "mpref";
-    public static final String KEY_IMAGE = "image";
     public static int levelId;
     public static MLevel mLevel;
     ArrayList<MAsset> imageArrayList;
-    ImageView img, imgSetting;
+    ImageView imgSetting;
     RecyclerView recyclerView;
     GameAdapter gameAdapter;
-    SharedPreferences preferences;
-    String image;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +40,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         init();
-        levelId = mLevel.getId();
-        NLogic.getInstance(this).setLevel(mLevel);
-
-        imageArrayList = generateAssets();
-
-        Collections.shuffle(imageArrayList);
-        gameAdapter.setData(imageArrayList);
+       getLocalData();
 
 
     }
 
-    public ArrayList<MAsset> generateAssets() {
-        int count = 20;
+    public void getLocalData() {
+        ArrayList<MAsset> realAssets = new ArrayList<>();
         MyDatabase db = new MyDatabase(this);
+        realAssets = db.getData(mLevel.getId());
+        imageArrayList = generateAssets(realAssets);
+        Collections.shuffle(imageArrayList);
+        gameAdapter.setData(imageArrayList);
+    }
+
+    public ArrayList<MAsset> generateAssets(ArrayList<MAsset> realAssets) {
+        int count = 20;
         ArrayList<MAsset> tempAsset = new ArrayList<>();
-        for (MAsset asset : db.getData(levelId)) {
+        for (MAsset asset : realAssets) {
             NLogic.count = 0;
 
             NLogic.previousId = tempAsset.size() + 1;
@@ -95,21 +91,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
-
-//        image = getPREF(KEY_IMAGE);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
-
-//        img = (ImageView) findViewById(R.id.img);
-        // img.setOnClickListener(this);
-       /* if (image.equals(1 + "")) {
-            NLogic.getInstance(this).isSoundPlay = true;
-            img.setImageResource(R.drawable.on);
-        } else if (image.equals(0 + "")) {
-            NLogic.getInstance(this).isSoundPlay = false;
-            img.setImageResource(R.drawable.off);
-        }*/
-
+        NLogic.getInstance(this).setLevel(mLevel);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         if (LevelActivity.value == Utils.EASY) {
@@ -125,37 +109,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameAdapter = new GameAdapter(this);
         recyclerView.setAdapter(gameAdapter);
     }
-
-   /* public void normalGame() {
-        mData = new MData();
-        mData.setPresentId(3);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/eight.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(4);
-        mData.setPresentType(2);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/eight.png");
-        arrayList.add(mData);
-
-        mData = new MData();
-        mData.setPresentId(6);
-        mData.setPresentType(3);
-        mData.setImage("http://www.radhooni.com/content/match_game/v1/images/fifteen.png");
-        arrayList.add(mData);
-
-
-        Collections.shuffle(arrayList);
-
-        levelAdapter.setData(arrayList);
-    }*/
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.imgseting) {
             final Dialog dialog = new Dialog(this);
-            dialog.setTitle("GameActivity Information");
+            dialog.setTitle("Game Information");
             dialog.requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
             dialog.setContentView(R.layout.dialog_setting);
             Button btnWin = (Button) dialog.findViewById(R.id.btnStatics);
@@ -168,30 +126,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             });
 
             dialog.show();
-
-        }/* else if (v.getId() == R.id.img) {
-            if (NLogic.getInstance(this).isSoundPlay == false) {
-                NLogic.getInstance(this).isSoundPlay = true;
-                img.setImageResource(R.drawable.on);
-                savePref(KEY_IMAGE, 1 + "");
-            } else {
-                NLogic.getInstance(this).isSoundPlay = false;
-                img.setImageResource(R.drawable.off);
-                savePref(KEY_IMAGE, 0 + "");
-            }
-
-        }*/
+        }
     }
-
-    /*private void savePref(String key, String value) {
-        preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public String getPREF(String key) {
-        preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        return preferences.getString(key, "null");
-    }*/
 }

@@ -27,36 +27,46 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/btnPlay"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/play_image" />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dino Matching"
+                android:textColor="#038ef0"
+                android:textSize="40sp"
+                android:textStyle="italic" />
 
 
             <Button
                 android:id="@+id/btnNormal"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/easy_img"
-                android:visibility="gone" />
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/mybutton"
+                android:text="Easy"
+                android:textColor="#fff"
+                android:textSize="20dp" />
 
             <Button
-
                 android:id="@+id/btnMedium"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/medium_img"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/mybutton"
                 android:text="Medium"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnHard"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/hard_img"
-                android:visibility="gone" />
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/mybutton"
+                android:text="Hard"
+                android:textColor="#fff"
+                android:textSize="20dp" />
 
             <View
                 android:layout_width="0dp"

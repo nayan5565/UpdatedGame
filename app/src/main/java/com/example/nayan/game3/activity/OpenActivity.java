@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.database.MyDatabase;
@@ -153,7 +152,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(1);
+                                level.setDifficulty(Utils.EASY);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
 
@@ -193,7 +192,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(2);
+                                level.setDifficulty(Utils.MEDIUM);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
 
@@ -230,7 +229,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 level.setLevel(jsonObject.getString("level"));
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(3);
+                                level.setDifficulty(Utils.HARD);
 
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
                                 ArrayList<MAsset> asset = new ArrayList<MAsset>();
@@ -262,15 +261,15 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        saveToDb();
-                        saveDbTOAsset();
+                        saveLevelToDb();
+                        saveAssetToDb();
 
                     }
                 }
         );
     }
 
-    private void saveToDb() {
+    private void saveLevelToDb() {
         for (MLevel data : Utils.easy) {
             database.addLevelFromJson(data);
         }
@@ -284,15 +283,15 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getLocalData() {
-        Utils.easy = database.getAllData(1);
+        Utils.easy = database.getAllData(Utils.EASY);
         Log.e("log", "easy : " + Utils.easy.size());
-        Utils.medium = database.getAllData(2);
+        Utils.medium = database.getAllData(Utils.MEDIUM);
         Log.e("log", "medium : " + Utils.medium.size());
-        Utils.hard = database.getAllData(3);
+        Utils.hard = database.getAllData(Utils.HARD);
         Log.e("log", "hard : " + Utils.hard.size());
     }
 
-    private void saveDbTOAsset() {
+    private void saveAssetToDb() {
         for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
         }
@@ -333,20 +332,17 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.getId() == R.id.btnNormal) {
             Utils.getSound(OpenActivity.this, R.raw.click);
-            Toast.makeText(this, "normal", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.EASY);
             startActivity(intent);
 
         } else if (v.getId() == R.id.btnHard) {
             Utils.getSound(OpenActivity.this, R.raw.click);
-            Toast.makeText(this, "hard", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.HARD);
             startActivity(intent);
         } else if (v.getId() == R.id.btnMedium) {
             Utils.getSound(OpenActivity.this, R.raw.click);
-            Toast.makeText(this, "medium", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.MEDIUM);
             startActivity(intent);

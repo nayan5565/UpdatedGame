@@ -4,25 +4,23 @@
     android:layout_height="100dp"
     android:background="@drawable/level3_bg_image"
     android:layout_margin="5dp"
+    android:gravity="center"
     android:orientation="vertical">
 
    <TextView
        android:id="@+id/txtLevel"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
        android:gravity="center"
        android:textColor="#0f0"
        android:textSize="20dp"
        android:text="1"/>
 
-   <!--<TextView-->
-       android:id="@+id/txtLevelPoint"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:gravity="center"
-       android:textColor="#f00"
-       android:textSize="20dp"
-       android:text="point"/>
+  <ImageView
+      android:id="@+id/imgStar"
+      android:layout_width="20dp"
+      android:layout_height="20dp"
+      android:background="#f0f"/>
 
 
 </LinearLayout>

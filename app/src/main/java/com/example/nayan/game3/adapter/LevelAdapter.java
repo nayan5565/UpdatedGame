@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
@@ -26,7 +27,6 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     MLevel mLevel = new MLevel();
     Context context;
     LayoutInflater inflater;
-
 
 
     public LevelAdapter(Context context) {
@@ -57,8 +57,16 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText("Level " + mLevel.getLevel()+"\n point "+mLevel.getBestpoint());
+        holder.txtLevel.setText("Level " + mLevel.getLevel() +"\n point "+mLevel.getBestpoint());
+
         holder.txtLevel.setTextColor(0xffff00ff);
+        if (mLevel.getBestpoint() == 100) {
+            holder.imgStar.setImageResource(R.drawable.star);
+        } else if (mLevel.getBestpoint() == 75) {
+            holder.imgStar.setImageResource(R.drawable.star2);
+        } else if (mLevel.getBestpoint() == 50) {
+            holder.imgStar.setImageResource(R.drawable.star_icon);
+        }
 
 
     }
@@ -71,10 +79,12 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 
     class MyViewholder extends RecyclerView.ViewHolder {
         TextView txtLevel;
+        ImageView imgStar;
 //        TextView txtLevelPoint;
 
         public MyViewholder(final View itemView) {
             super(itemView);
+            imgStar = (ImageView) itemView.findViewById(R.id.imgStar);
             txtLevel = (TextView) itemView.findViewById(R.id.txtLevel);
 //            txtLevelPoint = (TextView) itemView.findViewById(R.id.txtLevelPoint);
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -93,7 +93,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     public void init() {
         database = new MyDatabase(this);
-//        textView = (TextView) findViewById(R.id.tct);
+        textView = (TextView) findViewById(R.id.tct);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);

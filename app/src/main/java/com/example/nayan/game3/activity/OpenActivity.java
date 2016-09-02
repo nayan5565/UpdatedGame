@@ -37,7 +37,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
     Button btnNormal, btnHard, btnMedium;
-//    ImageView btnPlay;
+    //    ImageView btnPlay;
     Toolbar toolbar;
     MLevel level;
     MyDatabase database;
@@ -46,6 +46,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     ImageView img, imgSetting;
     String image;
     Animation animation;
+//    TextView title;
 
     //   NavigationDrawerFragment drawerFragment;
 
@@ -59,7 +60,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         init();
         getOnlineData();
 
-        getLocalData();
+//        getLocalData();
 
         prepareDisplay();
 
@@ -71,7 +72,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
+//        title = (TextView) findViewById(R.id.txtTitles);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -282,14 +283,14 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void getLocalData() {
-        Utils.easy = database.getAllData(Utils.EASY);
-        Log.e("log", "easy : " + Utils.easy.size());
-        Utils.medium = database.getAllData(Utils.MEDIUM);
-        Log.e("log", "medium : " + Utils.medium.size());
-        Utils.hard = database.getAllData(Utils.HARD);
-        Log.e("log", "hard : " + Utils.hard.size());
-    }
+//    private void getLocalData() {
+//        Utils.easy = database.getAllData(Utils.EASY);
+//        Log.e("log", "easy : " + Utils.easy.size());
+//        Utils.medium = database.getAllData(Utils.MEDIUM);
+//        Log.e("log", "medium : " + Utils.medium.size());
+//        Utils.hard = database.getAllData(Utils.HARD);
+//        Log.e("log", "hard : " + Utils.hard.size());
+//    }
 
     private void saveAssetToDb() {
         for (MAsset data2 : Utils.assetArrayList) {
@@ -331,7 +332,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         } else if (v.getId() == R.id.btnNormal) {
+//            LevelActivity.textView.setText("Easy");
             Utils.getSound(OpenActivity.this, R.raw.click);
+
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.EASY);
             startActivity(intent);

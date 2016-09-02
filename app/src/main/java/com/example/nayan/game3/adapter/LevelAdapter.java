@@ -57,7 +57,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText("Level " + mLevel.getLevel() +"\n point "+mLevel.getBestpoint());
+        holder.txtLevel.setText("Level " + mLevel.getLevel());
+        holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
 
         holder.txtLevel.setTextColor(0xffff00ff);
         if (mLevel.getBestpoint() == 100) {
@@ -80,13 +81,13 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     class MyViewholder extends RecyclerView.ViewHolder {
         TextView txtLevel;
         ImageView imgStar;
-//        TextView txtLevelPoint;
+        TextView txtLevelPoint;
 
         public MyViewholder(final View itemView) {
             super(itemView);
             imgStar = (ImageView) itemView.findViewById(R.id.imgStar);
             txtLevel = (TextView) itemView.findViewById(R.id.txtLevel);
-//            txtLevelPoint = (TextView) itemView.findViewById(R.id.txtLevelPoint);
+            txtLevelPoint = (TextView) itemView.findViewById(R.id.txtPoint);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

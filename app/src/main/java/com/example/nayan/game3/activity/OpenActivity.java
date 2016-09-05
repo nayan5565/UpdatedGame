@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -50,6 +52,15 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     //   NavigationDrawerFragment drawerFragment;
 
+    public static String getPath(String fileName) {
+        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Match Game";
+        File file = new File(dir);
+        if (!file.isDirectory()) {
+            file.mkdirs();
+
+        }
+        return dir + File.separator + fileName;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

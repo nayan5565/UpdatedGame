@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.nayan.game3.DownLoadAsyncTask;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.database.MyDatabase;
+import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
@@ -44,6 +46,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         init();
         prepareDisplay();
         getLocalData();
+        downloadAssets();
 
 //        if (value == Utils.EASY) {
 //            textView.setText("Normal");
@@ -64,6 +67,21 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 //        levelAdapter.setData(levels);
 
 
+    }
+
+    private void downloadAssets(){
+        ArrayList<String>uniqueImage=new ArrayList<>();
+        for (int i=0;i<levels.size();i++){
+            ArrayList<MAsset>assetArrayList=database.getData(levels.get(i).getId());
+            for (int j =0;j<assetArrayList.size();j++){
+                if (!uniqueImage.contains(assetArrayList.get(j).getImages())){
+                    uniqueImage.add(assetArrayList.get(j).getImages());
+                }
+            }
+        }
+        for (int i=0;i<uniqueImage.size();i++){
+            new DownLoadAsyncTask(this,OpenActivity.getPath(uniqueImage.get(i))).execute(IMAGE_URL + uniqueImage.get(i));
+        }
     }
 
     @Override

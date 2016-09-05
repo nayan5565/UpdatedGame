@@ -1,6 +1,8 @@
 package com.example.nayan.game3.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +12,10 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.activity.LevelActivity;
+import com.example.nayan.game3.activity.OpenActivity;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,9 +71,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                     .into(holder.img);*/
 
         if (mAsset.getImageOpen() == 1) {
-            Picasso.with(context)
-                    .load(LevelActivity.IMAGE_URL + mAsset.getImages())
-                    .into(holder.img);
+            Bitmap bitmap= BitmapFactory.decodeFile(OpenActivity.getPath(mAsset.getImages()));
+            holder.img.setImageBitmap(bitmap);
         } else {
             holder.img.setImageResource(R.drawable.place);
             //holder.img.setVisibility(View.INVISIBLE);

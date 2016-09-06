@@ -1,6 +1,12 @@
 package com.example.nayan.game3.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nayan.game3.DownLoadAsyncTask;
 import com.example.nayan.game3.R;
@@ -19,20 +26,21 @@ import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
     public static int value;
-    public static TextView textView;
     static LevelAdapter levelAdapter;
     static ArrayList<MLevel> levels;
     static MLevel level = new MLevel();
     MyDatabase database;
     RecyclerView recyclerView;
     Toolbar toolbar;
-
+    TextView textView;
+    private int STORAGE_PERMISSION_CODE = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,40 +56,78 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         getLocalData();
         downloadAssets();
 
-//        if (value == Utils.EASY) {
-//            textView.setText("Normal");
-//            textView.setTextColor(0xffff00ff);
-//            levels = Utils.easy;
-//        } else if (value == Utils.MEDIUM) {
-//
-//            textView.setText("Medium");
-//            textView.setTextColor(0xffff00ff);
-//            levels = Utils.medium;
-//        } else if (value == Utils.HARD) {
-//
-//            textView.setText("Hard");
-//            textView.setTextColor(0xffff00ff);
-//            levels = Utils.hard;
-//
-//        }
-//        levelAdapter.setData(levels);
+        if (value == Utils.EASY) {
+            textView.setText("Normal");
+            textView.setTextColor(0xffff00ff);
+
+        } else if (value == Utils.MEDIUM) {
+
+            textView.setText("Medium");
+            textView.setTextColor(0xffff00ff);
+
+        } else if (value == Utils.HARD) {
+
+            textView.setText("Hard");
+            textView.setTextColor(0xffff00ff);
+
+
+        }
 
 
     }
 
-    private void downloadAssets(){
-        ArrayList<String>uniqueImage=new ArrayList<>();
-        for (int i=0;i<levels.size();i++){
-            ArrayList<MAsset>assetArrayList=database.getData(levels.get(i).getId());
-            for (int j =0;j<assetArrayList.size();j++){
-                if (!uniqueImage.contains(assetArrayList.get(j).getImages())){
-                    uniqueImage.add(assetArrayList.get(j).getImages());
-                }
+    private void requestStoragePermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                downloadAssets();
+                //Displaying a toast
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
-        for (int i=0;i<uniqueImage.size();i++){
-            new DownLoadAsyncTask(this,OpenActivity.getPath(uniqueImage.get(i))).execute(IMAGE_URL + uniqueImage.get(i));
-        }
+    }
+
+    private void downloadAssets() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            ArrayList<String> uniqueImage = new ArrayList<>();
+            for (int i = 0; i < levels.size(); i++) {
+                ArrayList<MAsset> assetArrayList = database.getData(levels.get(i).getId());
+                for (int j = 0; j < assetArrayList.size(); j++) {
+                    if (!uniqueImage.contains(assetArrayList.get(j).getImages())) {
+                        uniqueImage.add(assetArrayList.get(j).getImages());
+                    }
+                }
+            }
+            for (int i = 0; i < uniqueImage.size(); i++) {
+                Log.e("DOWNLOAD_PATH", "Path:" + OpenActivity.getPath(uniqueImage.get(i)));
+                File file = new File(OpenActivity.getPath(uniqueImage.get(i)));
+                if (!file.exists()) {
+                    new DownLoadAsyncTask(this, OpenActivity.getPath(uniqueImage.get(i))).execute(IMAGE_URL + uniqueImage.get(i));
+                }
+
+            }
+        } else requestStoragePermission();
+
+
     }
 
     @Override
@@ -93,7 +139,13 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        id = R.id.action_settings;
+        if (id == android.R.id.home) {
+            Intent intent = new Intent(this, OpenActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.action_settings) {
+
+        }
+
         //id unused
         return super.onOptionsItemSelected(item);
     }
@@ -112,8 +164,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     public void init() {
         database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         if (value == Utils.EASY) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -123,13 +173,14 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
 
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         levelAdapter = new LevelAdapter(this);
         recyclerView.setAdapter(levelAdapter);
 
 
     }
+
     public void prepareDisplay() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);

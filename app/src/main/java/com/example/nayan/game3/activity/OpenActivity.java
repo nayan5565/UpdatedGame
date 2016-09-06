@@ -1,5 +1,6 @@
 package com.example.nayan.game3.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -39,23 +42,19 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     public static final String MYPREF = "mpref";
     public static final String KEY_IMAGE = "image";
     Button btnNormal, btnHard, btnMedium;
-    //    ImageView btnPlay;
     Toolbar toolbar;
     MLevel level;
     MyDatabase database;
     DrawerLayout drawerLayout;
     SharedPreferences preferences;
-    ImageView img, imgSetting;
-    String image;
     Animation animation;
-//    TextView title;
 
     //   NavigationDrawerFragment drawerFragment;
 
     public static String getPath(String fileName) {
         String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Match Game";
         File file = new File(dir);
-        if (!file.isDirectory()) {
+        if (!file.exists()) {
             file.mkdirs();
 
         }
@@ -70,9 +69,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
         getOnlineData();
-
-//        getLocalData();
-
         prepareDisplay();
 
     }
@@ -83,62 +79,75 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-//        title = (TextView) findViewById(R.id.txtTitles);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-//        btnPlay = (ImageView) findViewById(R.id.btnPlay);
-//        Utils.zoom(btnPlay, false);
-
-//        btnPlay.setOnClickListener(this);
         btnNormal = (Button) findViewById(R.id.btnNormal);
-//        Utils.zoom(btnNormal, false);
         btnNormal.setOnClickListener(this);
         btnMedium = (Button) findViewById(R.id.btnMedium);
-//        Utils.zoom(btnMedium, false);
         btnMedium.setOnClickListener(this);
         btnHard = (Button) findViewById(R.id.btnHard);
-//        Utils.zoom(btnHard, false);
         btnHard.setOnClickListener(this);
-        image = getPREF(KEY_IMAGE);
-        imgSetting = (ImageView) findViewById(R.id.imgseting);
-        imgSetting.setOnClickListener(this);
 
-
-        img = (ImageView) findViewById(R.id.img);
-        img.setOnClickListener(this);
-        if (image.equals(1 + "")) {
-            Utils.isSoundPlay = true;
-            img.setImageResource(R.drawable.on);
-        } else if (image.equals(0 + "")) {
-            Utils.isSoundPlay = false;
-            img.setImageResource(R.drawable.off);
-        }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-////        int id = item.getItemId();
-////        if (id == android.R.id.home) {
-////            btnHard.setVisibility(View.GONE);
-////            btnNormal.setVisibility(View.GONE);
-////            btnMedium.setVisibility(View.GONE);
-////            btnPlay.setVisibility(View.VISIBLE);
-////        }
-////
-////        if (id == R.id.action_settings) {
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+
+        }
+
+        if (id == R.id.action_settings) {
+
+            final Dialog dialog = new Dialog(this);
+            dialog.setTitle("Setting");
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.dialog_setting);
+            final ImageView imgSound = (ImageView) dialog.findViewById(R.id.imgSoundOnOf);
+            Button button = (Button) dialog.findViewById(R.id.btnStatics);
+            String image;
+            image = getPREF(KEY_IMAGE);
+            if (image.equals(1 + "")) {
+                Utils.isSoundPlay = true;
+                imgSound.setImageResource(R.drawable.on);
+            } else if (image.equals(0 + "")) {
+                Utils.isSoundPlay = false;
+                imgSound.setImageResource(R.drawable.off);
+            }
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            imgSound.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Utils.isSoundPlay == false) {
+                        Utils.isSoundPlay = true;
+                        imgSound.setImageResource(R.drawable.on);
+                        savePref(KEY_IMAGE, 1 + "");
+                    } else {
+                        Utils.isSoundPlay = false;
+                        imgSound.setImageResource(R.drawable.off);
+                        savePref(KEY_IMAGE, 0 + "");
+                    }
+                }
+            });
+            dialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void getOnlineData() {
 
@@ -183,11 +192,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                     mAsset.setPresentId(count);
                                     Log.e("Loge", "present id id ::" + mAsset.getPresentId());
                                     Utils.assetArrayList.add(mAsset);
-
-
                                 }
-//                                level.setAsset(Utils.assetArrayList);
-
                                 Utils.easy.add(level);
 
 
@@ -205,7 +210,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                                 level.setCoinPrice(jsonObject.getString("coins_price"));
                                 level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
                                 level.setDifficulty(Utils.MEDIUM);
-
                                 JSONArray asset1 = jsonObject.getJSONArray("asset");
 
                                 MAsset mAsset;
@@ -224,7 +228,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
                                     Utils.assetArrayList.add(mAsset);
                                 }
-//                                level.setAsset(Utils.assetArrayList);
                                 Utils.medium.add(level);
 
 
@@ -263,7 +266,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
                                     Utils.assetArrayList.add(mAsset);
                                 }
-//                                level.setAsset(Utils.assetArrayList);
                                 Utils.hard.add(level);
 
 
@@ -294,15 +296,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-//    private void getLocalData() {
-//        Utils.easy = database.getAllData(Utils.EASY);
-//        Log.e("log", "easy : " + Utils.easy.size());
-//        Utils.medium = database.getAllData(Utils.MEDIUM);
-//        Log.e("log", "medium : " + Utils.medium.size());
-//        Utils.hard = database.getAllData(Utils.HARD);
-//        Log.e("log", "hard : " + Utils.hard.size());
-//    }
-
     private void saveAssetToDb() {
         for (MAsset data2 : Utils.assetArrayList) {
             database.addAssetFromJson(data2);
@@ -320,32 +313,15 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.img) {
-            if (Utils.isSoundPlay == false) {
-                Utils.isSoundPlay = true;
-                img.setImageResource(R.drawable.on);
-                savePref(KEY_IMAGE, 1 + "");
-            } else {
-                Utils.isSoundPlay = false;
-                img.setImageResource(R.drawable.off);
-                savePref(KEY_IMAGE, 0 + "");
-            }
-
-//        } else if (v.getId() == R.id.btnPlay) {
-//            Utils.getSound(OpenActivity.this, R.raw.click);
-//            btnPlay.setVisibility(View.GONE);
-//            btnHard.setVisibility(View.VISIBLE);
-//            btnNormal.setVisibility(View.VISIBLE);
-//            btnMedium.setVisibility(View.VISIBLE);
-
-
-        } else if (v.getId() == R.id.btnNormal) {
-//            LevelActivity.textView.setText("Easy");
+        if (v.getId() == R.id.btnNormal) {
             Utils.getSound(OpenActivity.this, R.raw.click);
-
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.EASY);
             startActivity(intent);

@@ -74,6 +74,7 @@ public class NLogic {
         presentPoint = pointCount(listSize);
         final Dialog dialog = new Dialog(context);
         dialog.setTitle("GameActivity Over");
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.row_dialog);
         TextView textView = (TextView) dialog.findViewById(R.id.txt);
         textView.setText("Point : " + presentPoint);
@@ -102,9 +103,11 @@ public class NLogic {
         list.get(pos).setImageOpen(Utils.IMAGE_ON);
         gameAdapter.setData(list);
         count++;
+        Utils.getSound(context,R.raw.click);
         if (count == 2) {
 
             if (previousType == mImage.getPresentType()) {
+                Log.e("log","matchwincount : "+matchWinCount);
                 matchWinCount++;
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -119,6 +122,7 @@ public class NLogic {
 
 
                 if (matchWinCount == list.size() / 2) {
+
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -130,6 +134,7 @@ public class NLogic {
                     //starting game over
                     gameWinCount = mLevel.getLevelWinCount();
                     gameWinCount++;
+                    Log.e("log","game over : "+gameWinCount);
                     mLevel.setLevelWinCount(gameWinCount);
                     savePoint(listSize);
                     showInformation(listSize);
@@ -194,18 +199,6 @@ public class NLogic {
         }
 
         return point;
-    }
-
-    private void savePref(String key, int value) {
-        preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(key, value);
-        editor.apply();
-    }
-
-    private int getPref(String key) {
-        preferences = context.getSharedPreferences(MyPREFERENCE, Context.MODE_PRIVATE);
-        return preferences.getInt(key, 0);
     }
 
     public String showHistory() {

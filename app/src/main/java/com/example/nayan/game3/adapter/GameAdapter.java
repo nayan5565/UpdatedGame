@@ -15,7 +15,6 @@ import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.OpenActivity;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
-import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -92,7 +91,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
         public MyViewholder(final View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.img);
+            img = (ImageView) itemView.findViewById(R.id.imgSound);
             /*img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +108,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 public void onClick(View v) {
                     Log.e("position", "is" + getAdapterPosition());
                     mAsset = imageArrayList.get(getAdapterPosition());
-                    Utils.getSound(context,R.raw.click);
+
 //
                     //MyAnimation.rotation(itemView,false);
                     Log.e("ADA","pres ID: "+mAsset.getPresentId());

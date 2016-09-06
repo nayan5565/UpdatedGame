@@ -3,6 +3,7 @@ package com.example.nayan.game3;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.nayan.game3.utils.Utils;
 
@@ -31,11 +32,13 @@ public class DownLoadAsyncTask extends AsyncTask<String, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         progressDialog=ProgressDialog.show(context,null,Utils.ASSETS_DOWNLOAD_MASSAGE+Utils.convertNum("0%"));
+        Log.e("DOWNLOAD","start:"+path);
         super.onPreExecute();
     }
 
     @Override
     protected Boolean doInBackground(String... strings) {
+        Log.e("DOWNLOAD_RUN","url:"+strings[0]);
         int count;
         try {
             URL url = new URL(strings[0]);
@@ -46,7 +49,7 @@ public class DownLoadAsyncTask extends AsyncTask<String, Integer, Boolean> {
             OutputStream outputStream = new FileOutputStream(path);
             byte data[] = new byte[1024];
             long total=0;
-            while ((count = inputStream.read()) != -1) {
+            while ((count = inputStream.read(data)) != -1) {
                 total += count;
                 publishProgress((int)total*100/lengthOfFile);
                 outputStream.write(data,0,count);
@@ -66,12 +69,14 @@ public class DownLoadAsyncTask extends AsyncTask<String, Integer, Boolean> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
+        Log.e("DOWNLOAD_PROG","%:"+values[0]);
         progressDialog.setMessage(Utils.ASSETS_DOWNLOAD_MASSAGE +values[0]+"%");
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+        Log.e("DOWNLOAD_POST","completed");
         progressDialog.dismiss();
     }
 }

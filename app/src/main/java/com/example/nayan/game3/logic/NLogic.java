@@ -24,12 +24,6 @@ import java.util.Collections;
  */
 public class NLogic {
     public static final String MyPREFERENCE = "mypref";
-    public static final String HARD_GAME_MAX_POINT = "hardMax";
-    public static final String EASY_GAME_MAX_POINT = "normalMax";
-    public static final String MEDIUM_GAME_MAX_POINT = "mediumMax";
-    public static final String Hard_GAME_WIN_NO = "hardWin";
-    public static final String MEDIUM_GAME_WIN_NO = "mediumWin";
-    public static final String NORMAL_GAME_WIN_NO = "normalWin";
     public static int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
     static NLogic nLogic;
 
@@ -100,7 +94,7 @@ public class NLogic {
         Log.e("Loge", "present id ::" + mImage.getPresentId());
 
 
-        if (previousId == mImage.getPresentId() || mImage.getImageOpen() == Utils.IMAGE_ON) {
+        if (previousId == mImage.getPresentId() || mImage.getImageOpen() == Utils.IMAGE_ON||count>1) {
             return;
         }
         clickCount++;

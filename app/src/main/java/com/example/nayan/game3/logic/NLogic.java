@@ -111,6 +111,7 @@ public class NLogic {
                     public void run() {
 
                         Utils.getSound(context, R.raw.match2);
+                        count = 0;
 
 
                     }
@@ -134,7 +135,7 @@ public class NLogic {
                     showInformation(listSize);
                 }
                 previousId = 0;
-                count = 0;
+
                 return;
             } else {
 
@@ -151,9 +152,9 @@ public class NLogic {
                             }
                         }
                         gameAdapter.setData(list);
+                        count = 0;
                     }
                 }, 1000);
-                count = 0;
                 previousId = 0;
                 return;
             }

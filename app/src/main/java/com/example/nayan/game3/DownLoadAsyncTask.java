@@ -31,7 +31,7 @@ public class DownLoadAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        progressDialog=ProgressDialog.show(context,null,Utils.ASSETS_DOWNLOAD_MASSAGE+Utils.convertNum("0%"));
+        progressDialog=ProgressDialog.show(context,null,"downloading.... 0%");
         Log.e("DOWNLOAD","start:"+path);
         super.onPreExecute();
     }

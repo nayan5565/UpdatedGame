@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     ImageView imgSetting;
     RecyclerView recyclerView;
     GameAdapter gameAdapter;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
        getLocalData();
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if (id==android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
     }
 
     public void getLocalData() {
@@ -91,6 +102,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
         NLogic.getInstance(this).setLevel(mLevel);
@@ -116,7 +132,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             dialog.setTitle("Game Information");
             dialog.requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
             dialog.setContentView(R.layout.dialog_setting);
-            Button btnWin = (Button) dialog.findViewById(R.id.btnStatics);
+            Button btnWin = (Button) dialog.findViewById(R.id.btnBack);
             btnWin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

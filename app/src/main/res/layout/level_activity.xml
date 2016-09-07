@@ -8,14 +8,12 @@
     android:background="@drawable/level_bg_image"
     tools:context=".activity.LevelActivity">
 
-    <include layout="@layout/app_bar"/>
+    <include layout="@layout/app_bar" />
 
     <TextView
         android:id="@+id/tct"
-
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#00f"
         android:gravity="center"
         android:textSize="30dp" />
 

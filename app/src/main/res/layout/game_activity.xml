@@ -8,6 +8,8 @@
     android:orientation="vertical"
     tools:context=".activity.LevelActivity">
 
+    <include layout="@layout/app_bar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
 

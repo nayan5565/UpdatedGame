@@ -1,7 +1,6 @@
 package com.example.nayan.game3.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.DownLoadAsyncTask;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.LevelAdapter;
@@ -30,7 +30,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
-
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
     public static int value;
     static LevelAdapter levelAdapter;
@@ -41,6 +40,8 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     Toolbar toolbar;
     TextView textView;
     private int STORAGE_PERMISSION_CODE = 23;
+    OpenActivity openActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +59,17 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         if (value == Utils.EASY) {
             textView.setText("Normal");
-            textView.setTextColor(0xffff00ff);
+            textView.setTextColor(0xff888888);
 
         } else if (value == Utils.MEDIUM) {
 
             textView.setText("Medium");
-            textView.setTextColor(0xffff00ff);
+            textView.setTextColor(0xff444444);
 
         } else if (value == Utils.HARD) {
 
             textView.setText("Hard");
-            textView.setTextColor(0xffff00ff);
+            textView.setTextColor(0xffcccccc);
 
 
         }
@@ -136,14 +137,18 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent(this, OpenActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.action_settings) {
 
+            finish();
+
+        } else if (id == R.id.action_settings) {
+            DialogSoundOnOff.dialogShow(this);
+            return true;
         }
 
         //id unused
@@ -162,6 +167,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void init() {
+        openActivity=new OpenActivity();
         database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);

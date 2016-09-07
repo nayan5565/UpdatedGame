@@ -1,9 +1,7 @@
 package com.example.nayan.game3.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -16,8 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.ImageView;
 
+import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
@@ -39,16 +37,13 @@ import cz.msebera.android.httpclient.Header;
  * Created by NAYAN on 8/4/2016.
  */
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String MYPREF = "mpref";
-    public static final String KEY_IMAGE = "image";
     Button btnNormal, btnHard, btnMedium;
     Toolbar toolbar;
     MLevel level;
     MyDatabase database;
     DrawerLayout drawerLayout;
-    SharedPreferences preferences;
     Animation animation;
-
+    String image;
     //   NavigationDrawerFragment drawerFragment;
 
     public static String getPath(String fileName) {
@@ -75,6 +70,14 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init() {
 
+        image = DialogSoundOnOff.getPREF(this, DialogSoundOnOff.KEY_IMAGE);
+        if (image.equals(1 + "")) {
+            Utils.isSoundPlay = true;
+
+        } else if (image.equals(0 + "")) {
+            Utils.isSoundPlay = false;
+
+        }
         database = new MyDatabase(this);
 
 
@@ -108,42 +111,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.action_settings) {
 
-            final Dialog dialog = new Dialog(this);
-            dialog.setTitle("Setting");
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.dialog_setting);
-            final ImageView imgSound = (ImageView) dialog.findViewById(R.id.imgSoundOnOf);
-            Button button = (Button) dialog.findViewById(R.id.btnStatics);
-            String image;
-            image = getPREF(KEY_IMAGE);
-            if (image.equals(1 + "")) {
-                Utils.isSoundPlay = true;
-                imgSound.setImageResource(R.drawable.on);
-            } else if (image.equals(0 + "")) {
-                Utils.isSoundPlay = false;
-                imgSound.setImageResource(R.drawable.off);
-            }
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            imgSound.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (Utils.isSoundPlay == false) {
-                        Utils.isSoundPlay = true;
-                        imgSound.setImageResource(R.drawable.on);
-                        savePref(KEY_IMAGE, 1 + "");
-                    } else {
-                        Utils.isSoundPlay = false;
-                        imgSound.setImageResource(R.drawable.off);
-                        savePref(KEY_IMAGE, 0 + "");
-                    }
-                }
-            });
-            dialog.show();
+            DialogSoundOnOff.dialogShow(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -315,6 +283,29 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_game_exit);
+        Button btnYes = (Button) dialog.findViewById(R.id.btnYes);
+        Button btnNO = (Button) dialog.findViewById(R.id.btnNo);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               finish();
+
+            }
+        });
+
+        btnNO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void exitYes() {
         super.onBackPressed();
     }
 
@@ -325,29 +316,21 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.EASY);
             startActivity(intent);
+//            finish();
 
         } else if (v.getId() == R.id.btnHard) {
             Utils.getSound(OpenActivity.this, R.raw.click);
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.HARD);
             startActivity(intent);
+//            finish();
         } else if (v.getId() == R.id.btnMedium) {
             Utils.getSound(OpenActivity.this, R.raw.click);
             Intent intent = new Intent(this, LevelActivity.class);
             intent.putExtra("type", Utils.MEDIUM);
             startActivity(intent);
+//            finish();
         }
     }
 
-    private void savePref(String key, String value) {
-        preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public String getPREF(String key) {
-        preferences = this.getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        return preferences.getString(key, "null");
-    }
 }

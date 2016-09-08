@@ -53,6 +53,18 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         return viewholder;
     }
 
+    public static String getIntToStar(int starCount) {
+        String fillStar = "\u2605";
+        String blankStar = "\u2606";
+        String star = "";
+
+        for (int i = 0; i < starCount; i++) {
+            star = star.concat(" " + fillStar);
+        }
+
+        return star;
+    }
+
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
@@ -62,10 +74,13 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 
         holder.txtLevel.setTextColor(0xffff00ff);
         if (mLevel.getBestpoint() == 100) {
-            holder.imgStar.setImageResource(R.drawable.star);
+            holder.txtLevelStar.setText(getIntToStar(3));
+//            holder.imgStar.setImageResource(R.drawable.star);
         } else if (mLevel.getBestpoint() == 75) {
+            holder.txtLevelStar.setText(getIntToStar(2));
             holder.imgStar.setImageResource(R.drawable.star2);
         } else if (mLevel.getBestpoint() == 50) {
+            holder.txtLevelStar.setText(getIntToStar(1));
             holder.imgStar.setImageResource(R.drawable.star_icon);
         }
 
@@ -82,12 +97,14 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         TextView txtLevel;
         ImageView imgStar;
         TextView txtLevelPoint;
+        TextView txtLevelStar;
 
         public MyViewholder(final View itemView) {
             super(itemView);
             imgStar = (ImageView) itemView.findViewById(R.id.imgStar);
             txtLevel = (TextView) itemView.findViewById(R.id.txtLevel);
             txtLevelPoint = (TextView) itemView.findViewById(R.id.txtPoint);
+            txtLevelStar = (TextView) itemView.findViewById(R.id.txtStar);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

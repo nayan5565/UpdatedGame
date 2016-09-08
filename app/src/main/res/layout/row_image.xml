@@ -23,10 +23,18 @@
         android:textSize="20dp"
         android:text="1"/>
 
+    <TextView
+        android:id="@+id/txtStar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0"
+        android:text="1"/>
   <ImageView
+      android:layout_gravity="center"
       android:id="@+id/imgStar"
       android:layout_width="20dp"
-      android:layout_height="20dp"/>
+      android:layout_height="20dp"
+      android:visibility="gone"/>
 
 
 </LinearLayout>

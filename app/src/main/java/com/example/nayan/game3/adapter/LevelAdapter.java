@@ -61,6 +61,9 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         for (int i = 0; i < starCount; i++) {
             star = star.concat(" " + fillStar);
         }
+        for (int j=(3-starCount);j>0;j--){
+            star = star.concat(" " + blankStar);
+        }
 
         return star;
     }
@@ -71,6 +74,8 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 
         holder.txtLevel.setText("Level " + mLevel.getLevel());
         holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
+        holder.txtLevelStar.setText(getIntToStar(0));
+
 
         holder.txtLevel.setTextColor(0xffff00ff);
         if (mLevel.getBestpoint() == 100) {
@@ -78,10 +83,10 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
 //            holder.imgStar.setImageResource(R.drawable.star);
         } else if (mLevel.getBestpoint() == 75) {
             holder.txtLevelStar.setText(getIntToStar(2));
-            holder.imgStar.setImageResource(R.drawable.star2);
+//            holder.imgStar.setImageResource(R.drawable.star2);
         } else if (mLevel.getBestpoint() == 50) {
             holder.txtLevelStar.setText(getIntToStar(1));
-            holder.imgStar.setImageResource(R.drawable.star_icon);
+//            holder.imgStar.setImageResource(R.drawable.star_icon);
         }
 
 

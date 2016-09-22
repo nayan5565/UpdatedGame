@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
+import com.example.nayan.game3.VungleAdManager;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
@@ -40,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.game_activity);
-
+        VungleAdManager.getInstance(this).play();
 
         init();
        getLocalData();

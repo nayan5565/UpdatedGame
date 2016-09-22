@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
+import com.example.nayan.game3.VungleAdManager;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
@@ -122,6 +123,7 @@ public class NLogic {
 
 
                 if (matchWinCount == list.size() / 2) {
+                    VungleAdManager.getInstance(context).play();
 
                     handler.postDelayed(new Runnable() {
                         @Override

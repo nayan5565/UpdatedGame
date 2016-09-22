@@ -15,14 +15,21 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.example.nayan.game3.AnalyticsApplication;
 import com.example.nayan.game3.DialogSoundOnOff;
+import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
+import com.example.nayan.game3.VungleAdManager;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.vungle.publisher.VunglePub;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +39,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+
+import static android.R.attr.name;
 
 /**
  * Created by NAYAN on 8/4/2016.
@@ -43,7 +52,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     MyDatabase database;
     DrawerLayout drawerLayout;
     Animation animation;
+    private Tracker tracker;
     String image;
+    final VunglePub vunglePub = VunglePub.getInstance();
     //   NavigationDrawerFragment drawerFragment;
 
     public static String getPath(String fileName) {
@@ -60,6 +71,23 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_activity);
+        VungleAdManager.getInstance(this).playAdOptions();
+        AdView adView = (AdView) findViewById(R.id.adView);
+        InMobAdManager.getInstance(this).loadAd(adView);
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        tracker = application.getDefaultTracker();
+        // [END shared_tracker]
+
+
+        tracker.setScreenName("Image~" + name);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Share")
+                .build());
 
 
         init();
@@ -291,7 +319,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+                finish();
 
             }
         });

@@ -9,7 +9,7 @@ import com.vungle.publisher.VunglePub;
 /**
  * Created by NAYAN on 9/20/2016.
  */
-public class VungleAdManager {
+public class  VungleAdManager {
     final static VunglePub vunglePub = VunglePub.getInstance();
     private static VungleAdManager instance;
 

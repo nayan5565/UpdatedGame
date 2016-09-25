@@ -63,10 +63,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     public void onBindViewHolder(MyViewholder holder, int position) {
         mAsset = imageArrayList.get(position);
 
-        /*if (level.getImageOpen()==1){
+        /*if (levels.getImageOpen()==1){
            //holder.img.setImageResource();
             //MyAnimation.rotation(holder.img,false);
-            Glide.with(context).load(LevelActivity.IMAGE_URL+level.getImage())
+            Glide.with(context).load(LevelActivity.IMAGE_URL+levels.getImage())
                     .into(holder.img);*/
 
         if (mAsset.getImageOpen() == 1) {

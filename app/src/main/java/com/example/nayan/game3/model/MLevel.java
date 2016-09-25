@@ -8,19 +8,36 @@ import java.util.ArrayList;
 public class MLevel {
     ArrayList<MAsset> asset = new ArrayList<>();
     //String eId;
-    private String level;
+    private String lid;
     private String coinPrice;
     private String noOfCoinPrice;
     private String image;
+    private String name;
     private String sound;
-    private String hint;
+    private String update_date;
     private int difficulty;
     private int id;
     private int type;
     private int status;
     private int bestpoint;
     private int levelWinCount;
+    private String total_slevel;
 
+    public String getTotal_slevel() {
+        return total_slevel;
+    }
+
+    public void setTotal_slevel(String total_slevel) {
+        this.total_slevel = total_slevel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public int getLevelWinCount() {
         return levelWinCount;
     }
@@ -45,12 +62,12 @@ public class MLevel {
         this.asset = asset;
     }
 
-    public String getHint() {
-        return hint;
+    public String getUpdate_date() {
+        return update_date;
     }
 
-    public void setHint(String hint) {
-        this.hint = hint;
+    public void setUpdate_date(String update_date) {
+        this.update_date = update_date;
     }
 
     public String getSound() {
@@ -101,12 +118,12 @@ public class MLevel {
         this.id = id;
     }
 
-    public String getLevel() {
-        return level;
+    public String getLid() {
+        return lid;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLid(String lid) {
+        this.lid = lid;
     }
 
     public String getCoinPrice() {

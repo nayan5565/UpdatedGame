@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,17 +18,16 @@ import com.example.nayan.game3.AnalyticsApplication;
 import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.VungleAdManager;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.model.MSubLevel;
 import com.example.nayan.game3.utils.Utils;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.vungle.publisher.VunglePub;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,13 +46,13 @@ import static android.R.attr.name;
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnNormal, btnHard, btnMedium;
     Toolbar toolbar;
-    MLevel level;
+    MLevel mLevel;
     MyDatabase database;
     DrawerLayout drawerLayout;
     Animation animation;
     private Tracker tracker;
     String image;
-    final VunglePub vunglePub = VunglePub.getInstance();
+
     //   NavigationDrawerFragment drawerFragment;
 
     public static String getPath(String fileName) {
@@ -71,7 +69,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_activity);
-        VungleAdManager.getInstance(this).playAdOptions();
+//        VungleAdManager.getInstance(this).playAdOptions();
         AdView adView = (AdView) findViewById(R.id.adView);
         InMobAdManager.getInstance(this).loadAd(adView);
         // [START shared_tracker]
@@ -152,122 +150,46 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        Utils.easy = new ArrayList<MLevel>();
-                        Utils.medium = new ArrayList<MLevel>();
-                        Utils.hard = new ArrayList<MLevel>();
-                        Utils.assetArrayList = new ArrayList<>();
+                        Utils.levels = new ArrayList<MLevel>();
                         try {
                             JSONObject puzzle = response.getJSONObject("puzzle");
 
 
-                            JSONArray easy = puzzle.getJSONArray("easy");
-                            for (int i = 0; i < easy.length(); i++) {
-                                JSONObject jsonObject = easy.getJSONObject(i);
+                            JSONArray level = puzzle.getJSONArray("levels");
+                            for (int i = 0; i < level.length(); i++) {
+                                JSONObject jsonObject = level.getJSONObject(i);
 
-                                level = new MLevel();
-                                level.setId(jsonObject.getInt("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(Utils.EASY);
+                                mLevel = new MLevel();
+//                                mLevel.setId(jsonObject.getInt("id"));
+                                mLevel.setLid(jsonObject.getString("lid"));
+                                mLevel.setName(jsonObject.getString("name"));
+                                mLevel.setUpdate_date(jsonObject.getString("update_date"));
+                                mLevel.setTotal_slevel(jsonObject.getString("total_slevel"));
+                                mLevel.setDifficulty(Utils.EASY);
 
-                                JSONArray asset1 = jsonObject.getJSONArray("asset");
+                                JSONArray sub = jsonObject.getJSONArray("sub");
 
-                                MAsset mAsset;
+                                MSubLevel mSubLevel;
                                 int count = 0;
-                                for (int j = 0; j < asset1.length(); j++) {
-                                    JSONObject image = asset1.getJSONObject(j);
+                                for (int j = 0; j < sub.length(); j++) {
+                                    JSONObject subLevel = sub.getJSONObject(j);
 
                                     count++;
-                                    mAsset = new MAsset();
-                                    mAsset.setImages(image.getString("images"));
-                                    mAsset.setSounds(image.getString("sounds"));
-                                    mAsset.setHints(image.getString("hints"));
-                                    mAsset.setLevelId(level.getId());
-                                    mAsset.setPresentType(j + 1);
-                                    mAsset.setPresentId(count);
-                                    Log.e("Loge", "present id id ::" + mAsset.getPresentId());
-                                    Utils.assetArrayList.add(mAsset);
+                                    mSubLevel = new MSubLevel();
+                                    mSubLevel.setLid(subLevel.getString("lid"));
+                                    mSubLevel.setName(subLevel.getString("name"));
+                                    mSubLevel.setCoins_price(subLevel.getString("coins_price"));
+                                    mSubLevel.setNo_of_coins("no_of_coins");
+//                                    mSubLevel.setLevelId(mLevel.getId());
+//                                    mSubLevel.setPresentType(j + 1);
+//                                    mSubLevel.setPresentId(count);
+//                                    Log.e("Loge", "present id id ::" + mSubLevel.getPresentId());
+//                                    Utils.assetArrayList.add(mSubLevel);
                                 }
-                                Utils.easy.add(level);
+                                Utils.levels.add(mLevel);
 
 
                             }
-
-
-                            JSONArray medium = puzzle.getJSONArray("medium");
-
-                            for (int i = 0; i < medium.length(); i++) {
-                                JSONObject jsonObject = medium.getJSONObject(i);
-
-                                level = new MLevel();
-                                level.setId(jsonObject.getInt("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(Utils.MEDIUM);
-                                JSONArray asset1 = jsonObject.getJSONArray("asset");
-
-                                MAsset mAsset;
-                                int count = 0;
-                                for (int j = 0; j < asset1.length(); j++) {
-                                    JSONObject image = asset1.getJSONObject(j);
-
-                                    count++;
-                                    mAsset = new MAsset();
-                                    mAsset.setImages(image.getString("images"));
-                                    mAsset.setSounds(image.getString("sounds"));
-                                    mAsset.setHints(image.getString("hints"));
-                                    mAsset.setPresentType(j + 1);
-                                    mAsset.setLevelId(level.getId());
-                                    mAsset.setPresentId(count);
-
-                                    Utils.assetArrayList.add(mAsset);
-                                }
-                                Utils.medium.add(level);
-
-
-                            }
-
-
-                            JSONArray hard = puzzle.getJSONArray("hard");
-
-                            for (int i = 0; i < hard.length(); i++) {
-                                JSONObject jsonObject = hard.getJSONObject(i);
-
-                                level = new MLevel();
-                                level.setId(jsonObject.getInt("id"));
-                                level.setLevel(jsonObject.getString("level"));
-                                level.setCoinPrice(jsonObject.getString("coins_price"));
-                                level.setNoOfCoinPrice(jsonObject.getString("no_of_coins"));
-                                level.setDifficulty(Utils.HARD);
-
-                                JSONArray asset1 = jsonObject.getJSONArray("asset");
-                                ArrayList<MAsset> asset = new ArrayList<MAsset>();
-                                MAsset mAsset;
-                                int count = 0;
-                                for (int j = 0; j < asset1.length(); j++) {
-                                    JSONObject image = asset1.getJSONObject(j);
-
-                                    count++;
-                                    mAsset = new MAsset();
-                                    mAsset.setImages(image.getString("images"));
-                                    mAsset.setSounds(image.getString("sounds"));
-                                    mAsset.setHints(image.getString("hints"));
-                                    mAsset.setLevelId(level.getId());
-                                    mAsset.setPresentType(j + 1);
-                                    mAsset.setPresentId(count);
-                                    count++;
-                                    mAsset.setPresentId(count);
-
-                                    Utils.assetArrayList.add(mAsset);
-                                }
-                                Utils.hard.add(level);
-
-
-                            }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -280,16 +202,9 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveLevelToDb() {
-        for (MLevel data : Utils.easy) {
+        for (MLevel data : Utils.levels) {
             database.addLevelFromJson(data);
         }
-        for (MLevel data : Utils.medium) {
-            database.addLevelFromJson(data);
-        }
-        for (MLevel data : Utils.hard) {
-            database.addLevelFromJson(data);
-        }
-
     }
 
     private void saveAssetToDb() {

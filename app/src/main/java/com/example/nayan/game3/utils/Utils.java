@@ -16,14 +16,16 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/25/2016.
  */
 public class Utils {
-    public static int IMAGE_ON=1,IMAGE_OFF=0;
-    public static String ASSETS_DOWNLOAD_MASSAGE ="downloaded";
-    public static String CONVERT_NUM ="downloaded";
+    public static int IMAGE_ON = 1, IMAGE_OFF = 0;
+    public static String ASSETS_DOWNLOAD_MASSAGE = "downloaded";
+    public static String CONVERT_NUM = "downloaded";
     public static int EASY = 1, MEDIUM = 2, HARD = 3;
     public static ArrayList<MAsset> assetArrayList;
-    public static ArrayList<MLevel> easy;
-    public static ArrayList<MLevel> medium;
-    public static ArrayList<MLevel> hard;
+    public static ArrayList<MLevel> levels;
+    public static ArrayList<MLevel> অংক;
+    public static ArrayList<MLevel> English;
+    public static ArrayList<MLevel> Maths;
+    public static ArrayList<MLevel> Drawing;
     public static boolean isSoundPlay = true;
     static MediaPlayer mediaPlayer;
 
@@ -41,6 +43,7 @@ public class Utils {
             Log.e("log", "playing");
         }
     }
+
     public static String convertNum(String num) {
         if (num.length() > 0) {
             num = num.replace("0", "০").replace("1", "১").replace("2", "২")

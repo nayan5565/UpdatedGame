@@ -16,7 +16,7 @@ public class InMobAdManager {
     public static InMobAdManager getInstance(Context context) {
         if (instance == null) {
             instance = new InMobAdManager();
-            MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713");
+            MobileAds.initialize(context, "ca-app-pub-3852049226216249~9232307213");
         }
         return instance;
     }

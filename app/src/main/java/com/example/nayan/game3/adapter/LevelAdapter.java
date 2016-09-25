@@ -72,7 +72,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText("Level " + mLevel.getLevel());
+        holder.txtLevel.setText("Level " + mLevel.getLid());
         holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
         holder.txtLevelStar.setText(getIntToStar(0));
 

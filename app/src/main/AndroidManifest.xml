@@ -9,21 +9,20 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".AnalyticsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/game_image_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.OpenActivity"
-            android:screenOrientation="landscape">
+        <activity android:name=".activity.OpenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LevelActivity"
-            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.LevelActivity"/>
         <activity android:name=".activity.GameActivity"
             android:screenOrientation="landscape"/>
         <activity

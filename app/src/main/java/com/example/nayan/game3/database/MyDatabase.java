@@ -22,7 +22,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_ASSET_TABLE = "asset_table";
 
     private static final String KEY_ID = "id";
-    private static final String KEY_LEVEL = "level";
+    private static final String KEY_LEVEL = "levels";
     private static final String KEY_COINS_PRICE = "coins_price";
     private static final String KEY_NO_OF_COINS = "no_of_coins";
     private static final String KEY_DIFFICULTY = "difficulty";
@@ -74,7 +74,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(KEY_LEVEL, mLevel.getLevel());
+            values.put(KEY_LEVEL, mLevel.getLid());
             values.put(KEY_ID, mLevel.getId());
             values.put(KEY_COINS_PRICE, mLevel.getCoinPrice());
             values.put(KEY_DIFFICULTY, mLevel.getDifficulty());
@@ -148,7 +148,7 @@ public class MyDatabase extends SQLiteOpenHelper {
             do {
                 mLevel = new MLevel();
                 mLevel.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                mLevel.setLevel(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
+                mLevel.setLid(cursor.getString(cursor.getColumnIndex(KEY_LEVEL)));
                 mLevel.setCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
                 mLevel.setNoOfCoinPrice(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));
                 mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_DIFFICULTY)));

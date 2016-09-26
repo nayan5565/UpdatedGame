@@ -20,6 +20,7 @@ import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 import com.example.nayan.game3.utils.Utils;
@@ -146,7 +147,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     public void getOnlineData() {
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post("http://www.radhooni.com/content/match_game/v1/games.json", new JsonHttpResponseHandler() {
+        client.post("http://www.radhooni.com/content/match_game/v1/levels.php", new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
@@ -199,6 +200,32 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
         );
+    }
+    public void getOnlineContentsData(){
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        httpClient.post("http://www.radhooni.com/content/match_game/v1/contents.php",new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONArray content=response.getJSONArray("contents");
+                    MContents mContents;
+                    for (int i=0;i<content.length();i++){
+                        JSONObject jsonObject=content.getJSONObject(i);
+                        mContents=new MContents();
+                        mContents.setMid(jsonObject.getString("mid"));
+                        mContents.setLid(jsonObject.getString("lid"));
+                        mContents.setImg(jsonObject.getString("img"));
+                        mContents.setAud(jsonObject.getString("aud"));
+                        mContents.setTxt(jsonObject.getString("txt"));
+                        mContents.setVid(jsonObject.getString("vid"));
+                        mContents.setSen(jsonObject.getString("sen"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void saveLevelToDb() {

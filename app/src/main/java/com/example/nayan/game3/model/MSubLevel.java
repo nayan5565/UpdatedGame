@@ -5,7 +5,7 @@ package com.example.nayan.game3.model;
  */
 
 public class MSubLevel {
-    private String lid;
+    private int lid;
     private String name;
     private String coins_price;
 
@@ -17,11 +17,11 @@ public class MSubLevel {
         this.no_of_coins = no_of_coins;
     }
 
-    public String getLid() {
+    public int getLid() {
         return lid;
     }
 
-    public void setLid(String lid) {
+    public void setLid(int lid) {
         this.lid = lid;
     }
 

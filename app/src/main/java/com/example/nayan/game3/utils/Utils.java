@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.model.MSubLevel;
 
 import java.util.ArrayList;
 
@@ -20,9 +22,9 @@ public class Utils {
     public static String ASSETS_DOWNLOAD_MASSAGE = "downloaded";
     public static String CONVERT_NUM = "downloaded";
     public static int EASY = 1, MEDIUM = 2, HARD = 3;
-    public static ArrayList<MAsset> assetArrayList;
+    public static ArrayList<MSubLevel> aubLevelArrayList;
     public static ArrayList<MLevel> levels;
-    public static ArrayList<MLevel> অংক;
+    public static ArrayList<MContents> contents;
     public static ArrayList<MLevel> English;
     public static ArrayList<MLevel> Maths;
     public static ArrayList<MLevel> Drawing;

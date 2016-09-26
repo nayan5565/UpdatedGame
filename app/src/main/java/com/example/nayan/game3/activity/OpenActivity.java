@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.database.MyDatabase;
-import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
@@ -71,26 +71,27 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_activity);
 //        VungleAdManager.getInstance(this).playAdOptions();
-        AdView adView = (AdView) findViewById(R.id.adView);
-        InMobAdManager.getInstance(this).loadAd(adView);
+//        AdView adView = (AdView) findViewById(R.id.adView);
+//        InMobAdManager.getInstance(this).loadAd(adView);
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        tracker = application.getDefaultTracker();
+//        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+//        tracker = application.getDefaultTracker();
         // [END shared_tracker]
 
 
-        tracker.setScreenName("Image~" + name);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+//        tracker.setScreenName("Image~" + name);
+//        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        tracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Share")
-                .build());
+//        tracker.send(new HitBuilders.EventBuilder()
+//                .setCategory("Action")
+//                .setAction("Share")
+//                .build());
 
 
         init();
         getOnlineData();
+        getOnlineContentsData();
         prepareDisplay();
 
     }
@@ -151,22 +152,24 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
+
                         Utils.levels = new ArrayList<MLevel>();
                         try {
                             JSONObject puzzle = response.getJSONObject("puzzle");
 
 
-                            JSONArray level = puzzle.getJSONArray("levels");
+                            JSONArray level = puzzle.getJSONArray("level");
                             for (int i = 0; i < level.length(); i++) {
                                 JSONObject jsonObject = level.getJSONObject(i);
 
                                 mLevel = new MLevel();
 //                                mLevel.setId(jsonObject.getInt("id"));
-                                mLevel.setLid(jsonObject.getString("lid"));
+                                mLevel.setLid(jsonObject.getInt("lid"));
                                 mLevel.setName(jsonObject.getString("name"));
                                 mLevel.setUpdate_date(jsonObject.getString("update_date"));
                                 mLevel.setTotal_slevel(jsonObject.getString("total_slevel"));
                                 mLevel.setDifficulty(Utils.EASY);
+
 
                                 JSONArray sub = jsonObject.getJSONArray("sub");
 
@@ -177,7 +180,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
                                     count++;
                                     mSubLevel = new MSubLevel();
-                                    mSubLevel.setLid(subLevel.getString("lid"));
+                                    mSubLevel.setLid(subLevel.getInt("lid"));
                                     mSubLevel.setName(subLevel.getString("name"));
                                     mSubLevel.setCoins_price(subLevel.getString("coins_price"));
                                     mSubLevel.setNo_of_coins("no_of_coins");
@@ -185,7 +188,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 //                                    mSubLevel.setPresentType(j + 1);
 //                                    mSubLevel.setPresentId(count);
 //                                    Log.e("Loge", "present id id ::" + mSubLevel.getPresentId());
-//                                    Utils.assetArrayList.add(mSubLevel);
+//                                    Utils.aubLevelArrayList.add(mSubLevel);
                                 }
                                 Utils.levels.add(mLevel);
 
@@ -195,48 +198,66 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                         saveLevelToDb();
-                        saveAssetToDb();
+//                        saveSubLevelToDb();
 
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                        Log.e("json","onfailer :"+responseString);
                     }
                 }
         );
     }
-    public void getOnlineContentsData(){
-        AsyncHttpClient httpClient=new AsyncHttpClient();
-        httpClient.post("http://www.radhooni.com/content/match_game/v1/contents.php",new JsonHttpResponseHandler(){
+
+    public void getOnlineContentsData() {
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.post("http://www.radhooni.com/content/match_game/v1/contents.php", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                Utils.contents = new ArrayList<MContents>();
                 try {
-                    JSONArray content=response.getJSONArray("contents");
+                    JSONArray content = response.getJSONArray("contents");
                     MContents mContents;
-                    for (int i=0;i<content.length();i++){
-                        JSONObject jsonObject=content.getJSONObject(i);
-                        mContents=new MContents();
-                        mContents.setMid(jsonObject.getString("mid"));
-                        mContents.setLid(jsonObject.getString("lid"));
+                    for (int i = 0; i < content.length(); i++) {
+                        JSONObject jsonObject = content.getJSONObject(i);
+                        mContents = new MContents();
+                        mContents.setMid(jsonObject.getInt("mid"));
+                        mContents.setLid(jsonObject.getInt("lid"));
                         mContents.setImg(jsonObject.getString("img"));
                         mContents.setAud(jsonObject.getString("aud"));
                         mContents.setTxt(jsonObject.getString("txt"));
                         mContents.setVid(jsonObject.getString("vid"));
                         mContents.setSen(jsonObject.getString("sen"));
+
+                        Utils.contents.add(mContents);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                saveContentsToDb();
             }
         });
     }
 
     private void saveLevelToDb() {
+        Log.e("SAVE","level size:"+Utils.levels.size());
         for (MLevel data : Utils.levels) {
             database.addLevelFromJson(data);
         }
     }
 
-    private void saveAssetToDb() {
-        for (MAsset data2 : Utils.assetArrayList) {
-            database.addAssetFromJson(data2);
+    private void saveSubLevelToDb() {
+        for (MSubLevel data2 : Utils.aubLevelArrayList) {
+            database.addSubFromJsom(data2);
+        }
+    }
+
+    private void saveContentsToDb() {
+        for (MContents data2 : Utils.contents) {
+            database.addContentsFromJsom(data2);
         }
     }
 

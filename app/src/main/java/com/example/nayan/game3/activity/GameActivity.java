@@ -19,6 +19,7 @@ import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MLevel;
+import com.example.nayan.game3.model.MSubLevel;
 import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ import java.util.Collections;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static int levelId;
     public static MLevel mLevel;
-    ArrayList<MAsset> imageArrayList;
+    public static MSubLevel mSubLevel;
+    ArrayList<MSubLevel> imageArrayList;
     ImageView imgSetting;
     RecyclerView recyclerView;
     GameAdapter gameAdapter;
@@ -58,33 +60,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getLocalData() {
-        ArrayList<MAsset> realAssets = new ArrayList<>();
+        ArrayList<MSubLevel> realAssets = new ArrayList<>();
         MyDatabase db = new MyDatabase(this);
-        realAssets = db.getData(mLevel.getId());
+        realAssets = db.getSubLevelData(mSubLevel.getLid());
         imageArrayList = generateAssets(realAssets);
         Collections.shuffle(imageArrayList);
-        gameAdapter.setData(imageArrayList);
+//        gameAdapter.setData(imageArrayList);
     }
 
-    public ArrayList<MAsset> generateAssets(ArrayList<MAsset> realAssets) {
+    public ArrayList<MSubLevel> generateAssets(ArrayList<MSubLevel> realAssets) {
         int count = 20;
-        ArrayList<MAsset> tempAsset = new ArrayList<>();
-        for (MAsset asset : realAssets) {
+        ArrayList<MSubLevel> tempAsset = new ArrayList<>();
+        for (MSubLevel mSubLevel : realAssets) {
             NLogic.count = 0;
 
             NLogic.previousId = tempAsset.size() + 1;
 
-            tempAsset.add(asset);
+            tempAsset.add(mSubLevel);
             count++;
             MAsset asset1 = new MAsset();
             asset1.setPresentId(count);
-            asset1.setPresentType(asset.getPresentType());
-            asset1.setHints(asset.getHints());
-            asset1.setImageOpen(asset.getImageOpen());
-            asset1.setImages(asset.getImages());
-            asset1.setLevelId(asset.getLevelId());
-            asset1.setSounds(asset.getSounds());
-            tempAsset.add(asset1);
+//            asset1.setPresentType(asset.getPresentType());
+//            asset1.setHints(asset.getHints());
+//            asset1.setImageOpen(asset.getImageOpen());
+//            asset1.setImages(asset.getImages());
+//            asset1.setLevelId(asset.getLevelId());
+//            asset1.setSounds(asset.getSounds());
+            tempAsset.add(mSubLevel);
         }
         return tempAsset;
     }

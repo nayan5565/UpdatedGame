@@ -5,21 +5,22 @@ package com.example.nayan.game3.model;
  */
 
 public class MContents {
-    private String mid,lid,img,aud,txt,vid,sen;
+    private String img,aud,txt,vid,sen;
+    private int mid,lid;
 
-    public String getMid() {
+    public int getMid() {
         return mid;
     }
 
-    public void setMid(String mid) {
+    public void setMid(int mid) {
         this.mid = mid;
     }
 
-    public String getLid() {
+    public int getLid() {
         return lid;
     }
 
-    public void setLid(String lid) {
+    public void setLid(int lid) {
         this.lid = lid;
     }
 

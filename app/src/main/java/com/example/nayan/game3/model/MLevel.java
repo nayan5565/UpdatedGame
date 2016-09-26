@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class MLevel {
     ArrayList<MAsset> asset = new ArrayList<>();
     //String eId;
-    private String lid;
+    private int lid;
     private String coinPrice;
     private String noOfCoinPrice;
     private String image;
@@ -118,11 +118,11 @@ public class MLevel {
         this.id = id;
     }
 
-    public String getLid() {
+    public int getLid() {
         return lid;
     }
 
-    public void setLid(String lid) {
+    public void setLid(int lid) {
         this.lid = lid;
     }
 

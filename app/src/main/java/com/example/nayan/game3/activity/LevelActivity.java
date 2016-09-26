@@ -22,7 +22,7 @@ import com.example.nayan.game3.DownLoadAsyncTask;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.database.MyDatabase;
-import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
@@ -34,6 +34,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     public static int value;
     static LevelAdapter levelAdapter;
     static ArrayList<MLevel> levels;
+    static ArrayList<MContents> contentses;
     static MLevel level = new MLevel();
     MyDatabase database;
     RecyclerView recyclerView;
@@ -55,7 +56,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         init();
         prepareDisplay();
         getLocalData();
-        downloadAssets();
+//        downloadAssets();
 
         if (value == Utils.EASY) {
             textView.setText("Normal");
@@ -96,7 +97,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                downloadAssets();
+//                downloadAssets();
                 //Displaying a toast
                 Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
             } else {
@@ -110,11 +111,11 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             ArrayList<String> uniqueImage = new ArrayList<>();
-            for (int i = 0; i < levels.size(); i++) {
-                ArrayList<MAsset> assetArrayList = database.getData(levels.get(i).getId());
+            for (int i = 0; i < contentses.size(); i++) {
+                ArrayList<MContents> assetArrayList = database.getContentsData(contentses.get(i).getMid());
                 for (int j = 0; j < assetArrayList.size(); j++) {
-                    if (!uniqueImage.contains(assetArrayList.get(j).getImages())) {
-                        uniqueImage.add(assetArrayList.get(j).getImages());
+                    if (!uniqueImage.contains(assetArrayList.get(j).getImg())) {
+                        uniqueImage.add(assetArrayList.get(j).getImg());
                     }
                 }
             }
@@ -156,8 +157,9 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void getLocalData() {
-        levels = database.getAllData(value);
-        levelAdapter.setData(levels);
+        levels = database.getLevelData();
+        Log.e("list","size : "+levels.size());
+//        levelAdapter.setData(levels);
     }
 
     @Override

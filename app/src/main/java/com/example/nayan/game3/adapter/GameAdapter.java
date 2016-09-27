@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.OpenActivity;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 
 import java.util.ArrayList;
 
@@ -23,9 +25,9 @@ import java.util.ArrayList;
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
 
-    ArrayList<MAsset> imageArrayList;
+    ArrayList<MContents> textArrayList;
 
-    MAsset mAsset = new MAsset();
+    MContents mContents = new MContents();
     Context context;
     LayoutInflater inflater;
     NLogic nLogic;
@@ -35,18 +37,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     public GameAdapter(Context context) {
         this.context = context;
 
-        imageArrayList = new ArrayList<>();
+        textArrayList = new ArrayList<>();
 
 
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(ArrayList<MAsset> imageArrayList) {
-        this.imageArrayList = imageArrayList;
+    public void setData(ArrayList<MContents> textArraylist) {
+        this.textArrayList = textArraylist;
 
-        Log.e("log", "setdata:" + imageArrayList.size());
-        nLogic = NLogic.getInstance(context);
-        nLogic.callData(imageArrayList, this);
+        Log.e("log", "setdata:" + textArraylist.size());
+//        nLogic = NLogic.getInstance(context);
+//        nLogic.callData(textArraylist, this);
 
         notifyDataSetChanged();
     }
@@ -61,7 +63,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
 
     @Override
     public void onBindViewHolder(MyViewholder holder, int position) {
-        mAsset = imageArrayList.get(position);
+        mContents = textArrayList.get(position);
+        holder.txtContents.setText(mContents.getTxt());
+        holder.txtContents.setTextColor(0xffff00ff);
 
         /*if (levels.getImageOpen()==1){
            //holder.img.setImageResource();
@@ -69,52 +73,52 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
             Glide.with(context).load(LevelActivity.IMAGE_URL+levels.getImage())
                     .into(holder.img);*/
 
-        if (mAsset.getImageOpen() == 1) {
-            Bitmap bitmap= BitmapFactory.decodeFile(OpenActivity.getPath(mAsset.getImages()));
-            holder.img.setImageBitmap(bitmap);
-        } else {
-            holder.img.setImageResource(R.drawable.place);
-            //holder.img.setVisibility(View.INVISIBLE);
-        }
+//        if (mContents.getImageOpen() == 1) {
+//            Bitmap bitmap= BitmapFactory.decodeFile(OpenActivity.getPath(mContents.getImages()));
+//            holder.img.setImageBitmap(bitmap);
+//        } else {
+//            holder.img.setImageResource(R.drawable.place);
+//            //holder.img.setVisibility(View.INVISIBLE);
+//        }
 
 
     }
 
     @Override
     public int getItemCount() {
-        return imageArrayList.size();
+        return textArrayList.size();
     }
 
 
     class MyViewholder extends RecyclerView.ViewHolder {
-        ImageView img;
+        TextView txtContents;
 
         public MyViewholder(final View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.imgSound);
-            /*img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                   *//* animation = AnimationUtils.loadAnimation(context,R.anim.card_flip_left_out);
-                    img.startAnimation(animation);*//*
-                   // MyAnimation.rotation(img,false);
-                }
-            });*/
-
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e("position", "is" + getAdapterPosition());
-                    mAsset = imageArrayList.get(getAdapterPosition());
-
+            txtContents = (TextView) itemView.findViewById(R.id.textContents);
+//            img.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
 //
-                    //MyAnimation.rotation(itemView,false);
-                    Log.e("ADA","pres ID: "+mAsset.getPresentId());
-                    nLogic.imageClick(mAsset, getAdapterPosition(),imageArrayList.size());
-                }
-            });
+//                    animation = AnimationUtils.loadAnimation(context,R.anim.card_flip_left_out);
+//                    img.startAnimation(animation);
+//                   // MyAnimation.rotation(img,false);
+//                }
+//            });
+//
+//
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.e("position", "is" + getAdapterPosition());
+//                    mContents = textArrayList.get(getAdapterPosition());
+//
+////
+//                    //MyAnimation.rotation(itemView,false);
+//                    Log.e("ADA","pres ID: "+ mContents.getPresentId());
+//                    nLogic.imageClick(mContents, getAdapterPosition(), textArrayList.size());
+//                }
+//            });
         }
 
 

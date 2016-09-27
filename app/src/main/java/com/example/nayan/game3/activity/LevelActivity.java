@@ -19,12 +19,14 @@ import android.widget.Toast;
 
 import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.DownLoadAsyncTask;
+import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     Toolbar toolbar;
     TextView textView;
     private int STORAGE_PERMISSION_CODE = 23;
-    OpenActivity openActivity;
+
 
 
     @Override
@@ -61,19 +63,9 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         if (value == Utils.EASY) {
             textView.setText("Normal");
             textView.setTextColor(0xff888888);
-
-        } else if (value == Utils.MEDIUM) {
-
-            textView.setText("Medium");
-            textView.setTextColor(0xff444444);
-
-        } else if (value == Utils.HARD) {
-
-            textView.setText("Hard");
-            textView.setTextColor(0xffcccccc);
-
-
         }
+        AdView adView = (AdView) findViewById(R.id.adView);
+        InMobAdManager.getInstance(this).loadAd(adView);
 
 
     }
@@ -107,37 +99,36 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void downloadAssets() {
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            ArrayList<String> uniqueImage = new ArrayList<>();
-            for (int i = 0; i < contentses.size(); i++) {
-                ArrayList<MContents> assetArrayList = database.getContentsData(contentses.get(i).getMid());
-                for (int j = 0; j < assetArrayList.size(); j++) {
-                    if (!uniqueImage.contains(assetArrayList.get(j).getImg())) {
-                        uniqueImage.add(assetArrayList.get(j).getImg());
-                    }
-                }
-            }
-            for (int i = 0; i < uniqueImage.size(); i++) {
-                Log.e("DOWNLOAD_PATH", "Path:" + OpenActivity.getPath(uniqueImage.get(i)));
-                File file = new File(OpenActivity.getPath(uniqueImage.get(i)));
-                if (!file.exists()) {
-                    new DownLoadAsyncTask(this, OpenActivity.getPath(uniqueImage.get(i))).execute(IMAGE_URL + uniqueImage.get(i));
-                }
-
-            }
-        } else requestStoragePermission();
-
-
-    }
+//    private void downloadAssets() {
+//        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+//            ArrayList<String> uniqueImage = new ArrayList<>();
+//            for (int i = 0; i < contentses.size(); i++) {
+//                ArrayList<MContents> assetArrayList = database.getContentsData(contentses.get(i).getMid());
+//                for (int j = 0; j < assetArrayList.size(); j++) {
+//                    if (!uniqueImage.contains(assetArrayList.get(j).getImg())) {
+//                        uniqueImage.add(assetArrayList.get(j).getImg());
+//                    }
+//                }
+//            }
+//            for (int i = 0; i < uniqueImage.size(); i++) {
+//                Log.e("DOWNLOAD_PATH", "Path:" + OpenActivity.getPath(uniqueImage.get(i)));
+//                File file = new File(OpenActivity.getPath(uniqueImage.get(i)));
+//                if (!file.exists()) {
+//                    new DownLoadAsyncTask(this, OpenActivity.getPath(uniqueImage.get(i))).execute(IMAGE_URL + uniqueImage.get(i));
+//                }
+//
+//            }
+//        } else requestStoragePermission();
+//
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
 
     @Override
@@ -158,8 +149,8 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     public void getLocalData() {
         levels = database.getLevelData();
-        Log.e("list","size : "+levels.size());
-//        levelAdapter.setData(levels);
+        Log.e("list", "size : " + levels.size());
+        levelAdapter.setData(levels);
     }
 
     @Override
@@ -169,16 +160,11 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void init() {
-        openActivity=new OpenActivity();
         database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         if (value == Utils.EASY) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else if (value == Utils.MEDIUM) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        } else if (value == Utils.HARD) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

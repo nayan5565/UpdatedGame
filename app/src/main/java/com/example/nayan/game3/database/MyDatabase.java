@@ -241,12 +241,12 @@ public class MyDatabase extends SQLiteOpenHelper {
 
         return assetArrayList;
     }
-    public ArrayList<MContents> getContentsData(int mid) {
+    public ArrayList<MContents> getContentsData() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MContents> assetArrayList = new ArrayList<>();
 
         MContents mContents;
-        String sql = "select * from " + DATABASE_CONTENTS_TABLE + " where " + KEY_MODEL_ID + "='" + mid + "'";
+        String sql = "select * from " + DATABASE_CONTENTS_TABLE;
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {

@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import com.example.nayan.game3.AnalyticsApplication;
 import com.example.nayan.game3.DialogSoundOnOff;
 import com.example.nayan.game3.InMobAdManager;
 import com.example.nayan.game3.R;
+import com.example.nayan.game3.adapter.LevelAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
@@ -45,13 +48,16 @@ import static android.R.attr.name;
  * Created by NAYAN on 8/4/2016.
  */
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnNormal, btnHard, btnMedium;
+    Button btnNormal;
     Toolbar toolbar;
     MLevel mLevel;
+    static LevelAdapter levelAdapter;
+    static ArrayList<MLevel> levels;
     MyDatabase database;
     DrawerLayout drawerLayout;
     Animation animation;
     private Tracker tracker;
+    RecyclerView recyclerView;
     String image;
 
     //   NavigationDrawerFragment drawerFragment;
@@ -93,6 +99,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         getOnlineData();
         getOnlineContentsData();
         prepareDisplay();
+        getLocalData();
 
     }
 
@@ -109,17 +116,25 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
         database = new MyDatabase(this);
 
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         btnNormal = (Button) findViewById(R.id.btnNormal);
-        btnNormal.setOnClickListener(this);
-        btnMedium = (Button) findViewById(R.id.btnMedium);
-        btnMedium.setOnClickListener(this);
-        btnHard = (Button) findViewById(R.id.btnHard);
-        btnHard.setOnClickListener(this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        levelAdapter = new LevelAdapter(this);
+        recyclerView.setAdapter(levelAdapter);
+
+    }
+
+    public void getLocalData() {
+        levels = database.getLevelData();
+        Log.e("list", "size : " + levels.size());
+        levelAdapter.setData(levels);
     }
 
     @Override
@@ -205,7 +220,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                         super.onFailure(statusCode, headers, responseString, throwable);
-                        Log.e("json","onfailer :"+responseString);
+                        Log.e("json", "onfailer :" + responseString);
                     }
                 }
         );
@@ -243,7 +258,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveLevelToDb() {
-        Log.e("SAVE","level size:"+Utils.levels.size());
+        Log.e("SAVE", "level size:" + Utils.levels.size());
         for (MLevel data : Utils.levels) {
             database.addLevelFromJson(data);
         }
@@ -264,6 +279,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     public void prepareDisplay() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.home);
 
         //drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragNavDrewer);
 //        drawerFragment.setUp(R.id.fragNavDrewer, drawerLayout, toolbar);
@@ -309,18 +325,6 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
 //            finish();
 
-        } else if (v.getId() == R.id.btnHard) {
-            Utils.getSound(OpenActivity.this, R.raw.click);
-            Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", Utils.HARD);
-            startActivity(intent);
-//            finish();
-        } else if (v.getId() == R.id.btnMedium) {
-            Utils.getSound(OpenActivity.this, R.raw.click);
-            Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", Utils.MEDIUM);
-            startActivity(intent);
-//            finish();
         }
     }
 

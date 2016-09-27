@@ -18,6 +18,7 @@ import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 import com.example.nayan.game3.utils.Utils;
@@ -31,19 +32,20 @@ import java.util.Collections;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static int levelId;
     public static MLevel mLevel;
-    public static MSubLevel mSubLevel;
-    ArrayList<MSubLevel> imageArrayList;
+    public static MContents mContents;
+    ArrayList<MContents> imageArrayList;
     ImageView imgSetting;
     RecyclerView recyclerView;
     GameAdapter gameAdapter;
     Toolbar toolbar;
+    MyDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.game_activity);
-        VungleAdManager.getInstance(this).play();
+//        VungleAdManager.getInstance(this).play();
 
         init();
        getLocalData();
@@ -60,23 +62,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getLocalData() {
-        ArrayList<MSubLevel> realAssets = new ArrayList<>();
-        MyDatabase db = new MyDatabase(this);
-        realAssets = db.getSubLevelData(mSubLevel.getLid());
-        imageArrayList = generateAssets(realAssets);
-        Collections.shuffle(imageArrayList);
-//        gameAdapter.setData(imageArrayList);
+        imageArrayList=database.getContentsData();
+        gameAdapter.setData(imageArrayList);
+//        ArrayList<MContents> realAssets = new ArrayList<>();
+//        MyDatabase db = new MyDatabase(this);
+//        realAssets = db.getContentsData(mContents.getLid());
+//        imageArrayList = generateAssets(realAssets);
+//        Collections.shuffle(imageArrayList);
+//       gameAdapter.setData(imageArrayList);
     }
 
-    public ArrayList<MSubLevel> generateAssets(ArrayList<MSubLevel> realAssets) {
+    public ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
         int count = 20;
-        ArrayList<MSubLevel> tempAsset = new ArrayList<>();
-        for (MSubLevel mSubLevel : realAssets) {
+        ArrayList<MContents> tempAsset = new ArrayList<>();
+        for (MContents mContents : realAssets) {
             NLogic.count = 0;
 
             NLogic.previousId = tempAsset.size() + 1;
 
-            tempAsset.add(mSubLevel);
+            tempAsset.add(mContents);
             count++;
             MAsset asset1 = new MAsset();
             asset1.setPresentId(count);
@@ -86,7 +90,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //            asset1.setImages(asset.getImages());
 //            asset1.setLevelId(asset.getLevelId());
 //            asset1.setSounds(asset.getSounds());
-            tempAsset.add(mSubLevel);
+            tempAsset.add(mContents);
         }
         return tempAsset;
     }
@@ -105,6 +109,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
+        database=new MyDatabase(this);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -115,15 +120,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         NLogic.getInstance(this).setLevel(mLevel);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        if (LevelActivity.value == Utils.EASY) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        }
-        if (LevelActivity.value == Utils.MEDIUM) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        }
-        if (LevelActivity.value == Utils.HARD) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        }
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+//        if (LevelActivity.value == Utils.EASY) {
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        }
+//        if (LevelActivity.value == Utils.MEDIUM) {
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        }
+//        if (LevelActivity.value == Utils.HARD) {
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+//        }
 
         gameAdapter = new GameAdapter(this);
         recyclerView.setAdapter(gameAdapter);

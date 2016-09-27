@@ -72,7 +72,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
     public void onBindViewHolder(MyViewholder holder, int position) {
         mLevel = levels.get(position);
 
-        holder.txtLevel.setText("Level " + mLevel.getLid());
+        holder.txtLevel.setText(mLevel.getName());
         holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
         holder.txtLevelStar.setText(getIntToStar(0));
 
@@ -116,7 +116,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
                     Utils.getSound(context, R.raw.click);
-                    GameActivity.mLevel = mLevel;
+//                    GameActivity.mLevel = mLevel;
                     Intent intent = new Intent(context, GameActivity.class);
                     context.startActivity(intent);
 

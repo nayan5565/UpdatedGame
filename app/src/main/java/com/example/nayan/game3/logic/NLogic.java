@@ -14,6 +14,7 @@ import com.example.nayan.game3.VungleAdManager;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
+import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
@@ -28,7 +29,7 @@ public class NLogic {
     public static int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
     static NLogic nLogic;
 
-    private ArrayList<MAsset> list;
+    private ArrayList<MContents> list;
     private SharedPreferences preferences;
     private Context context;
     private Handler handler = new Handler();
@@ -51,7 +52,7 @@ public class NLogic {
 
     }
 
-    public void callData(ArrayList<MAsset> list, GameAdapter adapter) {
+    public void callData(ArrayList<MContents> list, GameAdapter adapter) {
         this.list = list;
         this.gameAdapter = adapter;
 
@@ -101,7 +102,7 @@ public class NLogic {
         }
         clickCount++;
 
-        list.get(pos).setImageOpen(Utils.IMAGE_ON);
+//        list.get(pos).setImageOpen(Utils.IMAGE_ON);
         gameAdapter.setData(list);
         count++;
         Utils.getSound(context,R.raw.click);
@@ -153,10 +154,10 @@ public class NLogic {
                     public void run() {
                         Utils.getSound(context, R.raw.fail);
                         for (int i = 0; i < list.size(); i++) {
-                            if (list.get(i).getPresentId() == perevious || list.get(i).getPresentId() == mImage.getPresentId()) {
-                                list.get(i).setImageOpen(Utils.IMAGE_OFF);
-
-                            }
+//                            if (list.get(i).getPresentId() == perevious || list.get(i).getPresentId() == mImage.getPresentId()) {
+//                                list.get(i).setImageOpen(Utils.IMAGE_OFF);
+//
+//                            }
                         }
                         gameAdapter.setData(list);
                         count = 0;
@@ -173,7 +174,7 @@ public class NLogic {
 
     public void resetList() {
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).setImageOpen(Utils.IMAGE_OFF);
+//            list.get(i).setImageOpen(Utils.IMAGE_OFF);
         }
         Collections.shuffle(list);
         clickCount = 0;

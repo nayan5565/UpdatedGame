@@ -47,8 +47,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         this.textArrayList = textArraylist;
 
         Log.e("log", "setdata:" + textArraylist.size());
-//        nLogic = NLogic.getInstance(context);
-//        nLogic.callData(textArraylist, this);
+        nLogic = NLogic.getInstance(context);
+        nLogic.callData(textArraylist, this);
 
         notifyDataSetChanged();
     }
@@ -96,6 +96,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         public MyViewholder(final View itemView) {
             super(itemView);
             txtContents = (TextView) itemView.findViewById(R.id.textContents);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContents=textArrayList.get(getAdapterPosition());
+                    nLogic.textClick(mContents);
+                }
+            });
 //            img.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

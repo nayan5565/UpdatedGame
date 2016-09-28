@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.VungleAdManager;
@@ -34,7 +35,7 @@ public class NLogic {
     private Context context;
     private Handler handler = new Handler();
     private GameAdapter gameAdapter;
-    private MLevel mLevel;
+    private MContents mContents;
 
 
     private NLogic() {
@@ -56,19 +57,19 @@ public class NLogic {
         this.list = list;
         this.gameAdapter = adapter;
 
-        bestPoint = mLevel.getBestpoint();
-//        gameWinCount = mLevel.getLevelWinCount();
+//        bestPoint = mContents.getBestpoint();
+//        gameWinCount = mContents.getLevelWinCount();
 
 
     }
 
-    public void setLevel(MLevel mLevel) {
-        this.mLevel = mLevel;
+    public void setLevel(MContents mContents) {
+        this.mContents = mContents;
     }
 
     public void saveDb() {
         MyDatabase db = new MyDatabase(context);
-        db.addLevelFromJson(mLevel);
+//        db.addLevelFromJson(mContents);
     }
 
 
@@ -92,12 +93,28 @@ public class NLogic {
         dialog.show();
     }
 
+    public void textClick(MContents mContents) {
+        if (mContents.getMid() == clickCount + 1) {
+            clickCount = mContents.getMid();
+            count++;
+            Toast.makeText(context, mContents.getTxt(), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(context, "wrong click", Toast.LENGTH_SHORT).show();
+        }
+        if (count==list.size()){
+            count=0;
+            clickCount=0;
+            Toast.makeText(context, "game over", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     public void imageClick(final MAsset mImage, int pos, int listSize) {
         Log.e("Loge", "present id ::" + mImage.getPresentId());
 
 
-        if (previousId == mImage.getPresentId() || mImage.getImageOpen() == Utils.IMAGE_ON||count>1) {
+        if (previousId == mImage.getPresentId() || mImage.getImageOpen() == Utils.IMAGE_ON || count > 1) {
             return;
         }
         clickCount++;
@@ -105,11 +122,11 @@ public class NLogic {
 //        list.get(pos).setImageOpen(Utils.IMAGE_ON);
         gameAdapter.setData(list);
         count++;
-        Utils.getSound(context,R.raw.click);
+        Utils.getSound(context, R.raw.click);
         if (count == 2) {
 
             if (previousType == mImage.getPresentType()) {
-                Log.e("log","matchwincount : "+matchWinCount);
+                Log.e("log", "matchwincount : " + matchWinCount);
                 matchWinCount++;
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -135,10 +152,10 @@ public class NLogic {
                         }
                     }, 1000);
                     //starting game over
-                    gameWinCount = mLevel.getLevelWinCount();
+//                    gameWinCount = mContents.getLevelWinCount();
                     gameWinCount++;
-                    Log.e("log","game over : "+gameWinCount);
-                    mLevel.setLevelWinCount(gameWinCount);
+                    Log.e("log", "game over : " + gameWinCount);
+//                    mContents.setLevelWinCount(gameWinCount);
                     savePoint(listSize);
                     showInformation(listSize);
                 }
@@ -186,7 +203,7 @@ public class NLogic {
     public void savePoint(int listSize) {
         presentPoint = pointCount(listSize);
         if (presentPoint > bestPoint) {
-            mLevel.setBestpoint(presentPoint);
+//            mContents.setBestpoint(presentPoint);
             saveDb();
         }
 
@@ -210,7 +227,7 @@ public class NLogic {
         dialog.setTitle("Status");
         dialog.setContentView(R.layout.row_d_best_point);
         TextView textView = (TextView) dialog.findViewById(R.id.txtBetPoint);
-        textView.setText("best point: " + mLevel.getBestpoint() + "\nWin count : " + mLevel.getLevelWinCount());
+//        textView.setText("best point: " + mContents.getBestpoint() + "\nWin count : " + mContents.getLevelWinCount());
         TextView textView1 = (TextView) dialog.findViewById(R.id.txtTotalWin);
 //        textView1.setText("no of total win: " + gameWinCount + "");
         dialog.show();

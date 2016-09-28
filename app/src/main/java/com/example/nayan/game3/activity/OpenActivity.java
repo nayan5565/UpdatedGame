@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.nayan.game3.AnalyticsApplication;
 import com.example.nayan.game3.DialogSoundOnOff;
@@ -48,7 +51,7 @@ import static android.R.attr.name;
  * Created by NAYAN on 8/4/2016.
  */
 public class OpenActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnNormal;
+    Button ফলাফল, বিশেষত্ব;
     Toolbar toolbar;
     MLevel mLevel;
     static LevelAdapter levelAdapter;
@@ -76,6 +79,7 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_activity);
+        ফলাফল = (Button) findViewById(R.id.result);
 //        VungleAdManager.getInstance(this).playAdOptions();
 //        AdView adView = (AdView) findViewById(R.id.adView);
 //        InMobAdManager.getInstance(this).loadAd(adView);
@@ -120,7 +124,11 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        btnNormal = (Button) findViewById(R.id.btnNormal);
+        ফলাফল = (Button) findViewById(R.id.result);
+        বিশেষত্ব = (Button) findViewById(R.id.special);
+        বিশেষত্ব.setOnClickListener(this);
+        ফলাফল.setTextColor(0xffff00ff);
+        বিশেষত্ব.setTextColor(0xffff00ff);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
@@ -318,12 +326,19 @@ public class OpenActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnNormal) {
-            Utils.getSound(OpenActivity.this, R.raw.click);
-            Intent intent = new Intent(this, LevelActivity.class);
-            intent.putExtra("type", Utils.EASY);
-            startActivity(intent);
-//            finish();
+        if (v.getId() == R.id.special) {
+            LayoutInflater layoutInflater = LayoutInflater.from(OpenActivity.this);
+            View view = layoutInflater.inflate(R.layout.scrollview_dailog, null);
+            TextView textView = (TextView) view.findViewById(R.id.txtScroll);
+//            textView.setText("Your really long message.");
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            textView.setTextColor(0xffff00ff);
+            alertDialog.setTitle("Title");
+//alertDialog.setMessage("Here is a really long message.");
+            alertDialog.setView(view);
+//            alertDialog.setButton("OK", null);
+            AlertDialog alert = alertDialog.create();
+            alert.show();
 
         }
     }

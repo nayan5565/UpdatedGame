@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.GameActivity;
+import com.example.nayan.game3.activity.SubLevelActivity;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
@@ -61,7 +62,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         for (int i = 0; i < starCount; i++) {
             star = star.concat(" " + fillStar);
         }
-        for (int j=(3-starCount);j>0;j--){
+        for (int j = (3 - starCount); j > 0; j--) {
             star = star.concat(" " + blankStar);
         }
 
@@ -116,8 +117,9 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
                     Log.e("position", "is" + getAdapterPosition());
                     mLevel = levels.get(getAdapterPosition());
                     Utils.getSound(context, R.raw.click);
-//                    GameActivity.mLevel = mLevel;
-                    Intent intent = new Intent(context, GameActivity.class);
+
+                    Intent intent = new Intent(context, SubLevelActivity.class);
+                    intent.putExtra("id",mLevel.getLid());
                     context.startActivity(intent);
 
                 }

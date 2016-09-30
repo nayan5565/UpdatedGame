@@ -5,8 +5,42 @@ package com.example.nayan.game3.model;
  */
 
 public class MContents {
-    private String img,aud,txt,vid,sen;
-    private int mid,lid;
+    private String img;
+    private String aud;
+    private String txt;
+    private String vid;
+    private String sen;
+
+    public String getClick() {
+        return click;
+    }
+
+    public void setClick(String click) {
+        this.click = click;
+    }
+
+    private String click;
+    private int mid;
+    private int lid;
+    private int presentId;
+
+    public int getPresentType() {
+        return presentType;
+    }
+
+    public void setPresentType(int presentType) {
+        this.presentType = presentType;
+    }
+
+    public int getPresentId() {
+        return presentId;
+    }
+
+    public void setPresentId(int presentId) {
+        this.presentId = presentId;
+    }
+
+    private int presentType;
 
     public int getMid() {
         return mid;

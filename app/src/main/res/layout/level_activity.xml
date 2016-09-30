@@ -26,12 +26,146 @@
         android:layout_weight="1"
         android:gravity="center" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/special"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="বিশেষত্ব "
+            android:textSize="25dp"/>
+
+        <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ফলাফল "
+            android:textSize="25dp"/>
+
+
+    </LinearLayout>
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id" />
 
 
+
+
 </LinearLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<include-->
+
+        <!--layout="@layout/app_bar" />-->
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recycler"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center" />-->
+
+
+    <!--<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/drawer"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
+        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/g_bg_im"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+            <!--<View-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtTitle"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Dino Matching"-->
+                <!--android:textColor="#f0f"-->
+                <!--android:textSize="40sp"-->
+                <!--android:textStyle="italic" />-->
+
+
+            <!--<Button-->
+                <!--android:id="@+id/btnNormal"-->
+                <!--android:layout_width="120dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:background="@drawable/play_image"-->
+
+                <!--android:textColor="#fff"-->
+                <!--android:textSize="20dp" />-->
+
+            <!--<View-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+
+                <!--android:orientation="horizontal">-->
+
+                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/img"&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;android:layout_width="40dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="40dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_gravity="left"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@drawable/on" />&ndash;&gt;-->
+
+                <!--<View-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_weight="1" />-->
+
+
+
+                <!--<com.google.android.gms.ads.AdView-->
+                    <!--android:id="@+id/adView"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--ads:adSize="BANNER"-->
+                    <!--ads:adUnitId="@string/banner_ad_unit_id" />-->
+
+
+            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+
+
+        <!--&lt;!&ndash;   <fragment-->
+
+               <!--android:presentId="@+presentId/fragNavDrewer"-->
+               <!--android:name="com.example.nayan.game3.fragment.NavigationDrawerFragment"-->
+               <!--android:layout_width="280dp"-->
+               <!--android:layout_height="match_parent"-->
+               <!--android:layout_gravity="start" />&ndash;&gt;-->
+    <!--</android.support.v4.widget.DrawerLayout>-->
+<!--</LinearLayout>-->

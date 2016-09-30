@@ -1,21 +1,17 @@
 package com.example.nayan.game3.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.activity.OpenActivity;
 import com.example.nayan.game3.logic.NLogic;
-import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
 
 import java.util.ArrayList;
@@ -32,6 +28,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     LayoutInflater inflater;
     NLogic nLogic;
     Animation animation;
+    int subLevelType;
 
 
     public GameAdapter(Context context) {
@@ -70,11 +67,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
         /*if (levels.getImageOpen()==1){
            //holder.img.setImageResource();
             //MyAnimation.rotation(holder.img,false);
-            Glide.with(context).load(LevelActivity.IMAGE_URL+levels.getImage())
+            Glide.with(context).load(SubLevelActivity.IMAGE_URL+levels.getImage())
                     .into(holder.img);*/
 
 //        if (mContents.getImageOpen() == 1) {
-//            Bitmap bitmap= BitmapFactory.decodeFile(OpenActivity.getPath(mContents.getImages()));
+//            Bitmap bitmap= BitmapFactory.decodeFile(LevelActivity.getPath(mContents.getImages()));
 //            holder.img.setImageBitmap(bitmap);
 //        } else {
 //            holder.img.setImageResource(R.drawable.place);
@@ -100,7 +97,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                 @Override
                 public void onClick(View v) {
                     mContents=textArrayList.get(getAdapterPosition());
-                    nLogic.textClick(mContents);
+//                    nLogic.textClick(mContents);
+                    Toast.makeText(context,mContents.getTxt(), Toast.LENGTH_SHORT).show();
+                    nLogic.imageClick(mContents,getAdapterPosition(),textArrayList.size());
                 }
             });
 //            img.setOnClickListener(new View.OnClickListener() {

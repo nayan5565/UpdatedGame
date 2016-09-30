@@ -98,34 +98,35 @@ public class NLogic {
             clickCount = mContents.getMid();
             count++;
             Toast.makeText(context, mContents.getTxt(), Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Toast.makeText(context, "wrong click", Toast.LENGTH_SHORT).show();
         }
-        if (count==list.size()){
-            count=0;
-            clickCount=0;
+        if (count == list.size()) {
+            count = 0;
+            clickCount = 0;
             Toast.makeText(context, "game over", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void imageClick(final MAsset mImage, int pos, int listSize) {
+    public void imageClick(final MContents mImage, int pos, int listSize) {
         Log.e("Loge", "present id ::" + mImage.getPresentId());
 
 
-        if (previousId == mImage.getPresentId() || mImage.getImageOpen() == Utils.IMAGE_ON || count > 1) {
+        if (previousType == mImage.getPresentType() || count > 1||mImage.getClick()==Utils.IMAGE_ON) {
+            Toast.makeText(context, "same click", Toast.LENGTH_SHORT).show();
             return;
         }
         clickCount++;
 
-//        list.get(pos).setImageOpen(Utils.IMAGE_ON);
+        list.get(pos).setClick(Utils.IMAGE_ON);
         gameAdapter.setData(list);
         count++;
         Utils.getSound(context, R.raw.click);
         if (count == 2) {
 
-            if (previousType == mImage.getPresentType()) {
+            if (previousId == mImage.getMid()) {
+                Toast.makeText(context, "match", Toast.LENGTH_SHORT).show();
                 Log.e("log", "matchwincount : " + matchWinCount);
                 matchWinCount++;
                 handler.postDelayed(new Runnable() {
@@ -141,8 +142,9 @@ public class NLogic {
 
 
                 if (matchWinCount == list.size() / 2) {
-                    VungleAdManager.getInstance(context).play();
+//                    VungleAdManager.getInstance(context).play();
 
+                    Toast.makeText(context, "game over", Toast.LENGTH_SHORT).show();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -156,25 +158,27 @@ public class NLogic {
                     gameWinCount++;
                     Log.e("log", "game over : " + gameWinCount);
 //                    mContents.setLevelWinCount(gameWinCount);
-                    savePoint(listSize);
-                    showInformation(listSize);
+//                    savePoint(listSize);
+//                    showInformation(listSize);
+                    matchWinCount=0;
                 }
-                previousId = 0;
+                previousType = 0;
 
                 return;
             } else {
 
-                final int perevious = previousId;
+                final int perevious = previousType;
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Utils.getSound(context, R.raw.fail);
                         for (int i = 0; i < list.size(); i++) {
-//                            if (list.get(i).getPresentId() == perevious || list.get(i).getPresentId() == mImage.getPresentId()) {
-//                                list.get(i).setImageOpen(Utils.IMAGE_OFF);
+                            if (list.get(i).getPresentType() == perevious || list.get(i).getPresentType() == mImage.getPresentType()) {
+                                list.get(i).setClick(Utils.IMAGE_OFF);
+                                Toast.makeText(context, "did not match or same click", Toast.LENGTH_SHORT).show();
 //
-//                            }
+                            }
                         }
                         gameAdapter.setData(list);
                         count = 0;
@@ -184,7 +188,7 @@ public class NLogic {
                 return;
             }
         }
-        previousId = mImage.getPresentId();
+        previousId = mImage.getMid();
         previousType = mImage.getPresentType();
     }
 

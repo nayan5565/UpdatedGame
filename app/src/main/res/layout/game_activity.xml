@@ -6,7 +6,7 @@
     android:background="@drawable/game_image_background"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.LevelActivity">
+    tools:context=".activity.SubLevelActivity">
 
     <include layout="@layout/app_bar" />
 

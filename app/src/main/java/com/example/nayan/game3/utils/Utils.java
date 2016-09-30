@@ -18,11 +18,11 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/25/2016.
  */
 public class Utils {
-    public static int IMAGE_ON = 1, IMAGE_OFF = 0;
+    public static String IMAGE_ON = "one", IMAGE_OFF = "two";
     public static String ASSETS_DOWNLOAD_MASSAGE = "downloaded";
     public static String CONVERT_NUM = "downloaded";
     public static int EASY = 1, MEDIUM = 2, HARD = 3;
-    public static ArrayList<MSubLevel> aubLevelArrayList;
+    public static ArrayList<MSubLevel> mSubLevelArrayList;
     public static ArrayList<MLevel> levels;
     public static ArrayList<MContents> contents;
     public static ArrayList<MLevel> English;

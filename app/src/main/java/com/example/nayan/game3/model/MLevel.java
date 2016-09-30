@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by NAYAN on 8/18/2016.
  */
 public class MLevel {
-    ArrayList<MAsset> asset = new ArrayList<>();
+    ArrayList<MSubLevel> mSubLevels = new ArrayList<>();
     //String eId;
     private int lid;
     private String coinPrice;
@@ -16,7 +16,6 @@ public class MLevel {
     private String sound;
     private String update_date;
     private int difficulty;
-    private int id;
     private int type;
     private int status;
     private int bestpoint;
@@ -54,12 +53,12 @@ public class MLevel {
         this.difficulty = difficulty;
     }
 
-    public ArrayList<MAsset> getAsset() {
-        return asset;
+    public ArrayList<MSubLevel> getmSubLevels() {
+        return mSubLevels;
     }
 
-    public void setAsset(ArrayList<MAsset> asset) {
-        this.asset = asset;
+    public void setmSubLevels(ArrayList<MSubLevel> mSubLevels) {
+        this.mSubLevels = mSubLevels;
     }
 
     public String getUpdate_date() {
@@ -109,15 +108,6 @@ public class MLevel {
     public void setBestpoint(int bestpoint) {
         this.bestpoint = bestpoint;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getLid() {
         return lid;
     }

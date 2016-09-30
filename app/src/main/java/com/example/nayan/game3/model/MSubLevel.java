@@ -5,6 +5,15 @@ package com.example.nayan.game3.model;
  */
 
 public class MSubLevel {
+    public int getpId() {
+        return pId;
+    }
+
+    public void setpId(int pId) {
+        this.pId = pId;
+    }
+
+    private int pId;
     private int lid;
     private String name;
     private String coins_price;

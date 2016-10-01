@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.VungleAdManager;
+import com.example.nayan.game3.adapter.Class3Adapter;
 import com.example.nayan.game3.adapter.GameAdapter;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.model.MAsset;
@@ -34,8 +36,9 @@ public class NLogic {
     private SharedPreferences preferences;
     private Context context;
     private Handler handler = new Handler();
-    private GameAdapter gameAdapter;
+    private RecyclerView.Adapter gameAdapter;
     private MContents mContents;
+    private Class3Adapter class3Adapter;
 
 
     private NLogic() {
@@ -53,7 +56,7 @@ public class NLogic {
 
     }
 
-    public void callData(ArrayList<MContents> list, GameAdapter adapter) {
+    public void callData(ArrayList<MContents> list, RecyclerView.Adapter adapter) {
         this.list = list;
         this.gameAdapter = adapter;
 
@@ -73,7 +76,7 @@ public class NLogic {
     }
 
 
-    public void showInformation(int listSize) {
+    public void showInformation(final int listSize) {
         presentPoint = pointCount(listSize);
         final Dialog dialog = new Dialog(context);
         dialog.setTitle("GameActivity Over");
@@ -86,7 +89,7 @@ public class NLogic {
             @Override
             public void onClick(View v) {
                 Utils.getSound(context, R.raw.shuffle);
-                resetList();
+                resetList(listSize);
                 dialog.dismiss();
             }
         });
@@ -94,7 +97,9 @@ public class NLogic {
     }
 
     public void textClick(MContents mContents) {
+        //don't work if mid !=1 at first time because first time click count=1
         if (mContents.getMid() == clickCount + 1) {
+            //clickcount store present mid
             clickCount = mContents.getMid();
             count++;
             Toast.makeText(context, mContents.getTxt(), Toast.LENGTH_SHORT).show();
@@ -109,25 +114,32 @@ public class NLogic {
 
     }
 
-    public void imageClick(final MContents mImage, int pos, int listSize) {
+    public void imageClick(final MContents mImage, int pos, final int listSize) {
         Log.e("Loge", "present id ::" + mImage.getPresentId());
 
-
-        if (previousType == mImage.getPresentType() || count > 1||mImage.getClick()==Utils.IMAGE_ON) {
+//
+        if (previousType == mImage.getPresentType() || count > 2 || mImage.getClick() == Utils.IMAGE_ON) {
+            Log.e("previoustype", "same: " + mImage.getPresentType());
+            Log.e("click over 1", "count: " +count);
             Toast.makeText(context, "same click", Toast.LENGTH_SHORT).show();
             return;
         }
         clickCount++;
 
         list.get(pos).setClick(Utils.IMAGE_ON);
-        gameAdapter.setData(list);
+        //list er position a click korbo set image on thakbe and
+        // image match korle ota image on data thakbe karon oy image on data
+        // thaka image abar click korle jate age click kora ase seta janabe
+        gameAdapter.notifyDataSetChanged();
         count++;
+        Log.e("click", "count: " +count);
         Utils.getSound(context, R.raw.click);
         if (count == 2) {
 
             if (previousId == mImage.getMid()) {
                 Toast.makeText(context, "match", Toast.LENGTH_SHORT).show();
                 Log.e("log", "matchwincount : " + matchWinCount);
+                Log.e("preivious id", "MID : " + previousId);
                 matchWinCount++;
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -141,18 +153,18 @@ public class NLogic {
                 }, 800);
 
 
-                if (matchWinCount == list.size() / 2) {
+                if (matchWinCount == listSize / 2) {
 //                    VungleAdManager.getInstance(context).play();
 
                     Toast.makeText(context, "game over", Toast.LENGTH_SHORT).show();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            // Utils.getSound(context,R.raw.gameover);
-                           /* game.animation();*/
-                        }
-                    }, 1000);
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                            // Utils.getSound(context,R.raw.gameover);
+//                           /* game.animation();*/
+//                        }
+//                    }, 1000);
                     //starting game over
 //                    gameWinCount = mContents.getLevelWinCount();
                     gameWinCount++;
@@ -160,9 +172,21 @@ public class NLogic {
 //                    mContents.setLevelWinCount(gameWinCount);
 //                    savePoint(listSize);
 //                    showInformation(listSize);
-                    matchWinCount=0;
+                    resetList(listSize);
+//                    matchWinCount = 0;
+//                    Log.e("match win", "zero" + matchWinCount);
+//                    count = 0;
+//                    Log.e("count", "zero" + count);
+//                    previousType = 0;
+//                    Log.e("prevousType", "zero" + previousType);
+//                    for (int i = 0; i < listSize; i++) {
+////
+//                        list.get(i).setClick(Utils.IMAGE_OFF);
+//                    }
+//
+//                    gameAdapter.notifyDataSetChanged();
                 }
-                previousType = 0;
+//                previousType = 0;
 
                 return;
             } else {
@@ -173,14 +197,14 @@ public class NLogic {
                     @Override
                     public void run() {
                         Utils.getSound(context, R.raw.fail);
-                        for (int i = 0; i < list.size(); i++) {
+                        for (int i = 0; i < listSize; i++) {
                             if (list.get(i).getPresentType() == perevious || list.get(i).getPresentType() == mImage.getPresentType()) {
                                 list.get(i).setClick(Utils.IMAGE_OFF);
                                 Toast.makeText(context, "did not match or same click", Toast.LENGTH_SHORT).show();
 //
                             }
                         }
-                        gameAdapter.setData(list);
+                        gameAdapter.notifyDataSetChanged();
                         count = 0;
                     }
                 }, 1000);
@@ -193,14 +217,16 @@ public class NLogic {
     }
 
 
-    public void resetList() {
-        for (int i = 0; i < list.size(); i++) {
-//            list.get(i).setImageOpen(Utils.IMAGE_OFF);
+    public void resetList(int listSize) {
+        for (int i = 0; i < listSize; i++) {
+            list.get(i).setClick(Utils.IMAGE_OFF);
         }
         Collections.shuffle(list);
         clickCount = 0;
         matchWinCount = 0;
-        gameAdapter.setData(list);
+        previousType=0;
+        count=0;
+        gameAdapter.notifyDataSetChanged();
 
     }
 

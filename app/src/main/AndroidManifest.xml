@@ -25,6 +25,7 @@
         <activity android:name=".activity.SubLevelActivity"/>
         <activity android:name=".activity.GameActivity"/>
         <activity android:name=".activity.Class2Activity"/>
+        <activity android:name=".activity.Class3Activity"/>
             android:screenOrientation="landscape"/>
         <activity
             android:name="com.vungle.publisher.VideoFullScreenAdActivity"

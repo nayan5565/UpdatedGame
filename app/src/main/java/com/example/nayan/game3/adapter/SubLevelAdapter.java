@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.Class2Activity;
+import com.example.nayan.game3.activity.Class3Activity;
 import com.example.nayan.game3.activity.GameActivity;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
@@ -77,6 +78,9 @@ public class SubLevelAdapter extends RecyclerView.Adapter<SubLevelAdapter.MyView
                         context.startActivity(intent);
                     } else if (mSubLevel.getLid() == 2) {
                         Intent intent = new Intent(context, Class2Activity.class);
+                        context.startActivity(intent);
+                    } else if (mSubLevel.getLid() == 3) {
+                        Intent intent = new Intent(context, Class3Activity.class);
                         context.startActivity(intent);
                     }
 

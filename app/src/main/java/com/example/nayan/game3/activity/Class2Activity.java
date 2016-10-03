@@ -1,7 +1,6 @@
 package com.example.nayan.game3.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.adapter.Class1AdapterOfBangla;
+import com.example.nayan.game3.adapter.Class2AdapterOfBangla;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
-import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Class2Activity extends AppCompatActivity {
     ArrayList<MContents> imageArrayList;
     ImageView imgSetting;
     RecyclerView recyclerView;
-    GameAdapter gameAdapter;
+    Class2AdapterOfBangla class1AdapterOfBangla;
     Toolbar toolbar;
     MyDatabase database;
     @Override
@@ -43,16 +42,13 @@ public class Class2Activity extends AppCompatActivity {
         realAssets = db.getContentsData();
         imageArrayList = generateAssets(realAssets);
 //        Collections.shuffle(imageArrayList);
-       gameAdapter.setData(imageArrayList);
+       class1AdapterOfBangla.setData(imageArrayList);
     }
 
     public ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
         int count = 20;
         ArrayList<MContents> tempAsset = new ArrayList<>();
         for (MContents mContents : realAssets) {
-            NLogic.count = 0;
-
-            NLogic.previousId = tempAsset.size() + 1;
 
             tempAsset.add(mContents);
             count++;
@@ -92,7 +88,7 @@ public class Class2Activity extends AppCompatActivity {
 //            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 //        }
 
-        gameAdapter = new GameAdapter(this);
-        recyclerView.setAdapter(gameAdapter);
+        class1AdapterOfBangla = new Class2AdapterOfBangla(this);
+        recyclerView.setAdapter(class1AdapterOfBangla);
     }
 }

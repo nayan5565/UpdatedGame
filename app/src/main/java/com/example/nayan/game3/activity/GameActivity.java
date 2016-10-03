@@ -13,15 +13,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.VungleAdManager;
-import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.adapter.Class1AdapterOfBangla;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
-import com.example.nayan.game3.model.MSubLevel;
-import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<MContents> imageArrayList;
     ImageView imgSetting;
     RecyclerView recyclerView;
-    GameAdapter gameAdapter;
+    Class1AdapterOfBangla class1AdapterOfBangla;
     Toolbar toolbar;
     MyDatabase database;
 
@@ -48,37 +45,35 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //        VungleAdManager.getInstance(this).play();
 
         init();
-       getLocalData();
+        getLocalData();
 
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        if (id==android.R.id.home)
+        int id = item.getItemId();
+        if (id == android.R.id.home)
             finish();
         return super.onOptionsItemSelected(item);
     }
 
     public void getLocalData() {
-        imageArrayList=database.getContentsData();
-        gameAdapter.setData(imageArrayList);
+        imageArrayList = database.getContentsData();
+        Collections.shuffle(imageArrayList);
+        class1AdapterOfBangla.setData(imageArrayList);
 //        ArrayList<MContents> realAssets = new ArrayList<>();
 //        MyDatabase db = new MyDatabase(this);
 //        realAssets = db.getContentsData(mContents.getLid());
 //        imageArrayList = generateAssets(realAssets);
 //        Collections.shuffle(imageArrayList);
-//       gameAdapter.setData(imageArrayList);
+//       class1AdapterOfBangla.setData(imageArrayList);
     }
 
     public ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
         int count = 20;
         ArrayList<MContents> tempAsset = new ArrayList<>();
         for (MContents mContents : realAssets) {
-            NLogic.count = 0;
-
-            NLogic.previousId = tempAsset.size() + 1;
 
             tempAsset.add(mContents);
             count++;
@@ -109,8 +104,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
-        database=new MyDatabase(this);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        database = new MyDatabase(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -120,7 +115,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         NLogic.getInstance(this).setLevel(mContents);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 //        if (SubLevelActivity.value == Utils.EASY) {
 //            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 //        }
@@ -131,9 +126,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 //        }
 
-        gameAdapter = new GameAdapter(this);
-        recyclerView.setAdapter(gameAdapter);
+        class1AdapterOfBangla = new Class1AdapterOfBangla(this);
+        recyclerView.setAdapter(class1AdapterOfBangla);
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.imgseting) {

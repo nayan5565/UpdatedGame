@@ -12,13 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.VungleAdManager;
-import com.example.nayan.game3.adapter.Class3Adapter;
-import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.adapter.Class3AdapterOfBangla;
 import com.example.nayan.game3.database.MyDatabase;
-import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
-import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
@@ -29,7 +25,7 @@ import java.util.Collections;
  */
 public class NLogic {
     public static final String MyPREFERENCE = "mypref";
-    public static int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
+    public int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
     static NLogic nLogic;
 
     private ArrayList<MContents> list;
@@ -38,7 +34,7 @@ public class NLogic {
     private Handler handler = new Handler();
     private RecyclerView.Adapter gameAdapter;
     private MContents mContents;
-    private Class3Adapter class3Adapter;
+    private Class3AdapterOfBangla class3Adapter;
 
 
     private NLogic() {
@@ -47,9 +43,10 @@ public class NLogic {
 
     public static NLogic getInstance(Context context1) {
 
-        if (nLogic == null) {
-            nLogic = new NLogic();
-        }
+//        if (nLogic == null) {
+//            nLogic = new NLogic();
+//        }
+        nLogic = new NLogic();
         nLogic.context = context1;
 
         return nLogic;
@@ -96,7 +93,7 @@ public class NLogic {
         dialog.show();
     }
 
-    public void textClick(MContents mContents) {
+    public void textClick(MContents mContents, int listSize) {
         //don't work if mid !=1 at first time because first time click count=1
         if (mContents.getMid() == clickCount + 1) {
             //clickcount store present mid
@@ -106,9 +103,8 @@ public class NLogic {
         } else {
             Toast.makeText(context, "wrong click", Toast.LENGTH_SHORT).show();
         }
-        if (count == list.size()) {
-            count = 0;
-            clickCount = 0;
+        if (count == listSize) {
+            resetList(listSize);
             Toast.makeText(context, "game over", Toast.LENGTH_SHORT).show();
         }
 
@@ -118,9 +114,9 @@ public class NLogic {
         Log.e("Loge", "present id ::" + mImage.getPresentId());
 
 //
-        if (previousType == mImage.getPresentType() || count > 2 || mImage.getClick() == Utils.IMAGE_ON) {
+        if (previousType == mImage.getPresentType() || count > 1 || mImage.getClick() == Utils.IMAGE_ON) {
             Log.e("previoustype", "same: " + mImage.getPresentType());
-            Log.e("click over 1", "count: " +count);
+            Log.e("click over 1", "count: " + count);
             Toast.makeText(context, "same click", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -132,7 +128,7 @@ public class NLogic {
         // thaka image abar click korle jate age click kora ase seta janabe
         gameAdapter.notifyDataSetChanged();
         count++;
-        Log.e("click", "count: " +count);
+        Log.e("click", "count: " + count);
         Utils.getSound(context, R.raw.click);
         if (count == 2) {
 
@@ -224,8 +220,9 @@ public class NLogic {
         Collections.shuffle(list);
         clickCount = 0;
         matchWinCount = 0;
-        previousType=0;
-        count=0;
+        previousType = 0;
+        previousId = 0;
+        count = 0;
         gameAdapter.notifyDataSetChanged();
 
     }

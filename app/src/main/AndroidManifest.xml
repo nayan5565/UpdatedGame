@@ -22,20 +22,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SubLevelActivity"/>
-        <activity android:name=".activity.GameActivity"/>
-        <activity android:name=".activity.Class2Activity"/>
-        <activity android:name=".activity.Class3Activity"/>
-            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.SubLevelActivity" />
+        <activity android:name=".activity.GameActivity" />
+        <activity android:name=".activity.Class2Activity" />
+        <activity android:name=".activity.Class3Activity" />
+        <activity android:name=".activity.MathLevel_1Activity" />
+        android:screenOrientation="landscape"/>
         <activity
             android:name="com.vungle.publisher.VideoFullScreenAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-
         <activity
             android:name="com.vungle.publisher.MraidFullScreenAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity android:name=".activity.MathLevel_1Activity"></activity>
     </application>
 
 </manifest>

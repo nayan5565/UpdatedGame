@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by NAYAN on 8/20/2016.
  */
-public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> {
+public class Class1AdapterOfBangla extends RecyclerView.Adapter<Class1AdapterOfBangla.MyViewholder> {
 
     ArrayList<MContents> textArrayList;
 
@@ -31,7 +31,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
     int subLevelType;
 
 
-    public GameAdapter(Context context) {
+    public Class1AdapterOfBangla(Context context) {
         this.context = context;
 
         textArrayList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewholder> 
                     mContents=textArrayList.get(getAdapterPosition());
 //                    nLogic.textClick(mContents);
                     Toast.makeText(context,mContents.getTxt(), Toast.LENGTH_SHORT).show();
-                    nLogic.imageClick(mContents,getAdapterPosition(),textArrayList.size());
+                    nLogic.textClick(mContents,textArrayList.size());
                 }
             });
 //            img.setOnClickListener(new View.OnClickListener() {

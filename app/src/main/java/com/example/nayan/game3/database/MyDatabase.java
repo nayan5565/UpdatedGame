@@ -3,8 +3,7 @@ package com.example.nayan.game3.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
 import android.util.Log;
 
 import com.example.nayan.game3.model.MAsset;
@@ -12,12 +11,17 @@ import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by NAYAN on 8/24/2016.
  */
-public class MyDatabase extends SQLiteOpenHelper {
+public class MyDatabase {
+    private Context context;
     private static final String DATABASE_NAME = "game.db";
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_LEVEL_TABLE = "level";
@@ -42,6 +46,11 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String KEY_PRESENT_TYPE = "present_type";
     private static final String KEY_BEST_POINT = "best_point";
     private static final String KEY_LEVEL_WIN_COUNT = "win_count";
+
+    private final String TAG = getClass().getSimpleName();
+    private final String PASS = "test123";
+
+    private SQLiteDatabase db;
 
 
     private static final String DATABASE_CREATE_LEVEL_TABLE = "create table if not exists "
@@ -73,28 +82,32 @@ public class MyDatabase extends SQLiteOpenHelper {
             + KEY_NO_OF_COINS + " text)";
 
     public MyDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        this.context = context;
+        openDB(context);
+        onCreate();
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    private void openDB(Context context) {
+        SQLiteDatabase.loadLibs(context);
+        File databaseFile = context.getDatabasePath(DATABASE_NAME);
+        if (!databaseFile.exists()) {
+            databaseFile.mkdirs();
+            databaseFile.delete();
+        }
+        db = SQLiteDatabase.openOrCreateDatabase(databaseFile, PASS, null);
+    }
+
+
+    public void onCreate() {
         db.execSQL(DATABASE_CREATE_LEVEL_TABLE);
         db.execSQL(DATABASE_CREATE_CONTENTS_TABLE);
         db.execSQL(DATABASE_CREATE_SUB_LEVEL_TABLE);
 
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + DATABASE_LEVEL_TABLE);
-        db.execSQL("drop table if exists " + DATABASE_CONTENTS_TABLE);
-        db.execSQL("drop table if exists " + DATABASE_SUB_LEVEL_TABLE);
-        onCreate(db);
-
-    }
-
     public void addLevelFromJson(MLevel mLevel) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_NAME, mLevel.getName());
@@ -111,7 +124,7 @@ public class MyDatabase extends SQLiteOpenHelper {
             }
 
             String sql = "select * from " + DATABASE_LEVEL_TABLE + " where " + KEY_LEVEL_ID + "='" + mLevel.getLid() + "'";
-            Cursor cursor = db.rawQuery(sql, null);
+            cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int update = db.update(DATABASE_LEVEL_TABLE, values, KEY_LEVEL_ID + "=?", new String[]{mLevel.getLid() + ""});
                 Log.e("log", "update : " + mLevel.getLid());
@@ -122,15 +135,14 @@ public class MyDatabase extends SQLiteOpenHelper {
             }
 
 
-            db.close();
         } catch (Exception e) {
 
         }
-
+        cursor.close();
     }
 
     public void addSubFromJsom(MSubLevel mSubLevel) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_LEVEL_ID, mSubLevel.getLid());
@@ -140,7 +152,7 @@ public class MyDatabase extends SQLiteOpenHelper {
             values.put(KEY_NO_OF_COINS, mSubLevel.getNo_of_coins());
 
             String sql = "select * from " + DATABASE_SUB_LEVEL_TABLE + " where " + KEY_LEVEL_ID + "='" + mSubLevel.getLid() + "'";
-            Cursor cursor = db.rawQuery(sql, null);
+            cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int update = db.update(DATABASE_SUB_LEVEL_TABLE, values, KEY_LEVEL_ID + "=?", new String[]{mSubLevel.getLid() + ""});
                 Log.e("log", "sub level update : " + update);
@@ -151,15 +163,14 @@ public class MyDatabase extends SQLiteOpenHelper {
             }
 
 
-            db.close();
         } catch (Exception e) {
 
         }
-
+        cursor.close();
     }
 
     public void addContentsFromJsom(MContents mContents) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_LEVEL_ID, mContents.getLid());
@@ -172,7 +183,7 @@ public class MyDatabase extends SQLiteOpenHelper {
             values.put(KEY_SEN, mContents.getSen());
 
             String sql = "select * from " + DATABASE_CONTENTS_TABLE + " where " + KEY_MODEL_ID + "='" + mContents.getMid() + "'";
-            Cursor cursor = db.rawQuery(sql, null);
+            cursor = db.rawQuery(sql, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int update = db.update(DATABASE_CONTENTS_TABLE, values, KEY_MODEL_ID + "=?", new String[]{mContents.getMid() + ""});
                 Log.e("log", "content update : " + update);
@@ -183,16 +194,15 @@ public class MyDatabase extends SQLiteOpenHelper {
             }
 
 
-            db.close();
         } catch (Exception e) {
 
         }
 
+        cursor.close();
     }
 
 
     public ArrayList<MLevel> getLevelData() {
-        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MLevel> levelArrayList = new ArrayList<>();
 
         MLevel mLevel;
@@ -213,16 +223,14 @@ public class MyDatabase extends SQLiteOpenHelper {
                 levelArrayList.add(mLevel);
                 Log.e("do", "end");
             } while (cursor.moveToNext());
+            cursor.close();
         }
-
-        db.close();
 
 
         return levelArrayList;
     }
 
     public ArrayList<MSubLevel> getSubLevelData(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MSubLevel> assetArrayList = new ArrayList<>();
 
         MSubLevel mSubLevel;
@@ -239,16 +247,14 @@ public class MyDatabase extends SQLiteOpenHelper {
                 assetArrayList.add(mSubLevel);
 
             } while (cursor.moveToNext());
+            cursor.close();
         }
-
-        db.close();
 
 
         return assetArrayList;
     }
 
     public ArrayList<MContents> getContentsData() {
-        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<MContents> assetArrayList = new ArrayList<>();
 
         MContents mContents;
@@ -268,9 +274,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                 assetArrayList.add(mContents);
 
             } while (cursor.moveToNext());
+            cursor.close();
         }
-
-        db.close();
 
 
         return assetArrayList;

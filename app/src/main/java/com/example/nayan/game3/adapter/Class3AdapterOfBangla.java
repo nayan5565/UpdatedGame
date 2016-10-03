@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MContents;
+import com.example.nayan.game3.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  * Created by NAYAN on 10/1/2016.
  */
 
-public class Class3Adapter extends RecyclerView.Adapter<Class3Adapter.MyViewHolder> {
+public class Class3AdapterOfBangla extends RecyclerView.Adapter<Class3AdapterOfBangla.MyViewHolder> {
     ArrayList<MContents> textArrayList;
 
     MContents mContents = new MContents();
@@ -27,7 +28,7 @@ public class Class3Adapter extends RecyclerView.Adapter<Class3Adapter.MyViewHold
     LayoutInflater inflater;
     NLogic nLogic;
 
-    public Class3Adapter(Context context) {
+    public Class3AdapterOfBangla(Context context) {
         this.context = context;
 
         textArrayList = new ArrayList<>();
@@ -56,10 +57,14 @@ public class Class3Adapter extends RecyclerView.Adapter<Class3Adapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         mContents = textArrayList.get(position);
-        if (mContents.getTxt()==null||mContents.getTxt().equals("")) {
-            holder.txtContents.setText(mContents.getSen());
+        if (mContents.getClick() == Utils.IMAGE_ON) {
+            if (mContents.getTxt() == null || mContents.getTxt().equals("")) {
+                holder.txtContents.setText(mContents.getSen());
+            } else {
+                holder.txtContents.setText(mContents.getTxt());
+            }
         } else {
-            holder.txtContents.setText(mContents.getTxt());
+            holder.txtContents.setText(" ");
         }
         holder.txtContents.setTextColor(0xffff00ff);
         holder.txtContents.setTextSize(20);
@@ -81,12 +86,11 @@ public class Class3Adapter extends RecyclerView.Adapter<Class3Adapter.MyViewHold
                 public void onClick(View v) {
                     mContents = textArrayList.get(getAdapterPosition());
 //                    nLogic.textClick(mContents);
-                    if (mContents.getTxt()==null||mContents.getTxt().equals("")){
-                        Toast.makeText(context, mContents.getSen(), Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(context, mContents.getTxt(), Toast.LENGTH_SHORT).show();
-                    }
+//                    if (mContents.getTxt() == null || mContents.getTxt().equals("")) {
+////                        Toast.makeText(context, mContents.getSen(), Toast.LENGTH_SHORT).show();
+//                    } else {
+////                        Toast.makeText(context, mContents.getTxt(), Toast.LENGTH_SHORT).show();
+//                    }
 
                     nLogic.imageClick(mContents, getAdapterPosition(), textArrayList.size());
                 }

@@ -1,7 +1,6 @@
 package com.example.nayan.game3.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.adapter.Class3Adapter;
-import com.example.nayan.game3.adapter.GameAdapter;
+import com.example.nayan.game3.adapter.Class3AdapterOfBangla;
 import com.example.nayan.game3.database.MyDatabase;
 import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MContents;
@@ -26,7 +24,7 @@ public class Class3Activity extends AppCompatActivity {
     ArrayList<MContents> imageArrayList;
     ImageView imgSetting;
     RecyclerView recyclerView;
-    Class3Adapter class3Adapter;
+    Class3AdapterOfBangla class3Adapter;
     Toolbar toolbar;
     MyDatabase database;
 
@@ -69,7 +67,7 @@ public class Class3Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        imgSetting = (ImageView) findViewById(R.id.imgseting);
 //        imgSetting.setOnClickListener(this);
-        NLogic.getInstance(this).setLevel(mContents);
+//        NLogic.getInstance(this).setLevel(mContents);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -83,7 +81,7 @@ public class Class3Activity extends AppCompatActivity {
 //            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 //        }
 
-        class3Adapter = new Class3Adapter(this);
+        class3Adapter = new Class3AdapterOfBangla(this);
         recyclerView.setAdapter(class3Adapter);
     }
 }

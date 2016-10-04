@@ -12,9 +12,8 @@ import android.widget.TextView;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.Class2Activity;
 import com.example.nayan.game3.activity.Class3Activity;
-import com.example.nayan.game3.activity.GameActivity;
+import com.example.nayan.game3.activity.Class1Activity;
 import com.example.nayan.game3.activity.MathLevel_1Activity;
-import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 
 import java.util.ArrayList;
@@ -24,11 +23,11 @@ import java.util.ArrayList;
  */
 
 public class SubLevelAdapter extends RecyclerView.Adapter<SubLevelAdapter.MyViewHolder> {
-    ArrayList<MSubLevel> mSubLevels;
-    MSubLevel mSubLevel = new MSubLevel();
-    Context context;
-    LayoutInflater inflater;
-    int subLevel;
+    private ArrayList<MSubLevel> mSubLevels;
+    private MSubLevel mSubLevel = new MSubLevel();
+    private Context context;
+    private LayoutInflater inflater;
+    private int subLevel;
 
     public SubLevelAdapter(Context context) {
         this.context = context;
@@ -75,7 +74,7 @@ public class SubLevelAdapter extends RecyclerView.Adapter<SubLevelAdapter.MyView
                 public void onClick(View v) {
                     mSubLevel = mSubLevels.get(getAdapterPosition());
                     if (mSubLevel.getLid() == 1) {
-                        Intent intent = new Intent(context, GameActivity.class);
+                        Intent intent = new Intent(context, Class1Activity.class);
                         context.startActivity(intent);
                     } else if (mSubLevel.getLid() == 2) {
                         Intent intent = new Intent(context, Class2Activity.class);

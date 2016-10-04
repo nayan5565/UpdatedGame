@@ -44,17 +44,17 @@ import cz.msebera.android.httpclient.Header;
  * Created by NAYAN on 8/4/2016.
  */
 public class LevelActivity extends AppCompatActivity implements View.OnClickListener {
-    Button ফলাফল, বিশেষত্ব;
-    Toolbar toolbar;
-    MLevel mLevel;
-    static LevelAdapter levelAdapter;
-    static ArrayList<MLevel> levels;
-    MyDatabase database;
-    DrawerLayout drawerLayout;
-    Animation animation;
+    private Button result, special;
+    private Toolbar toolbar;
+    private MLevel mLevel;
+    private static LevelAdapter levelAdapter;
+    private static ArrayList<MLevel> levels;
+    private MyDatabase database;
+    private DrawerLayout drawerLayout;
+    private Animation animation;
     private Tracker tracker;
-    RecyclerView recyclerView;
-    String image;
+    private RecyclerView recyclerView;
+    private String image;
 
     //   NavigationDrawerFragment drawerFragment;
 
@@ -72,7 +72,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.level_activity);
-        ফলাফল = (Button) findViewById(R.id.result);
+        result = (Button) findViewById(R.id.result);
 //        VungleAdManager.getInstance(this).playAdOptions();
 //        AdView adView = (AdView) findViewById(R.id.adView);
 //        InMobAdManager.getInstance(this).loadAd(adView);
@@ -100,7 +100,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void init() {
+    private void init() {
 
         image = DialogSoundOnOff.getPREF(this, DialogSoundOnOff.KEY_IMAGE);
         if (image.equals(1 + "")) {
@@ -117,22 +117,22 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        ফলাফল = (Button) findViewById(R.id.result);
-        বিশেষত্ব = (Button) findViewById(R.id.special);
-        বিশেষত্ব.setOnClickListener(this);
-        ফলাফল.setTextColor(0xffff00ff);
-        বিশেষত্ব.setTextColor(0xffff00ff);
+        result = (Button) findViewById(R.id.result);
+        special = (Button) findViewById(R.id.special);
+        special.setOnClickListener(this);
+        result.setTextColor(0xffff00ff);
+        special.setTextColor(0xffff00ff);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         levelAdapter = new LevelAdapter(this);
-        recyclerView.setAdapter(levelAdapter);
+
 
     }
 
-    public void getLocalData() {
+    private void getLocalData() {
         levels = database.getLevelData();
         Log.e("list", "size : " + levels.size());
         levelAdapter.setData(levels);
@@ -161,7 +161,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
-    public void getOnlineData() {
+    private void getOnlineData() {
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post("http://www.radhooni.com/content/match_game/v1/levels.php", new JsonHttpResponseHandler() {
@@ -213,7 +213,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                                 }
 
 
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -233,7 +232,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         );
     }
 
-    public void getOnlineContentsData() {
+    private void getOnlineContentsData() {
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.post("http://www.radhooni.com/content/match_game/v1/contents.php", new JsonHttpResponseHandler() {
             @Override
@@ -243,7 +242,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     JSONArray content = response.getJSONArray("contents");
                     MContents mContents;
-                    int count=0;
+                    int count = 0;
                     for (int i = 0; i < content.length(); i++) {
                         JSONObject jsonObject = content.getJSONObject(i);
                         count++;
@@ -297,6 +296,8 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 //        drawerFragment.setUp(R.id.fragNavDrewer, drawerLayout, toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(levelAdapter);
 
     }
 
@@ -324,7 +325,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
         dialog.show();
     }
 
-    public void exitYes() {
+    private void exitYes() {
         super.onBackPressed();
     }
 

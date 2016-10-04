@@ -21,14 +21,14 @@ import java.util.ArrayList;
  */
 public class Class1AdapterOfBangla extends RecyclerView.Adapter<Class1AdapterOfBangla.MyViewholder> {
 
-    ArrayList<MContents> textArrayList;
+    private ArrayList<MContents> textArrayList;
 
-    MContents mContents = new MContents();
-    Context context;
-    LayoutInflater inflater;
-    NLogic nLogic;
-    Animation animation;
-    int subLevelType;
+    private MContents mContents = new MContents();
+    private Context context;
+    private LayoutInflater inflater;
+    private NLogic nLogic;
+   private Animation animation;
+    private int subLevelType;
 
 
     public Class1AdapterOfBangla(Context context) {

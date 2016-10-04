@@ -5,14 +5,14 @@ package com.example.nayan.game3.model;
  */
 
 public class MItem {
-    private int number,tag;
+    private int item,tag;
 
-    public int getNumber() {
-        return number;
+    public int getItem() {
+        return item;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setItem(int item) {
+        this.item = item;
     }
 
     public int getTag() {

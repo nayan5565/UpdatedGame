@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.activity.MathLevel_1Activity;
 import com.example.nayan.game3.model.MItem;
-import com.example.nayan.game3.model.MQuestions;
 
 import java.util.ArrayList;
 
@@ -25,27 +24,28 @@ public class MathLevelAdapter extends RecyclerView.Adapter<MathLevelAdapter.MyVi
     private ArrayList<MItem> mItems;
     private MItem mItem;
 
-    public MathLevelAdapter(Context context){
-        this.context=context;
-        mItems=new ArrayList<>();
-        inflater=LayoutInflater.from(context);
+    public MathLevelAdapter(Context context) {
+        this.context = context;
+        mItems = new ArrayList<>();
+        inflater = LayoutInflater.from(context);
     }
 
-    public void setData(ArrayList<MItem> mItems){
-        this.mItems=mItems;
+    public void setData(ArrayList<MItem> mItems) {
+        this.mItems = mItems;
         notifyDataSetChanged();
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=inflater.inflate(R.layout.row_image,parent,false);
-        MyViewHolder myViewHolder=new MyViewHolder(view);
+        View view = inflater.inflate(R.layout.row_image, parent, false);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        mItem=mItems.get(position);
-        holder.textView.setText(mItem.getNumber()+"");
+        mItem = mItems.get(position);
+        holder.textView.setText(mItem.getItem() + "");
 
     }
 
@@ -56,21 +56,22 @@ public class MathLevelAdapter extends RecyclerView.Adapter<MathLevelAdapter.MyVi
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+
         public MyViewHolder(final View itemView) {
             super(itemView);
-            textView=(TextView)itemView.findViewById(R.id.txtLevel);
+            textView = (TextView) itemView.findViewById(R.id.txtLevel);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mItem=mItems.get(getAdapterPosition());
-                    if (mItem.getTag()==1){
-                        Toast.makeText(context,"Correct",Toast.LENGTH_SHORT).show();
+                    mItem = mItems.get(getAdapterPosition());
+                    if (mItem.getTag() == 1) {
+                        Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
                         itemView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 MathLevel_1Activity.getInstance().preParedisplay();
                             }
-                        },2000);
+                        }, 2000);
                     }
                 }
             });

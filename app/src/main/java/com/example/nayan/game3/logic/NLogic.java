@@ -24,9 +24,9 @@ import java.util.Collections;
  * Created by NAYAN on 8/20/2016.
  */
 public class NLogic {
-    public static final String MyPREFERENCE = "mypref";
-    public int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
-    static NLogic nLogic;
+    private static final String MyPREFERENCE = "mypref";
+    private int previousId, count, clickCount, matchWinCount, previousType, gameWinCount, previousPoint, presentPoint, bestPoint;
+    private static NLogic nLogic;
 
     private ArrayList<MContents> list;
     private SharedPreferences preferences;
@@ -67,7 +67,7 @@ public class NLogic {
         this.mContents = mContents;
     }
 
-    public void saveDb() {
+    private void saveDb() {
         MyDatabase db = new MyDatabase(context);
 //        db.addLevelFromJson(mContents);
     }
@@ -76,7 +76,7 @@ public class NLogic {
     public void showInformation(final int listSize) {
         presentPoint = pointCount(listSize);
         final Dialog dialog = new Dialog(context);
-        dialog.setTitle("GameActivity Over");
+        dialog.setTitle("Class1Activity Over");
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.row_dialog);
         TextView textView = (TextView) dialog.findViewById(R.id.txt);
@@ -205,6 +205,7 @@ public class NLogic {
                     }
                 }, 1000);
                 previousId = 0;
+                previousType=0;
                 return;
             }
         }
@@ -213,7 +214,7 @@ public class NLogic {
     }
 
 
-    public void resetList(int listSize) {
+    private void resetList(int listSize) {
         for (int i = 0; i < listSize; i++) {
             list.get(i).setClick(Utils.IMAGE_OFF);
         }
@@ -227,7 +228,7 @@ public class NLogic {
 
     }
 
-    public void savePoint(int listSize) {
+    private void savePoint(int listSize) {
         presentPoint = pointCount(listSize);
         if (presentPoint > bestPoint) {
 //            mContents.setBestpoint(presentPoint);
@@ -236,7 +237,7 @@ public class NLogic {
 
     }
 
-    public int pointCount(int listSize) {
+    private int pointCount(int listSize) {
         int point = 50;
 
         if (clickCount == listSize) {

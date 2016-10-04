@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SubLevelActivity" />
-        <activity android:name=".activity.GameActivity" />
+        <activity android:name=".activity.Class1Activity" />
         <activity android:name=".activity.Class2Activity" />
         <activity android:name=".activity.Class3Activity" />
         <activity android:name=".activity.MathLevel_1Activity" />

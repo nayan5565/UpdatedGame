@@ -20,30 +20,40 @@ import java.util.ArrayList;
  */
 
 public class Class3Activity extends AppCompatActivity {
-    public static MContents mContents;
-    ArrayList<MContents> imageArrayList;
-    ImageView imgSetting;
-    RecyclerView recyclerView;
-    Class3AdapterOfBangla class3Adapter;
-    Toolbar toolbar;
-    MyDatabase database;
+    private static MContents mContents;
+    private ArrayList<MContents> imageArrayList;
+    private ImageView imgSetting;
+    private RecyclerView recyclerView;
+    private Class3AdapterOfBangla class3Adapter;
+    private Toolbar toolbar;
+    private MyDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.class3_activity);
         init();
+        prepareDisplay();
         getLocalData();
     }
 
-    public void getLocalData() {
+    private void prepareDisplay() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setAdapter(class3Adapter);
+    }
+
+    private void getLocalData() {
         ArrayList<MContents> realTxtSen = new ArrayList<>();
         realTxtSen = database.getContentsData();
-        imageArrayList =generatesTxtSen(realTxtSen);
+        imageArrayList = generatesTxtSen(realTxtSen);
         class3Adapter.setData(imageArrayList);
     }
 
-    public ArrayList<MContents> generatesTxtSen(ArrayList<MContents> realTxtSen) {
+    private ArrayList<MContents> generatesTxtSen(ArrayList<MContents> realTxtSen) {
         int count = 20;
         ArrayList<MContents> tempTxtSen = new ArrayList<>();
         for (MContents mContents : realTxtSen) {
@@ -58,30 +68,15 @@ public class Class3Activity extends AppCompatActivity {
         return tempTxtSen;
     }
 
-    public void init() {
+    private void init() {
         database = new MyDatabase(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        imgSetting = (ImageView) findViewById(R.id.imgseting);
 //        imgSetting.setOnClickListener(this);
 //        NLogic.getInstance(this).setLevel(mContents);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        if (SubLevelActivity.value == Utils.EASY) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        }
-//        if (SubLevelActivity.value == Utils.MEDIUM) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-//        if (SubLevelActivity.value == Utils.HARD) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-
         class3Adapter = new Class3AdapterOfBangla(this);
-        recyclerView.setAdapter(class3Adapter);
+
     }
 }

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nayan.game3.R;
-import com.example.nayan.game3.activity.GameActivity;
 import com.example.nayan.game3.activity.SubLevelActivity;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.utils.Utils;
@@ -24,10 +23,10 @@ import java.util.ArrayList;
 public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder> {
 
 
-    ArrayList<MLevel> levels;
-    MLevel mLevel = new MLevel();
-    Context context;
-    LayoutInflater inflater;
+    private ArrayList<MLevel> levels;
+    private MLevel mLevel = new MLevel();
+    private Context context;
+    private LayoutInflater inflater;
 
 
     public LevelAdapter(Context context) {
@@ -119,7 +118,7 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
                     Utils.getSound(context, R.raw.click);
 
                     Intent intent = new Intent(context, SubLevelActivity.class);
-                    intent.putExtra("id",mLevel.getLid());
+                    intent.putExtra("id", mLevel.getLid());
                     context.startActivity(intent);
 
                 }

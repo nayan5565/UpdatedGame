@@ -32,15 +32,15 @@ import java.util.ArrayList;
 
 public class SubLevelActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String IMAGE_URL = "http://www.radhooni.com/content/match_game/v1/images/";
-    public static int value;
-    static SubLevelAdapter subLevelAdapter;
-    static ArrayList<MSubLevel> mSubLevels;
-    static ArrayList<MContents> contentses;
-    public static MSubLevel mSubLevel = new MSubLevel();
-    MyDatabase database;
-    RecyclerView recyclerView;
-    Toolbar toolbar;
-    TextView textView;
+    private static int value;
+    private static SubLevelAdapter subLevelAdapter;
+    private static ArrayList<MSubLevel> mSubLevels;
+    private static ArrayList<MContents> contentses;
+    private static MSubLevel mSubLevel = new MSubLevel();
+    private MyDatabase database;
+    private RecyclerView recyclerView;
+    private Toolbar toolbar;
+    private TextView textView;
     private int STORAGE_PERMISSION_CODE = 23;
 
 
@@ -145,7 +145,7 @@ public class SubLevelActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public void getLocalData() {
+    private void getLocalData() {
         mSubLevels = database.getSubLevelData(value);
         Log.e("getDb", "sublevel : " + mSubLevels.size());
 
@@ -160,35 +160,35 @@ public class SubLevelActivity extends AppCompatActivity implements View.OnClickL
         super.onRestart();
     }
 
-    public void init() {
+    private void init() {
         database = new MyDatabase(this);
         textView = (TextView) findViewById(R.id.tct);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         // if (value == Utils.EASY) {
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
         //}
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         subLevelAdapter = new SubLevelAdapter(this);
-        recyclerView.setAdapter(subLevelAdapter);
 
 
     }
 
-    public void prepareDisplay() {
+    private void prepareDisplay() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(subLevelAdapter);
     }
 
     @Override
     public void onClick(View v) {
        /* if (v.getPresentId() == R.id.imgseting) {
             final Dialog dialog = new Dialog(this);
-            dialog.setTitle("GameActivity Information");
+            dialog.setTitle("Class1Activity Information");
             dialog.requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
             dialog.setContentView(R.layout.dialog_setting);
             Button btnWin = (Button) dialog.findViewById(R.id.btnStatics);

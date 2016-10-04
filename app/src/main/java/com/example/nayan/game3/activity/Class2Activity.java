@@ -15,6 +15,7 @@ import com.example.nayan.game3.logic.NLogic;
 import com.example.nayan.game3.model.MContents;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by NAYAN on 9/30/2016.
@@ -22,30 +23,33 @@ import java.util.ArrayList;
 
 public class Class2Activity extends AppCompatActivity {
     public static MContents mContents;
-    ArrayList<MContents> imageArrayList;
-    ImageView imgSetting;
-    RecyclerView recyclerView;
-    Class2AdapterOfBangla class1AdapterOfBangla;
-    Toolbar toolbar;
-    MyDatabase database;
+    private ArrayList<MContents> imageArrayList;
+    private ImageView imgSetting;
+    private RecyclerView recyclerView;
+    private Class2AdapterOfBangla class1AdapterOfBangla;
+    private Toolbar toolbar;
+    private MyDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.class_2);
         init();
+        prepareDisplay();
         getLocalData();
     }
-    public void getLocalData() {
+
+    private void getLocalData() {
 
         ArrayList<MContents> realAssets = new ArrayList<>();
         MyDatabase db = new MyDatabase(this);
         realAssets = db.getContentsData();
         imageArrayList = generateAssets(realAssets);
-//        Collections.shuffle(imageArrayList);
-       class1AdapterOfBangla.setData(imageArrayList);
+        Collections.shuffle(imageArrayList);
+        class1AdapterOfBangla.setData(imageArrayList);
     }
 
-    public ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
+    private ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
         int count = 20;
         ArrayList<MContents> tempAsset = new ArrayList<>();
         for (MContents mContents : realAssets) {
@@ -65,30 +69,25 @@ public class Class2Activity extends AppCompatActivity {
         }
         return tempAsset;
     }
-    public void init() {
-        database=new MyDatabase(this);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    private void init() {
+        database = new MyDatabase(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
 //        imgSetting.setOnClickListener(this);
         NLogic.getInstance(this).setLevel(mContents);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-//        if (SubLevelActivity.value == Utils.EASY) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        }
-//        if (SubLevelActivity.value == Utils.MEDIUM) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-//        if (SubLevelActivity.value == Utils.HARD) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-
         class1AdapterOfBangla = new Class2AdapterOfBangla(this);
+        recyclerView.setAdapter(class1AdapterOfBangla);
+    }
+
+    private void prepareDisplay() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(class1AdapterOfBangla);
     }
 }

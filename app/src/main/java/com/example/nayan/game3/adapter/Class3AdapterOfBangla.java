@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.nayan.game3.R;
 import com.example.nayan.game3.logic.NLogic;
@@ -21,12 +20,12 @@ import java.util.ArrayList;
  */
 
 public class Class3AdapterOfBangla extends RecyclerView.Adapter<Class3AdapterOfBangla.MyViewHolder> {
-    ArrayList<MContents> textArrayList;
+    private ArrayList<MContents> textArrayList;
 
-    MContents mContents = new MContents();
-    Context context;
-    LayoutInflater inflater;
-    NLogic nLogic;
+    private MContents mContents = new MContents();
+    private Context context;
+    private LayoutInflater inflater;
+    private NLogic nLogic;
 
     public Class3AdapterOfBangla(Context context) {
         this.context = context;

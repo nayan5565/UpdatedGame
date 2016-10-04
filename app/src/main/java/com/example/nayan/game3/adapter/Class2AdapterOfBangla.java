@@ -19,11 +19,11 @@ import java.util.ArrayList;
  */
 
 public class Class2AdapterOfBangla extends RecyclerView.Adapter<Class2AdapterOfBangla.MyViewHolder> {
-    Context context;
-    ArrayList<MContents> mContentses;
-    MContents mContents;
-    NLogic nLogic;
-    LayoutInflater layoutInflater;
+    private Context context;
+    private ArrayList<MContents> mContentses;
+    private MContents mContents;
+    private NLogic nLogic;
+    private LayoutInflater layoutInflater;
 
     public Class2AdapterOfBangla(Context context) {
         this.context = context;

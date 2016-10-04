@@ -7,22 +7,22 @@ import java.util.ArrayList;
  */
 
 public class MQuestions {
-    private String mQuestion;
-    private ArrayList<MItem> options;
+    private String ques;
+    private ArrayList<MItem> option;
 
-    public String getmQuestion() {
-        return mQuestion;
+    public String getQues() {
+        return ques;
     }
 
-    public void setmQuestion(String mQuestion) {
-        this.mQuestion = mQuestion;
+    public void setQues(String ques) {
+        this.ques = ques;
     }
 
-    public ArrayList<MItem> getOptions() {
-        return options;
+    public ArrayList<MItem> getOption() {
+        return option;
     }
 
-    public void setOptions(ArrayList<MItem> options) {
-        this.options = options;
+    public void setOption(ArrayList<MItem> option) {
+        this.option = option;
     }
 }

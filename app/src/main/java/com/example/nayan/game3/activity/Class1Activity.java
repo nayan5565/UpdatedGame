@@ -26,16 +26,16 @@ import java.util.Collections;
 /**
  * Created by NAYAN on 8/20/2016.
  */
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    public static int levelId;
-    public static MLevel mLevel;
-    public static MContents mContents;
-    ArrayList<MContents> imageArrayList;
-    ImageView imgSetting;
-    RecyclerView recyclerView;
-    Class1AdapterOfBangla class1AdapterOfBangla;
-    Toolbar toolbar;
-    MyDatabase database;
+public class Class1Activity extends AppCompatActivity implements View.OnClickListener {
+    private static int levelId;
+    private static MLevel mLevel;
+    private static MContents mContents;
+    private ArrayList<MContents> imageArrayList;
+    private ImageView imgSetting;
+    private RecyclerView recyclerView;
+    private Class1AdapterOfBangla class1AdapterOfBangla;
+    private Toolbar toolbar;
+    private MyDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //        VungleAdManager.getInstance(this).play();
 
         init();
+        prepareDisplay();
         getLocalData();
 
 
@@ -58,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    public void getLocalData() {
+    private void getLocalData() {
         imageArrayList = database.getContentsData();
         Collections.shuffle(imageArrayList);
         class1AdapterOfBangla.setData(imageArrayList);
@@ -70,7 +71,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 //       class1AdapterOfBangla.setData(imageArrayList);
     }
 
-    public ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
+    private ArrayList<MContents> generateAssets(ArrayList<MContents> realAssets) {
         int count = 20;
         ArrayList<MContents> tempAsset = new ArrayList<>();
         for (MContents mContents : realAssets) {
@@ -103,30 +104,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void init() {
+    private void init() {
         database = new MyDatabase(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imgSetting = (ImageView) findViewById(R.id.imgseting);
         imgSetting.setOnClickListener(this);
         NLogic.getInstance(this).setLevel(mContents);
         imageArrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        if (SubLevelActivity.value == Utils.EASY) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-//        }
-//        if (SubLevelActivity.value == Utils.MEDIUM) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-//        if (SubLevelActivity.value == Utils.HARD) {
-//            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-//        }
-
         class1AdapterOfBangla = new Class1AdapterOfBangla(this);
+
+    }
+    private void prepareDisplay(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(class1AdapterOfBangla);
     }
 
@@ -142,7 +136,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    NLogic.getInstance(GameActivity.this).showHistory();
+                    NLogic.getInstance(Class1Activity.this).showHistory();
                 }
             });
 

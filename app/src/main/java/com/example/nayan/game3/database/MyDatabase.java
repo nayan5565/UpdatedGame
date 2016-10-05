@@ -111,11 +111,11 @@ public class MyDatabase {
             values.put(KEY_NAME, mLevel.getName());
             values.put(KEY_LEVEL_ID, mLevel.getLid());
             values.put(KEY_UPDATE_DATE, mLevel.getUpdate_date());
-            values.put(KEY_DIFFICULTY, mLevel.getDifficulty());
+//            values.put(KEY_DIFFICULTY, mLevel.getDifficulty());
             values.put(KEY_TOTAL_S_LEVEL, mLevel.getTotal_slevel());
-            if (mLevel.getBestpoint() > 0) {
-                values.put(KEY_BEST_POINT, mLevel.getBestpoint());
-            }
+//            if (mLevel.getBestpoint() > 0) {
+//                values.put(KEY_BEST_POINT, mLevel.getBestpoint());
+//            }
 
             if (mLevel.getLevelWinCount() > 0) {
                 values.put(KEY_LEVEL_WIN_COUNT, mLevel.getLevelWinCount());
@@ -215,8 +215,8 @@ public class MyDatabase {
                 mLevel.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
                 mLevel.setUpdate_date(cursor.getString(cursor.getColumnIndex(KEY_UPDATE_DATE)));
                 mLevel.setTotal_slevel(cursor.getString(cursor.getColumnIndex(KEY_TOTAL_S_LEVEL)));
-                mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_DIFFICULTY)));
-                mLevel.setBestpoint(cursor.getInt(cursor.getColumnIndex(KEY_BEST_POINT)));
+//                mLevel.setDifficulty(cursor.getInt(cursor.getColumnIndex(KEY_DIFFICULTY)));
+//                mLevel.setBestpoint(cursor.getInt(cursor.getColumnIndex(KEY_BEST_POINT)));
                 mLevel.setLevelWinCount(cursor.getInt(cursor.getColumnIndex(KEY_LEVEL_WIN_COUNT)));
                 levelArrayList.add(mLevel);
                 Log.e("do", "end");

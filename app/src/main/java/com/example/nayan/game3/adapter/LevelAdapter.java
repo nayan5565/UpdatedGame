@@ -73,21 +73,21 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewholder
         mLevel = levels.get(position);
 
         holder.txtLevel.setText(mLevel.getName());
-        holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
+//        holder.txtLevelPoint.setText(" point " + mLevel.getBestpoint());
         holder.txtLevelStar.setText(getIntToStar(0));
 
 
         holder.txtLevel.setTextColor(0xffff00ff);
-        if (mLevel.getBestpoint() == 100) {
-            holder.txtLevelStar.setText(getIntToStar(3));
-//            holder.imgStar.setImageResource(R.drawable.star);
-        } else if (mLevel.getBestpoint() == 75) {
-            holder.txtLevelStar.setText(getIntToStar(2));
-//            holder.imgStar.setImageResource(R.drawable.star2);
-        } else if (mLevel.getBestpoint() == 50) {
-            holder.txtLevelStar.setText(getIntToStar(1));
-//            holder.imgStar.setImageResource(R.drawable.star_icon);
-        }
+//        if (mLevel.getBestpoint() == 100) {
+//            holder.txtLevelStar.setText(getIntToStar(3));
+////            holder.imgStar.setImageResource(R.drawable.star);
+//        } else if (mLevel.getBestpoint() == 75) {
+//            holder.txtLevelStar.setText(getIntToStar(2));
+////            holder.imgStar.setImageResource(R.drawable.star2);
+//        } else if (mLevel.getBestpoint() == 50) {
+//            holder.txtLevelStar.setText(getIntToStar(1));
+////            holder.imgStar.setImageResource(R.drawable.star_icon);
+//        }
 
 
     }

@@ -10,6 +10,11 @@ public class MContents {
     private String txt;
     private String vid;
     private String sen;
+    private int mid;
+    private int lid;
+    private int presentId;
+    private int presentType;
+    private String click;
 
     public String getClick() {
         return click;
@@ -19,10 +24,6 @@ public class MContents {
         this.click = click;
     }
 
-    private String click;
-    private int mid;
-    private int lid;
-    private int presentId;
 
     public int getPresentType() {
         return presentType;
@@ -40,7 +41,6 @@ public class MContents {
         this.presentId = presentId;
     }
 
-    private int presentType;
 
     public int getMid() {
         return mid;

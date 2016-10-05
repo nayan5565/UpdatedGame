@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ public class MathLevel_1Activity extends AppCompatActivity {
     private ArrayList<MQuestions> mQuestionses;
     private RecyclerView recyclerView;
     private MathLevelAdapter matchLevelAdapter;
-    private TextView txtItem;
+    private TextView txtQuestion;
     private static MathLevel_1Activity instance;
     int index;
     private Gson gson;
@@ -54,7 +53,7 @@ public class MathLevel_1Activity extends AppCompatActivity {
         mQuestionses = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-        txtItem = (TextView) findViewById(R.id.tct);
+        txtQuestion = (TextView) findViewById(R.id.tct);
 
         matchLevelAdapter = new MathLevelAdapter(this);
         gson=new Gson();
@@ -91,7 +90,7 @@ public class MathLevel_1Activity extends AppCompatActivity {
             index = 0;
             return;
         } else {
-            txtItem.setText(mQuestionses.get(index).getQues());
+            txtQuestion.setText(mQuestionses.get(index).getQues());
             matchLevelAdapter.setData(mQuestionses.get(index).getOption());
             index++;
         }

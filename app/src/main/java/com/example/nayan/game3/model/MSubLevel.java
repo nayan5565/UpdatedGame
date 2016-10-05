@@ -5,18 +5,21 @@ package com.example.nayan.game3.model;
  */
 
 public class MSubLevel {
-    public int getpId() {
-        return pId;
-    }
 
-    public void setpId(int pId) {
-        this.pId = pId;
-    }
 
-    private int pId;
+    private int parentId;
     private int lid;
     private String name;
     private String coins_price;
+    private String no_of_coins;
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 
     public String getNo_of_coins() {
         return no_of_coins;
@@ -50,5 +53,5 @@ public class MSubLevel {
         this.coins_price = coins_price;
     }
 
-    private String no_of_coins;
+
 }

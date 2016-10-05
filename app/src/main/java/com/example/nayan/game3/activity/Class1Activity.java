@@ -91,7 +91,6 @@ public class Class1Activity extends AppCompatActivity implements View.OnClickLis
         return tempAsset;
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 

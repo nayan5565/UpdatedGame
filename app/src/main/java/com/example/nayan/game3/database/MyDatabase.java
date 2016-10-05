@@ -6,13 +6,11 @@ import android.database.Cursor;
 
 import android.util.Log;
 
-import com.example.nayan.game3.model.MAsset;
 import com.example.nayan.game3.model.MContents;
 import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -146,7 +144,7 @@ public class MyDatabase {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_LEVEL_ID, mSubLevel.getLid());
-            values.put(KEY_PARENT_ID, mSubLevel.getpId());
+            values.put(KEY_PARENT_ID, mSubLevel.getParentId());
             values.put(KEY_NAME, mSubLevel.getName());
             values.put(KEY_COINS_PRICE, mSubLevel.getCoins_price());
             values.put(KEY_NO_OF_COINS, mSubLevel.getNo_of_coins());
@@ -240,7 +238,7 @@ public class MyDatabase {
             do {
                 mSubLevel = new MSubLevel();
                 mSubLevel.setLid(cursor.getInt(cursor.getColumnIndex(KEY_LEVEL_ID)));
-                mSubLevel.setpId(cursor.getInt(cursor.getColumnIndex(KEY_PARENT_ID)));
+                mSubLevel.setParentId(cursor.getInt(cursor.getColumnIndex(KEY_PARENT_ID)));
                 mSubLevel.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
                 mSubLevel.setCoins_price(cursor.getString(cursor.getColumnIndex(KEY_COINS_PRICE)));
                 mSubLevel.setNo_of_coins(cursor.getString(cursor.getColumnIndex(KEY_NO_OF_COINS)));

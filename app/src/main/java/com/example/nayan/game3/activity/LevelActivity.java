@@ -28,6 +28,7 @@ import com.example.nayan.game3.model.MLevel;
 import com.example.nayan.game3.model.MSubLevel;
 import com.example.nayan.game3.utils.Utils;
 import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -55,6 +57,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
     private Tracker tracker;
     private RecyclerView recyclerView;
     private String image;
+    private Gson gson;
 
     //   NavigationDrawerFragment drawerFragment;
 
@@ -186,7 +189,6 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                                 Log.e("level", "name :" + mLevel.getName());
                                 mLevel.setUpdate_date(jsonObject.getString("update_date"));
                                 mLevel.setTotal_slevel(jsonObject.getString("total_slevel"));
-                                mLevel.setDifficulty(Utils.EASY);
                                 Utils.levels.add(mLevel);
 
                                 JSONArray sub = jsonObject.getJSONArray("sub");
@@ -198,7 +200,7 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
 
                                     count++;
                                     mSubLevel = new MSubLevel();
-                                    mSubLevel.setpId(mLevel.getLid());
+                                    mSubLevel.setParentId(mLevel.getLid());
                                     mSubLevel.setLid(subLevel.getInt("lid"));
                                     mSubLevel.setName(subLevel.getString("name"));
                                     Log.e("sublevel", "name :" + mSubLevel.getName());
@@ -230,6 +232,24 @@ public class LevelActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
         );
+    }
+
+    private void getOnlineDataByGson(){
+        AsyncHttpClient client=new AsyncHttpClient();
+        client.post("http://www.radhooni.com/content/match_game/v1/levels.php",new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject puzzle=response.getJSONObject("puzzle");
+                    JSONArray level=puzzle.getJSONArray("level");
+                    MLevel[] mLevels=gson.fromJson(level.toString(),MLevel[].class);
+                    levels=new ArrayList<MLevel>(Arrays.asList(mLevels));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void getOnlineContentsData() {
